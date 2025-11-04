@@ -3,3 +3,13 @@ export interface CoreValue {
   title: string;
   description: string;
 }
+
+export interface WebLink {
+  title: string;
+  href: string;
+}
+
+export interface FooterLink {
+  title: string;
+  links: WebLink[];
+}

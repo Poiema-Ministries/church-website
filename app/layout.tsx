@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Navbar from './common/components/navbar/navbar';
 import { Kaisei_Decol } from 'next/font/google';
 import './globals.css';
+import Footer from './common/components/footer/footer';
 
 const kaiseiDecol = Kaisei_Decol({
   variable: '--font-kaisei-decol',
@@ -24,6 +25,7 @@ export default function RootLayout({
       <body className={`${kaiseiDecol.variable} antialiased overflow-x-hidden`}>
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );

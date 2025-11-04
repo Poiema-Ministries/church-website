@@ -1,10 +1,9 @@
 'use client';
+import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
   const navLinks = [
@@ -15,23 +14,22 @@ export default function Navbar() {
 
   return (
     <nav className='sticky top-0 z-50'>
-      <div className='max-w-6xl mx-auto flex justify-between items-center p-4'>
-        <Link href='/' className='text-xl font-bold'>
-          Grace Fellowship
+      <div className='pt-10 max-w-6xl mx-auto flex flex-col md:flex-row justify-center items-center p-4'>
+        <Link href='/' className='text-xl font-bold md:mr-15'>
+          <Image
+            src='./logo.svg'
+            width={180}
+            height={140}
+            alt='Poiema Ministries'
+            priority
+          />
         </Link>
-        <button
-          className='md:hidden'
-          aria-expanded={open}
-          onClick={() => setOpen(!open)}
-        >
-          ☰
-        </button>
-        <ul className={`md:flex gap-6 ${open ? 'block' : 'hidden'} md:block`}>
+        <ul className={`md:flex gap-6 hidden md:block`}>
           {navLinks.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}
-                className={`block py-2 ${
+                className={`block py-2 text-sm ${
                   pathname === link.href && 'underline'
                 }`}
               >
