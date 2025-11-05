@@ -42,7 +42,7 @@ export default function Services() {
         </div>
       </div>
       <div className='flex flex-col md:flex-row w-full pl-4 sm:pl-5 md:pl-7 gap-3 sm:gap-4 md:gap-6 items-start bg-secondary mt-5'>
-        <div className='flex w-full items-center justify-center p-5'>
+        <div className='flex w-full items-center justify-center p-5 order-2 md:order-1'>
           <Image
             src='/imgs/second-service.webp'
             width={400}
@@ -51,7 +51,7 @@ export default function Services() {
             className='w-full h-auto md:w-auto md:h-full object-cover'
           />
         </div>
-        <div className='flex flex-col md:items-start w-full p-10'>
+        <div className='flex flex-col md:items-start w-full p-10 order-1 md:order-2'>
           <div className='flex flex-col w-full max-w-prose mx-auto md:max-w-xl md:mx-0'>
             <span className='text-lg sm:text-xl md:text-3xl font-bold text-center md:text-left md:opacity-100'>
               Second Service - 11:30AM
@@ -98,7 +98,7 @@ export default function Services() {
             <div className='flex flex-col space-y-1'>
               <span className='underline'>Address</span>
               <span>
-                45-60 22th Street
+                45-60 211th Street
                 <span className='block'>Bayside, NY 11358</span>
               </span>
             </div>
