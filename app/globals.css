@@ -4,10 +4,12 @@
   --background: #fffaf5;
   --secondary: #fff3e9;
   --foreground: #171717;
+  --primary-black: #3f3c3c;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --primary-black: var(--primary-black);
   --color-secondary: var(--secondary);
   --color-foreground: var(--foreground);
   --font-kaisei-decol: var(--font-kaisei-decol);
@@ -15,6 +17,7 @@
 
 body {
   background: var(--background);
+  color: var(--primary-black);
   color: var(--foreground);
   font-family: var(--font-kaisei-decol);
 }

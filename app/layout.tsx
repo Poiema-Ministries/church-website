@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
-import Navbar from './common/components/navbar/navbar';
 import { Kaisei_Decol } from 'next/font/google';
-import './globals.css';
+import Navbar from './common/components/navbar/navbar';
 import Footer from './common/components/footer/footer';
+import './globals.css';
 
 const kaiseiDecol = Kaisei_Decol({
   variable: '--font-kaisei-decol',
