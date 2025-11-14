@@ -1,3 +1,5 @@
+// Copyright 2025 Poiema Ministries. All Rights Reserved.
+
 type TheologyCreed = string;
 
 const CREEDS: TheologyCreed[] = [

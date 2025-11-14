@@ -1,8 +1,13 @@
-export interface CoreValue {
+// Copyright 2025 Poiema Ministries. All Rights Reserved.
+
+interface Describable {
   id: number;
   title: string;
   description: string;
 }
+
+export interface Announcement extends Describable {}
+export interface CoreValue extends Describable {}
 
 export interface FooterLink {
   title: string;

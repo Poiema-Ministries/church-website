@@ -1,3 +1,5 @@
+// Copyright 2025 Poiema Ministries. All Rights Reserved.
+
 export default function Offering() {
   return (
     <div className='flex flex-col min-h-screen w-full gap-4 sm:gap-5 md:gap-7'>

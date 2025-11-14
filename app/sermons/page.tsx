@@ -1,3 +1,5 @@
+// Copyright 2025 Poiema Ministries. All Rights Reserved.
+
 import { SERMONS } from '../common/mock/sermons';
 import { Sermon } from '../common/types/models';
 import SermonItem from './sermon-item';

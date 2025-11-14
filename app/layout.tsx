@@ -1,3 +1,5 @@
+// Copyright 2025 Poiema Ministries. All Rights Reserved.
+
 import type { Metadata } from 'next';
 import { Kaisei_Decol } from 'next/font/google';
 import Navbar from './common/components/navbar/navbar';

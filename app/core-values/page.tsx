@@ -1,3 +1,5 @@
+// Copyright 2025 Poiema Ministries. All Rights Reserved.
+
 import { CoreValue } from '../common/types/models';
 
 const CORE_VALUES: CoreValue[] = [

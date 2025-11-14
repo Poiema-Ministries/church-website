@@ -1,3 +1,5 @@
+// Copyright 2025 Poiema Ministries. All Rights Reserved.
+
 import { SermonsReponse } from '../types/response';
 
 export const SERMONS: SermonsReponse = {

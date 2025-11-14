@@ -1,3 +1,5 @@
+// Copyright 2025 Poiema Ministries. All Rights Reserved.
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { WebLink, FooterLink } from '../../types/models';
