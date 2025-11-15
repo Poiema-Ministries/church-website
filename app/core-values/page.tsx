@@ -40,7 +40,7 @@ export default function CoreValues() {
         >
           <div className='flex flex-1 items-center md:items-center h-full md:self-stretch'>
             <div className='flex items-center w-full max-w-prose mx-auto md:max-w-xl md:mx-0'>
-              <span className='text-3xl sm:text-4xl md:text-7xl font-bold mr-3 sm:mr-4 opacity-70 md:opacity-100'>
+              <span className='text-3xl sm:text-4xl md:text-7xl font-bold mr-3 sm:mr-4'>
                 {value.id}
               </span>
               <div className='flex-1 text-center md:text-left text-lg sm:text-xl md:text-2xl font-semibold'>

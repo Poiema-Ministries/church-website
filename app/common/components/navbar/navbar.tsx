@@ -40,6 +40,15 @@ const NAV_ITEMS = [
       { title: 'Upcoming Events', href: '/upcoming-events' },
     ],
   },
+  {
+    name: 'Get Involved',
+    hasDropdown: true,
+    links: [
+      { title: 'New Members', href: '/new-members' },
+      { title: 'Prayer Requests', href: '/prayer-requests' },
+      { title: 'Contact Us', href: '/contact-us' },
+    ],
+  },
 ];
 
 export default function Navbar() {
