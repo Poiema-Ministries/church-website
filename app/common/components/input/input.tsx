@@ -6,12 +6,14 @@ interface InputProps {
   type: 'text' | 'email' | 'password' | 'tel' | 'date';
   placeholder?: string;
   label?: string;
+  error?: string;
 }
 
 export default function Input({
   label,
   type,
   placeholder,
+  error,
   ...props
 }: InputProps) {
   return (
@@ -28,9 +30,16 @@ export default function Input({
         type={type}
         id={label}
         placeholder={placeholder}
-        className='w-full border border-black bg-white px-3 py-2 text-primary-black focus:outline-none focus:ring-1 focus:ring-black'
+        className={`w-full border ${
+          error ? 'border-red-500' : 'border-black'
+        } bg-white px-3 py-2 text-primary-black focus:outline-none focus:ring-1 ${
+          error ? 'focus:ring-red-500' : 'focus:ring-black'
+        }`}
         {...props}
       />
+      {error && (
+        <span className='text-sm text-red-500'>{error}</span>
+      )}
     </div>
   );
 }

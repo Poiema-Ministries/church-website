@@ -9,10 +9,32 @@ import Input from '../common/components/input/input';
 import Textarea from '../common/components/textarea/textarea';
 
 export default function PrayerRequestsForm() {
-  const { register, handleSubmit } = useForm();
+  const { 
+    register, 
+    handleSubmit, 
+    formState: { errors } 
+  } = useForm();
 
-  const onFormSubmit = (data: FieldValues) => {
+  const onFormSubmit = async(data: FieldValues) => {
     console.log(data);
+    const formData = {
+      name: `${data.firstName} ${data.lastName}`,
+      prayerRequest: data.prayerRequest,
+    };
+
+    const response = await fetch('/api/prayer-request', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to send prayer request');
+    } else {
+      alert('Prayer request sent successfully');
+    }
   };
 
   return (
@@ -27,10 +49,24 @@ export default function PrayerRequestsForm() {
       <div className='flex flex-col gap-4 w-full mt-5 mb-5'>
         <div className='flex flex-col sm:flex-row gap-4 sm:gap-2'>
           <div className='flex-1'>
-            <Input label='First Name' type='text' {...register('firstName')} />
+            <Input 
+              label='First Name' 
+              type='text' 
+              error={errors.firstName?.message as string}
+              {...register('firstName', { 
+                required: 'First Name is required in order to send' 
+              })} 
+            />
           </div>
           <div className='flex-1'>
-            <Input label='Last Name' type='text' {...register('lastName')} />
+            <Input 
+              label='Last Name' 
+              type='text' 
+              error={errors.lastName?.message as string}
+              {...register('lastName', { 
+                required: 'Last Name is required in order to send' 
+              })} 
+            />
           </div>
         </div>
       </div>
@@ -38,7 +74,10 @@ export default function PrayerRequestsForm() {
         <Textarea
           label='Prayer Request'
           placeholder='Enter your prayer request'
-          {...register('prayerRequest')}
+          error={errors.prayerRequest?.message as string}
+          {...register('prayerRequest', { 
+            required: 'Prayer Request is required in order to send' 
+          })}
         />
       </div>
     </Form>

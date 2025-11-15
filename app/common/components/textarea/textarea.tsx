@@ -5,11 +5,13 @@
 interface TextareaProps {
   label?: string;
   placeholder?: string;
+  error?: string;
 }
 
 export default function Textarea({
   label,
   placeholder,
+  error,
   ...props
 }: TextareaProps) {
   return (
@@ -23,9 +25,17 @@ export default function Textarea({
         </label>
       )}
       <textarea
-        className='w-full border border-black bg-white px-3 py-2 text-primary-black focus:outline-none focus:ring-1 focus:ring-black'
+        id={label}
+        className={`w-full border ${
+          error ? 'border-red-500' : 'border-black'
+        } bg-white px-3 py-2 text-primary-black focus:outline-none focus:ring-1 ${
+          error ? 'focus:ring-red-500' : 'focus:ring-black'
+        }`}
         {...props}
       />
+      {error && (
+        <span className='text-sm text-red-500'>{error}</span>
+      )}
     </div>
   );
 }
