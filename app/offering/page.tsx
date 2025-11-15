@@ -29,15 +29,24 @@ export default function Offering() {
         </Link>
       </div>
       <div className='flex flex-col md:flex-row w-full px-4 sm:px-6 md:px-8 lg:px-12 py-8 md:py-12 gap-8 md:gap-12 bg-background'>
-        <div className='flex-1 flex items-center'>
-          <h2 className='text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-primary-black'>
+        <div className='flex-1 flex items-center justify-center md:justify-start'>
+          <h2 className='text-3xl sm:text-4xl md:text-5xl lg:text-6xl  md:text-left font-bold text-primary-black'>
             Why We Give?
           </h2>
         </div>
         <div className='flex-1 flex items-center'>
           <p className='text-sm sm:text-base md:text-lg leading-relaxed font-bold text-primary-black'>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+            nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur.
           </p>
         </div>
       </div>
