@@ -56,6 +56,23 @@ const FOOTER_LINKS: FooterLink[] = [
       },
     ],
   },
+  {
+    title: 'Get Involved',
+    links: [
+      {
+        title: 'New Members',
+        href: '/new-members',
+      },
+      {
+        title: 'Prayer Requests',
+        href: '/prayer-requests',
+      },
+      {
+        title: 'Contact Us',
+        href: '/contact-us',
+      },
+    ]
+  }
 ];
 
 export default function Footer() {
@@ -63,12 +80,12 @@ export default function Footer() {
     return FOOTER_LINKS.map((footerLink: FooterLink) => {
       const { title, links } = footerLink;
       return (
-        <div className='flex flex-col' key={title}>
-          <span className='font-bold md:text-base mb-5'>{title}</span>
-          <ul className='underline'>
+        <div className='flex flex-col items-center md:items-start' key={title}>
+          <span className='font-bold text-xs sm:text-sm md:text-base mb-3 md:mb-5'>{title}</span>
+          <ul className='underline text-center md:text-left'>
             {links.map((link: WebLink) => (
-              <li key={link.title}>
-                <Link href={link.href}>{link.title}</Link>
+              <li key={link.title} className='mb-1'>
+                <Link href={link.href} className='text-xs sm:text-sm md:text-base'>{link.title}</Link>
               </li>
             ))}
           </ul>
@@ -77,20 +94,21 @@ export default function Footer() {
     });
   };
   return (
-    <footer className='flex flex-col md:flex-row items-center md:items-center justify-center p-10'>
-      <div className='flex mb-8 md:mb-0 md:mr-15'>
+    <footer className='flex flex-col md:flex-row items-center md:items-center justify-center p-6 sm:p-8 md:p-10'>
+      <div className='flex mb-6 sm:mb-8 md:mb-0 md:mr-15'>
         <Image
           src='./logo.svg'
           width={180}
           height={140}
           alt='Poiema Ministries'
           priority
+          className='w-32 sm:w-40 md:w-[180px] h-auto'
         />
       </div>
-      <div className='flex flex-col items-center md:items-start md:ml-5 gap-4'>
-        <div className='flex gap-8'>{renderFooterLinks()}</div>
-        <div className='flex'>
-          <span className='font-bold text-xs md:text-base'>
+      <div className='flex flex-col items-center md:items-start md:ml-5 gap-3 sm:gap-4 w-full md:w-auto'>
+        <div className='grid grid-cols-2 sm:flex sm:flex-row sm:flex-wrap justify-center md:justify-start gap-3 sm:gap-4 md:gap-8'>{renderFooterLinks()}</div>
+        <div className='flex justify-center md:justify-start'>
+          <span className='font-bold text-xs sm:text-sm md:text-base text-center md:text-left'>
             Address: Address: 45-60 211th St Bayside, NY 11361
           </span>
         </div>
@@ -102,6 +120,7 @@ export default function Footer() {
               height={40}
               alt='@poiema.ministries '
               priority
+              className='w-8 h-8 sm:w-10 sm:h-10'
             />
           </Link>
           <Link href='https://www.youtube.com/@poiemaministries8748'>
@@ -111,6 +130,7 @@ export default function Footer() {
               height={48}
               alt='Poiema Ministries'
               priority
+              className='w-9 h-9 sm:w-12 sm:h-12'
             />
           </Link>
         </div>
