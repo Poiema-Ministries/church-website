@@ -71,8 +71,8 @@ const FOOTER_LINKS: FooterLink[] = [
         title: 'Contact Us',
         href: '/contact-us',
       },
-    ]
-  }
+    ],
+  },
 ];
 
 export default function Footer() {
@@ -81,11 +81,18 @@ export default function Footer() {
       const { title, links } = footerLink;
       return (
         <div className='flex flex-col items-center md:items-start' key={title}>
-          <span className='font-bold text-xs sm:text-sm md:text-base mb-3 md:mb-5'>{title}</span>
+          <span className='font-bold text-xs sm:text-sm md:text-base mb-3 md:mb-5'>
+            {title}
+          </span>
           <ul className='underline text-center md:text-left'>
             {links.map((link: WebLink) => (
               <li key={link.title} className='mb-1'>
-                <Link href={link.href} className='text-xs sm:text-sm md:text-base'>{link.title}</Link>
+                <Link
+                  href={link.href}
+                  className='text-xs sm:text-sm md:text-base'
+                >
+                  {link.title}
+                </Link>
               </li>
             ))}
           </ul>
@@ -106,7 +113,9 @@ export default function Footer() {
         />
       </div>
       <div className='flex flex-col items-center md:items-start md:ml-5 gap-3 sm:gap-4 w-full md:w-auto'>
-        <div className='grid grid-cols-2 sm:flex sm:flex-row sm:flex-wrap justify-center md:justify-start gap-3 sm:gap-4 md:gap-8'>{renderFooterLinks()}</div>
+        <div className='grid grid-cols-2 sm:flex sm:flex-row sm:flex-wrap justify-center md:justify-start gap-3 sm:gap-4 md:gap-8'>
+          {renderFooterLinks()}
+        </div>
         <div className='flex justify-center md:justify-start'>
           <span className='font-bold text-xs sm:text-sm md:text-base text-center md:text-left'>
             Address: Address: 45-60 211th St Bayside, NY 11361

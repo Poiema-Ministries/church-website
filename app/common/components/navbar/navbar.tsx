@@ -61,24 +61,24 @@ export default function Navbar() {
   );
   const [isScrolledPastHero, setIsScrolledPastHero] = useState(false);
   const isHomePage = pathname === '/';
-  
+
   useEffect(() => {
     if (!isHomePage) {
       setIsScrolledPastHero(true);
       return;
     }
-    
+
     const handleScroll = () => {
       const heroHeight = window.innerHeight;
       setIsScrolledPastHero(window.scrollY > heroHeight * 0.8);
     };
-    
+
     window.addEventListener('scroll', handleScroll);
     handleScroll(); // Check initial state
-    
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isHomePage]);
-  
+
   const shouldShowWhiteLogo = isHomePage && !isScrolledPastHero;
 
   const handleDropdownOpen = (name: string) => {
@@ -145,7 +145,9 @@ export default function Navbar() {
   }, [isMobileMenuOpen]);
 
   return (
-    <nav className={`sticky top-0 z-50 transition-colors duration-300 ${shouldShowWhiteLogo ? 'bg-transparent' : 'bg-background'}`}>
+    <nav
+      className={`sticky top-0 z-50 transition-colors duration-300 ${shouldShowWhiteLogo ? 'bg-transparent' : 'bg-background'}`}
+    >
       <div className='pt-10 max-w-6xl mx-auto flex flex-col md:flex-row justify-center items-center p-4 relative'>
         {/* Mobile: Hamburger button on the right */}
         <button
@@ -183,7 +185,9 @@ export default function Navbar() {
             alt='Poiema Ministries'
             priority
             className={shouldShowWhiteLogo ? 'brightness-0 invert' : ''}
-            style={shouldShowWhiteLogo ? { filter: 'brightness(0) invert(1)' } : {}}
+            style={
+              shouldShowWhiteLogo ? { filter: 'brightness(0) invert(1)' } : {}
+            }
           />
         </Link>
         {/* Desktop navigation links */}
@@ -231,9 +235,7 @@ export default function Navbar() {
                   href={item.href || '/'}
                   className={`block py-2 text-sm transition-colors ${
                     shouldShowWhiteLogo ? 'text-white' : 'text-primary-black'
-                  } ${
-                    item.href && isActiveLink(item.href) && 'underline'
-                  }`}
+                  } ${item.href && isActiveLink(item.href) && 'underline'}`}
                 >
                   {item.name}
                 </Link>
