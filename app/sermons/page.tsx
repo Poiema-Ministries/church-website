@@ -4,10 +4,9 @@ import { Sermon } from '../common/types/models';
 import SermonItem from './sermon-item';
 import { client } from '../../sanity/lib/client';
 import { sermonsQuery } from '../../sanity/lib/queries';
-  
-export default async function Sermons() {
 
-  const renderSermons = async() => {
+export default async function Sermons() {
+  const renderSermons = async () => {
     const sermons: Sermon[] = await client.fetch(sermonsQuery);
     return sermons.map((sermon: Sermon & { _id?: string }, index: number) => {
       const isLast = index === sermons.length - 1;

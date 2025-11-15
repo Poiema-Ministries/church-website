@@ -37,9 +37,7 @@ export default function Input({
         }`}
         {...props}
       />
-      {error && (
-        <span className='text-sm text-red-500'>{error}</span>
-      )}
+      {error && <span className='text-sm text-red-500'>{error}</span>}
     </div>
   );
 }

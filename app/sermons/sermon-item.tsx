@@ -9,7 +9,10 @@ interface SermonItemProps {
   isLast?: boolean;
 }
 
-export default function SermonItem({ sermon, isLast = false }: SermonItemProps) {
+export default function SermonItem({
+  sermon,
+  isLast = false,
+}: SermonItemProps) {
   const formatDate = (date: Date | string) => {
     const dateObj = typeof date === 'string' ? new Date(date) : date;
     return dateObj.toLocaleDateString('en-US', {
@@ -38,7 +41,9 @@ export default function SermonItem({ sermon, isLast = false }: SermonItemProps) 
           <span>{formatDate(sermon.date)}</span>
         </div>
       </div>
-      {!isLast && <div className='border-t-[0.5px] border-primary-black w-full'></div>}
+      {!isLast && (
+        <div className='border-t-[0.5px] border-primary-black w-full'></div>
+      )}
     </div>
   );
 }

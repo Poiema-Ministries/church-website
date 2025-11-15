@@ -8,6 +8,7 @@ interface Describable {
 
 export interface Announcement extends Describable {}
 export interface CoreValue extends Describable {}
+export interface Bulletin extends Describable {}
 
 export interface FooterLink {
   title: string;

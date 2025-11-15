@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
-import { Resend } from "resend";
+import { NextResponse } from 'next/server';
+import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -9,18 +9,17 @@ export async function POST(req: Request) {
 
     if (!name || !prayerRequest) {
       return NextResponse.json(
-        { error: "Missing required fields" },
-        { status: 400 }
+        { error: 'Missing required fields' },
+        { status: 400 },
       );
     }
 
     await resend.emails.send({
-      from: "Poiema Website <onboarding@resend.dev>",
-      to: "info@poiemaministries.org",
+      from: 'Poiema MinistriesWebsite <onboarding@resend.dev>',
+      to: 'info@poiemaministries.org',
       subject: `New Prayer Request Submission: ${name}`,
       html: `
         <p>A new prayer request has been submitted.</p>
-        <h2>New Contact Form Submission</h2>
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Prayer Request:</strong></p>
         <p>${prayerRequest}</p>
@@ -30,8 +29,8 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: true });
   } catch (error: any) {
     return NextResponse.json(
-      { error: error.message ?? "Failed to send email" },
-      { status: 500 }
+      { error: error.message ?? 'Failed to send email' },
+      { status: 500 },
     );
   }
 }

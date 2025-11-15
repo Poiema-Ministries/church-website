@@ -9,13 +9,13 @@ import Input from '../common/components/input/input';
 import Textarea from '../common/components/textarea/textarea';
 
 export default function PrayerRequestsForm() {
-  const { 
-    register, 
-    handleSubmit, 
-    formState: { errors } 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
   } = useForm();
 
-  const onFormSubmit = async(data: FieldValues) => {
+  const onFormSubmit = async (data: FieldValues) => {
     console.log(data);
     const formData = {
       name: `${data.firstName} ${data.lastName}`,
@@ -49,23 +49,23 @@ export default function PrayerRequestsForm() {
       <div className='flex flex-col gap-4 w-full mt-5 mb-5'>
         <div className='flex flex-col sm:flex-row gap-4 sm:gap-2'>
           <div className='flex-1'>
-            <Input 
-              label='First Name' 
-              type='text' 
+            <Input
+              label='First Name'
+              type='text'
               error={errors.firstName?.message as string}
-              {...register('firstName', { 
-                required: 'First Name is required in order to send' 
-              })} 
+              {...register('firstName', {
+                required: 'First Name is required in order to send',
+              })}
             />
           </div>
           <div className='flex-1'>
-            <Input 
-              label='Last Name' 
-              type='text' 
+            <Input
+              label='Last Name'
+              type='text'
               error={errors.lastName?.message as string}
-              {...register('lastName', { 
-                required: 'Last Name is required in order to send' 
-              })} 
+              {...register('lastName', {
+                required: 'Last Name is required in order to send',
+              })}
             />
           </div>
         </div>
@@ -75,8 +75,8 @@ export default function PrayerRequestsForm() {
           label='Prayer Request'
           placeholder='Enter your prayer request'
           error={errors.prayerRequest?.message as string}
-          {...register('prayerRequest', { 
-            required: 'Prayer Request is required in order to send' 
+          {...register('prayerRequest', {
+            required: 'Prayer Request is required in order to send',
           })}
         />
       </div>

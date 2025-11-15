@@ -21,3 +21,19 @@ export const sermonsQuery = groq`
     url
   }
 `;
+
+export const bulletinsQuery = groq`
+  *[_type == "bulletin"] | order(order asc) {
+    _id,
+    title,
+    description
+  }
+`;
+
+export const announcementsQuery = groq`
+  *[_type == "announcement"] | order(date desc) {
+    _id,
+    title,
+    description
+  }
+`;
