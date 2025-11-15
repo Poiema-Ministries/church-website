@@ -1,3 +1,5 @@
+// Copyright 2025 Poiema Ministries. All Rights Reserved.
+
 export const apiVersion =
   process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2025-11-15';
 

@@ -7,6 +7,5 @@ import HomeClient from './home-client';
 
 export default async function Home() {
   const coreValues: CoreValue[] = await client.fetch(coreValuesQuery);
-
   return <HomeClient coreValues={coreValues} />;
 }

@@ -1,3 +1,5 @@
+// Copyright 2025 Poiema Ministries. All Rights Reserved.
+
 import { defineField, defineType } from 'sanity';
 
 export const coreValueType = defineType({

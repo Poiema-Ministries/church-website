@@ -15,7 +15,7 @@ export interface FooterLink {
 }
 
 export interface Sermon {
-  id: number;
+  _id?: string;
   title: string;
   bibleVerse: string;
   preacher: string;

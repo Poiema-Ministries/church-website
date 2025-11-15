@@ -1,13 +1,17 @@
 // Copyright 2025 Poiema Ministries. All Rights Reserved.
 
-import { SERMONS } from '../common/mock/sermons';
 import { Sermon } from '../common/types/models';
 import SermonItem from './sermon-item';
+import { client } from '../../sanity/lib/client';
+import { sermonsQuery } from '../../sanity/lib/queries';
+  
+export default async function Sermons() {
 
-export default function Sermons() {
-  const renderSermons = () => {
-    return SERMONS.response.map((sermon: Sermon) => {
-      return <SermonItem sermon={sermon} key={sermon.id} />;
+  const renderSermons = async() => {
+    const sermons: Sermon[] = await client.fetch(sermonsQuery);
+    return sermons.map((sermon: Sermon & { _id?: string }, index: number) => {
+      const isLast = index === sermons.length - 1;
+      return <SermonItem sermon={sermon} key={sermon._id} isLast={isLast} />;
     });
   };
 

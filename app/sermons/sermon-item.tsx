@@ -6,11 +6,13 @@ import { Sermon } from '../common/types/models';
 
 interface SermonItemProps {
   sermon: Sermon;
+  isLast?: boolean;
 }
 
-export default function SermonItem({ sermon }: SermonItemProps) {
-  const formatDate = (date: Date) => {
-    return date.toLocaleDateString('en-US', {
+export default function SermonItem({ sermon, isLast = false }: SermonItemProps) {
+  const formatDate = (date: Date | string) => {
+    const dateObj = typeof date === 'string' ? new Date(date) : date;
+    return dateObj.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
@@ -36,7 +38,7 @@ export default function SermonItem({ sermon }: SermonItemProps) {
           <span>{formatDate(sermon.date)}</span>
         </div>
       </div>
-      <div className='border-t-[0.5px] border-primary-black w-full'></div>
+      {!isLast && <div className='border-t-[0.5px] border-primary-black w-full'></div>}
     </div>
   );
 }

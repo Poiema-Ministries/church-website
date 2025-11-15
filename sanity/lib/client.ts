@@ -1,3 +1,5 @@
+// Copyright 2025 Poiema Ministries. All Rights Reserved.
+
 import { createClient } from 'next-sanity';
 
 import { apiVersion, dataset, projectId } from '../env';
