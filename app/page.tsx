@@ -151,8 +151,8 @@ export default function Home() {
             <h2 className='text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-primary-black mb-4 sm:mb-6'>
               Visit Us
             </h2>
-            <p className='text-sm sm:text-base md:text-lg text-primary-black leading-tight mb-4 sm:mb-6 max-w-xs sm:max-w-sm'>
-              Come join us every Sunday either during our Morning or After Service
+            <p className='text-sm sm:text-base md:text-lg text-primary-black leading-tight mb-4 sm:mb-6 max-w-xs sm:max-w-sm font-semibold'>
+              Come join us every Sunday either during our 9:30AM or 11:30AM Service
             </p>
             <Link 
               href='/services'
