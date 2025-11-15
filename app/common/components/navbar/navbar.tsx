@@ -59,6 +59,27 @@ export default function Navbar() {
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState<string | null>(
     null,
   );
+  const [isScrolledPastHero, setIsScrolledPastHero] = useState(false);
+  const isHomePage = pathname === '/';
+  
+  useEffect(() => {
+    if (!isHomePage) {
+      setIsScrolledPastHero(true);
+      return;
+    }
+    
+    const handleScroll = () => {
+      const heroHeight = window.innerHeight;
+      setIsScrolledPastHero(window.scrollY > heroHeight * 0.8);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Check initial state
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isHomePage]);
+  
+  const shouldShowWhiteLogo = isHomePage && !isScrolledPastHero;
 
   const handleDropdownOpen = (name: string) => {
     if (closeTimeout) {
@@ -124,7 +145,7 @@ export default function Navbar() {
   }, [isMobileMenuOpen]);
 
   return (
-    <nav className='sticky top-0 z-50 bg-background'>
+    <nav className={`sticky top-0 z-50 transition-colors duration-300 ${shouldShowWhiteLogo ? 'bg-transparent' : 'bg-background'}`}>
       <div className='pt-10 max-w-6xl mx-auto flex flex-col md:flex-row justify-center items-center p-4 relative'>
         {/* Mobile: Hamburger button on the right */}
         <button
@@ -134,19 +155,19 @@ export default function Navbar() {
           aria-expanded={isMobileMenuOpen}
         >
           <span
-            className={`block w-5 h-1 bg-gray-900 transition-all duration-300 origin-center ${
-              isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''
-            }`}
+            className={`block w-5 h-1 transition-all duration-300 origin-center ${
+              shouldShowWhiteLogo ? 'bg-white' : 'bg-gray-900'
+            } ${isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`}
           />
           <span
-            className={`block w-5 h-1 bg-gray-900 transition-all duration-300 ${
-              isMobileMenuOpen ? 'opacity-0' : ''
-            }`}
+            className={`block w-5 h-1 transition-all duration-300 ${
+              shouldShowWhiteLogo ? 'bg-white' : 'bg-gray-900'
+            } ${isMobileMenuOpen ? 'opacity-0' : ''}`}
           />
           <span
-            className={`block w-5 h-1 bg-gray-900 transition-all duration-300 origin-center ${
-              isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''
-            }`}
+            className={`block w-5 h-1 transition-all duration-300 origin-center ${
+              shouldShowWhiteLogo ? 'bg-white' : 'bg-gray-900'
+            } ${isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}
           />
         </button>
         {/* Logo - centered on mobile, left on desktop */}
@@ -161,6 +182,8 @@ export default function Navbar() {
             height={140}
             alt='Poiema Ministries'
             priority
+            className={shouldShowWhiteLogo ? 'brightness-0 invert' : ''}
+            style={shouldShowWhiteLogo ? { filter: 'brightness(0) invert(1)' } : {}}
           />
         </Link>
         {/* Desktop navigation links */}
@@ -174,7 +197,9 @@ export default function Navbar() {
                   onMouseLeave={() => handleDropdownClose(item.name)}
                 >
                   <button
-                    className={`block py-2 text-sm cursor-pointer ${
+                    className={`block py-2 text-sm cursor-pointer transition-colors ${
+                      shouldShowWhiteLogo ? 'text-white' : 'text-primary-black'
+                    } ${
                       isAnyDropdownLinkActive(item.links || []) && 'underline'
                     }`}
                     onClick={() => handleDropdownToggle(item.name)}
@@ -204,7 +229,9 @@ export default function Navbar() {
               ) : (
                 <Link
                   href={item.href || '/'}
-                  className={`block py-2 text-sm ${
+                  className={`block py-2 text-sm transition-colors ${
+                    shouldShowWhiteLogo ? 'text-white' : 'text-primary-black'
+                  } ${
                     item.href && isActiveLink(item.href) && 'underline'
                   }`}
                 >
