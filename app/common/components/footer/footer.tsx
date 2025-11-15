@@ -77,8 +77,8 @@ export default function Footer() {
     });
   };
   return (
-    <footer className='flex items-center justify-center p-10'>
-      <div className='flex mr-15'>
+    <footer className='flex flex-col md:flex-row items-center md:items-center justify-center p-10'>
+      <div className='flex mb-8 md:mb-0 md:mr-15'>
         <Image
           src='./logo.svg'
           width={180}
@@ -87,7 +87,7 @@ export default function Footer() {
           priority
         />
       </div>
-      <div className='flex flex-col ml-5 gap-4'>
+      <div className='flex flex-col items-center md:items-start md:ml-5 gap-4'>
         <div className='flex gap-8'>{renderFooterLinks()}</div>
         <div className='flex'>
           <span className='font-bold text-xs md:text-base'>

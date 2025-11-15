@@ -12,7 +12,7 @@ export default function Sermons() {
   };
 
   return (
-    <div className='flex flex-col min-h-screen w-full gap-2'>
+    <div className='flex flex-col w-full gap-2'>
       <div className='flex flex-col items-start w-full max-w-xl'>
         <h1 className='text-4xl font-bold text-center mt-10 ml-4 md:ml-8'>
           Sermons

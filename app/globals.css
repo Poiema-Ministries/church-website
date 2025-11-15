@@ -22,3 +22,19 @@ body {
   color: var(--primary-black);
   font-family: var(--font-kaisei-decol);
 }
+
+.offering-image {
+  object-position: center;
+}
+
+@media (min-width: 768px) {
+  .offering-image {
+    object-position: 60% center;
+  }
+}
+
+@media (min-width: 1024px) {
+  .offering-image {
+    object-position: 55% center;
+  }
+}
