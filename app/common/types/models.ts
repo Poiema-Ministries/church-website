@@ -6,7 +6,9 @@ interface Describable {
   description: string;
 }
 
-export interface Announcement extends Describable {}
+export interface Announcement extends Describable {
+  order?: number;
+}
 export interface CoreValue extends Describable {}
 export interface Bulletin extends Describable {}
 

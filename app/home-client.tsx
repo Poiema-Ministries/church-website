@@ -37,7 +37,7 @@ export default function HomeClient({ coreValues }: HomeClientProps) {
 
         {/* Content - positioned on the top left, centered on mobile */}
         <div className='relative z-20 w-full h-full flex items-start pt-12 sm:pt-16 md:pt-20 lg:pt-24'>
-          <div className='w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12'>
+          <div className='w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12'>
             <div
               className={`flex flex-col items-center md:items-start text-white transition-opacity duration-1000 ${
                 isVisible ? 'opacity-100' : 'opacity-0'

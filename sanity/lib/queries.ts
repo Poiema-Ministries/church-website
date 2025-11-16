@@ -31,9 +31,10 @@ export const bulletinsQuery = groq`
 `;
 
 export const announcementsQuery = groq`
-  *[_type == "announcement"] | order(date desc) {
+  *[_type == "announcement"] | order(order asc) {
     _id,
     title,
-    description
+    description,
+    order
   }
 `;
