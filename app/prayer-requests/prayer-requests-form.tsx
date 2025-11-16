@@ -16,7 +16,6 @@ export default function PrayerRequestsForm() {
   } = useForm();
 
   const onFormSubmit = async (data: FieldValues) => {
-    console.log(data);
     const formData = {
       name: `${data.firstName} ${data.lastName}`,
       prayerRequest: data.prayerRequest,

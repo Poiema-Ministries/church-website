@@ -1,3 +1,5 @@
+// Copyright 2025 Poiema Ministries. All Rights Reserved.
+
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
