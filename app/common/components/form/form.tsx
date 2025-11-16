@@ -34,7 +34,7 @@ export default function Form({
           label='Submit'
           type='submit'
           disabled={false}
-          className='mt-4'
+          className='mt-4 cursor-pointer'
         />
       </div>
     </form>

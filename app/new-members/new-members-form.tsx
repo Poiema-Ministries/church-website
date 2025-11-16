@@ -19,7 +19,7 @@ export default function NewMembersForm() {
   const attendedOtherChurches = watch('attendedOtherChurches');
 
   const onFormSubmit = async (data: FieldValues) => {
-    const formData = {...data, message: data.message || ''};
+    const formData = { ...data, message: data.message || '' };
     const response = await fetch('/api/new-member', {
       method: 'POST',
       headers: {
@@ -217,10 +217,7 @@ export default function NewMembersForm() {
           </div>
         </div>
         <div className='flex flex-col gap-4 w-full mt-3 mb-5'>
-          <Textarea
-            label='Message'
-            {...register('message')}
-          />
+          <Textarea label='Message' {...register('message')} />
         </div>
       </div>
     </Form>

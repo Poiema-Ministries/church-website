@@ -9,7 +9,7 @@ import { bulletinsQuery, announcementsQuery } from '../../sanity/lib/queries';
 export default async function Bulletins() {
   const bulletins: Bulletin[] = await client.fetch(bulletinsQuery);
   const announcements: Announcement[] = await client.fetch(announcementsQuery);
-  
+
   const renderBulletins = () => {
     console.log(bulletins);
     return bulletins.map(
@@ -22,7 +22,12 @@ export default async function Bulletins() {
   const renderAnnouncements = () => {
     return announcements.map(
       (announcement: Announcement & { _id?: string }, index: number) => {
-        return <AnnouncementItem announcement={announcement} key={announcement._id} />;
+        return (
+          <AnnouncementItem
+            announcement={announcement}
+            key={announcement._id}
+          />
+        );
       },
     );
   };
