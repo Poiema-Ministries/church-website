@@ -2,6 +2,7 @@
 
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { generateNewMemberEmail } from '@/app/common/utils/email-templates';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -16,30 +17,50 @@ export async function POST(req: Request) {
       );
     }
 
+    const {
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      address,
+      city,
+      state,
+      zipCode,
+      ageGroup,
+      occupation,
+      attendedOtherChurches,
+      otherChurches,
+      howDidYouHearAboutUs,
+      message,
+    } = requestData;
+
+    const html = generateNewMemberEmail({
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      address,
+      city,
+      state,
+      zipCode,
+      ageGroup,
+      occupation,
+      attendedOtherChurches,
+      otherChurches,
+      howDidYouHearAboutUs,
+      message,
+    });
+
     await resend.emails.send({
-      from: 'Poiema MinistriesWebsite <onboarding@resend.dev>',
+      from: 'Poiema Ministries Website <onboarding@resend.dev>',
       to: 'info@poiemaministries.org',
-      subject: `New Member Submission: ${requestData.firstName} ${requestData.lastName}`,
-      html: `
-        <p>A new member has been submitted.</p>
-        <p><strong>Name:</strong> ${requestData.firstName} ${requestData.lastName}</p>
-        <p><strong>Email:</strong> ${requestData.email}</p>
-        <p><strong>Phone:</strong> ${requestData.phoneNumber}</p>
-        <p><strong>Address:</strong> ${requestData.address}</p>
-        <p><strong>City:</strong> ${requestData.city}</p>
-        <p><strong>State:</strong> ${requestData.state}</p>
-        <p><strong>Zip Code:</strong> ${requestData.zipCode}</p>
-        <p><strong>Age Group:</strong> ${requestData.ageGroup}</p>
-        <p><strong>Occupation:</strong> ${requestData.occupation}</p>
-        <p><strong>Have you attended other churches before our church?</strong> ${requestData.attendedOtherChurches}</p>
-        <p><strong>If yes, where did you attend?</strong> ${requestData.otherChurches || 'N/A'}</p>
-        <p><strong>How did you hear about our church?</strong> ${requestData.howDidYouHearAboutUs}</p>
-        <p><strong>Message:</strong> ${requestData?.message || 'N/A'}</p>
-      `,
+      subject: `New Member Submission: ${firstName} ${lastName}`,
+      html,
     });
 
     return NextResponse.json({ success: true });
   } catch (error: any) {
+    console.error('Email error:', error);
     return NextResponse.json(
       { error: error.message ?? 'Failed to send email' },
       { status: 500 },

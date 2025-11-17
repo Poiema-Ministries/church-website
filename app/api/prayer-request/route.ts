@@ -2,6 +2,7 @@
 
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { generatePrayerRequestEmail } from '@/app/common/utils/email-templates';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -16,22 +17,23 @@ export async function POST(req: Request) {
       );
     }
 
+    const html = generatePrayerRequestEmail({
+      name,
+      prayerRequest,
+    });
+
     await resend.emails.send({
-      from: 'Poiema MinistriesWebsite <onboarding@resend.dev>',
+      from: 'Poiema Ministries Website <onboarding@resend.dev>',
       to: 'info@poiemaministries.org',
       subject: `New Prayer Request Submission: ${name}`,
-      html: `
-        <p>A new prayer request has been submitted.</p>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Prayer Request:</strong></p>
-        <p>${prayerRequest}</p>
-      `,
+      html,
     });
 
     return NextResponse.json({ success: true });
   } catch (error: any) {
+    console.error('Email error:', error);
     return NextResponse.json(
-      { error: error.message ?? 'Failed to send email' },
+      { error: error?.message ?? 'Failed to send email' },
       { status: 500 },
     );
   }

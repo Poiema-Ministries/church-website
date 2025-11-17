@@ -5,7 +5,14 @@ import { coreValueType } from './coreValueType';
 import { sermonType } from './sermonType';
 import { bulletinType } from './bulletinType';
 import { announcementType } from './announcementType';
+import { upcomingEventType } from './upcomingEventType';
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [coreValueType, sermonType, bulletinType, announcementType],
+  types: [
+    coreValueType,
+    sermonType,
+    bulletinType,
+    announcementType,
+    upcomingEventType,
+  ],
 };

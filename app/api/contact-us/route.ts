@@ -2,6 +2,7 @@
 
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { generateContactUsEmail } from '@/app/common/utils/email-templates';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -16,21 +17,26 @@ export async function POST(req: Request) {
       );
     }
 
+    const { firstName, lastName, email, ageGroup, message } = requestData;
+
+    const html = generateContactUsEmail({
+      firstName,
+      lastName,
+      email,
+      ageGroup,
+      message,
+    });
+
     await resend.emails.send({
-      from: 'Poiema MinistriesWebsite <onboarding@resend.dev>',
+      from: 'Poiema Ministries Website <onboarding@resend.dev>',
       to: 'info@poiemaministries.org',
-      subject: `Contact Us Submission: ${requestData.firstName} ${requestData.lastName}`,
-      html: `
-        <p>A contact us submission has been submitted.</p>
-        <p><strong>Name:</strong> ${requestData.firstName} ${requestData.lastName}</p>
-        <p><strong>Email:</strong> ${requestData.email}</p>
-        <p><strong>Age Group:</strong> ${requestData.ageGroup}</p>
-        <p><strong>Message:</strong> ${requestData.message}</p>
-      `,
+      subject: `Contact Us Submission: ${firstName} ${lastName}`,
+      html,
     });
 
     return NextResponse.json({ success: true });
   } catch (error: any) {
+    console.error('Email error:', error);
     return NextResponse.json(
       { error: error.message ?? 'Failed to send email' },
       { status: 500 },
