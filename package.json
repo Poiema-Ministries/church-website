@@ -12,6 +12,7 @@
   "dependencies": {
     "@sanity/image-url": "^1.2.0",
     "@sanity/vision": "^4.15.0",
+    "cloudinary": "^2.8.0",
     "next": "16.0.1",
     "next-sanity": "^11.6.6",
     "react": "19.2.0",
