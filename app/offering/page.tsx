@@ -36,17 +36,12 @@ export default function Offering() {
         </div>
         <div className='flex-1 flex items-center'>
           <p className='text-sm sm:text-base md:text-lg leading-relaxed font-bold text-primary-black'>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-            nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur.
+            Tithing is an act of worship and an expression of our gratitude to
+            God. By returning a portion of what He has provided, we acknowledge
+            that He is the source of every blessing in our lives. Your
+            generosity allows us to continue our mission of sharing the Gospel
+            and serving our local community. As 2 Corinthians 9:7 reminds us,
+            "God loves a cheerful giver."
           </p>
         </div>
       </div>

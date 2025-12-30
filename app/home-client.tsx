@@ -36,26 +36,26 @@ export default function HomeClient({ coreValues }: HomeClientProps) {
         <div className='absolute inset-0 bg-black/40 z-0'></div>
 
         {/* Content - positioned on the top left, centered on mobile */}
-        <div className='relative z-20 w-full h-full flex items-start pt-12 sm:pt-16 md:pt-20 lg:pt-24'>
-          <div className='w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12'>
+        <div className='relative z-20 w-full h-full flex items-start justify-center md:justify-start pt-10 sm:pt-16 md:pt-20 lg:pt-24'>
+          <div className='w-full max-w-7xl md:max-w-none mx-auto md:mx-0 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16'>
             <div
               className={`flex flex-col items-center md:items-start text-white transition-opacity duration-1000 ${
                 isVisible ? 'opacity-100' : 'opacity-0'
               }`}
             >
               {/* Definition */}
-              <div className='flex flex-col gap-0.5 text-sm sm:text-base md:text-lg max-w-2xl leading-tight text-center md:text-left'>
-                <p className='font-semibold text-lg sm:text-xl md:text-2xl leading-tight'>
+              <div className='flex flex-col gap-1 text-sm sm:text-base md:text-lg max-w-2xl leading-normal text-center md:text-left'>
+                <p className='font-semibold text-lg sm:text-xl md:text-2xl leading-normal'>
                   poiema
                 </p>
-                <p className='italic leading-tight'>poy'-ah-meh</p>
-                <p className='font-semibold leading-tight'>
+                <p className='italic leading-normal'>poy'-ah-meh</p>
+                <p className='font-semibold leading-normal'>
                   Greek word for workmanship or masterpiece
                 </p>
-                <div className='mt-1 space-y-0.5 leading-tight'>
-                  <p className='leading-tight'>I. that which has been made</p>
-                  <p className='leading-tight'>II. a work</p>
-                  <p className='md:ml-4 leading-tight'>
+                <div className='mt-1.5 space-y-0.5 leading-normal'>
+                  <p className='leading-normal'>I. that which has been made</p>
+                  <p className='leading-normal'>II. a work</p>
+                  <p className='md:ml-4 leading-normal'>
                     A. of the works of God as a creator
                   </p>
                 </div>
@@ -173,6 +173,70 @@ export default function HomeClient({ coreValues }: HomeClientProps) {
             >
               Learn More
             </Link>
+          </div>
+        </div>
+
+        {/* Service Times Section */}
+        <div className='relative w-full bg-white mt-6 sm:mt-8 lg:mt-12'>
+          <div className='flex flex-col md:flex-row lg:flex-row w-full'>
+            {/* Left Image - summer-2022.jpg - only shown on desktop (lg+) */}
+            <div className='hidden lg:block relative w-full lg:w-[300px] h-[549px] flex-shrink-0'>
+              <Image
+                src='/imgs/summer-2022.jpg'
+                alt='Summer service'
+                fill
+                className='object-cover'
+              />
+            </div>
+
+            {/* Center Schedule Section */}
+            <div className='relative w-full md:w-1/2 lg:w-[482px] h-auto md:h-[500px] lg:h-[549px] bg-[#FFF3E9] flex-shrink-0 flex flex-col justify-start px-6 sm:px-8 md:px-10 py-8 sm:py-10 lg:py-12'>
+              {/* Service Times Title */}
+              <div className='flex flex-col mb-4 sm:mb-6 lg:mb-8'>
+                <h3 className='text-2xl sm:text-3xl md:text-4xl lg:text-[36px] font-medium text-primary-black leading-tight sm:leading-[40px] lg:leading-[52px] mb-2'>
+                  Service Times
+                </h3>
+                <div className='w-full max-w-[255.59px] h-[1px] border-t border-primary-black'></div>
+              </div>
+
+              {/* Schedule Content */}
+              <div className='flex flex-col gap-4 sm:gap-6 lg:gap-8'>
+                {/* Morning Schedule */}
+                <div className='flex flex-col gap-2'>
+                  <h4 className='text-lg sm:text-xl md:text-2xl lg:text-[24px] font-bold text-primary-black leading-tight sm:leading-[30px] lg:leading-[35px]'>
+                    Morning
+                  </h4>
+                  <p className='text-base sm:text-lg md:text-xl lg:text-[24px] font-normal text-primary-black leading-relaxed sm:leading-[28px] lg:leading-[35px]'>
+                    11:15AM Service - 2nd Education Building, First Floor
+                  </p>
+                </div>
+
+                {/* Afternoon Schedule */}
+                <div className='flex flex-col gap-2'>
+                  <h4 className='text-lg sm:text-xl md:text-2xl lg:text-[24px] font-bold text-primary-black leading-tight sm:leading-[30px] lg:leading-[35px]'>
+                    Afternoon
+                  </h4>
+                  <p className='text-base sm:text-lg md:text-xl lg:text-[24px] font-normal text-primary-black leading-relaxed sm:leading-[28px] lg:leading-[35px]'>
+                    02:00PM Service - Main Sanctuary
+                  </p>
+                </div>
+
+                {/* Address */}
+                <p className='text-base sm:text-lg md:text-xl lg:text-[24px] font-bold text-primary-black leading-tight sm:leading-[28px] lg:leading-[35px] mt-2 sm:mt-4'>
+                  45-65 211th St Bayside, NY 11361
+                </p>
+              </div>
+            </div>
+
+            {/* Right Image - winter-2024.jpg - shown on all sizes */}
+            <div className='relative w-full md:w-1/2 lg:flex-1 h-[300px] sm:h-[350px] md:h-[500px] lg:h-[549px]'>
+              <Image
+                src='/imgs/winter-2024.jpg'
+                alt='Winter service'
+                fill
+                className='object-cover'
+              />
+            </div>
           </div>
         </div>
       </div>

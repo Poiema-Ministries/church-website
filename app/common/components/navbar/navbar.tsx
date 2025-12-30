@@ -191,7 +191,7 @@ export default function Navbar() {
           />
         </Link>
         {/* Desktop navigation links */}
-        <ul className='md:flex gap-6 hidden md:block relative'>
+        <ul className='md:flex gap-6 hidden md:block relative ml-10'>
           {NAV_ITEMS.map((item) => (
             <li key={item.name} className='relative'>
               {item.hasDropdown ? (
