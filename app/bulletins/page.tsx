@@ -6,6 +6,10 @@ import { Announcement, Bulletin } from '../common/types/models';
 import { client } from '../../sanity/lib/client';
 import { bulletinsQuery, announcementsQuery } from '../../sanity/lib/queries';
 
+// Disable caching for this page since bulletins update frequently
+export const revalidate = 0;
+export const dynamic = 'force-dynamic';
+
 export default async function Bulletins() {
   const bulletins: Bulletin[] = await client.fetch(bulletinsQuery);
   const announcements: Announcement[] = await client.fetch(announcementsQuery);
