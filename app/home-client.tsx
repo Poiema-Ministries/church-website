@@ -7,12 +7,20 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { CoreValue } from './common/types/models';
 
+const GALLERY_IMAGES: string[] = [
+  '/imgs/gallery-1.webp',
+  '/imgs/gallery-2.webp',
+  '/imgs/gallery-3.webp',
+  '/imgs/gallery-4.webp',
+  '/imgs/gallery-5.webp',
+];
+
 interface HomeClientProps {
   coreValues: CoreValue[];
 }
 
 export default function HomeClient({ coreValues }: HomeClientProps) {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
   useEffect(() => {
     setIsVisible(true);
@@ -26,6 +34,7 @@ export default function HomeClient({ coreValues }: HomeClientProps) {
         <Image
           src='/imgs/home-banner.webp'
           alt='Poiema Ministries'
+          loading='eager'
           fill
           className='object-cover'
           style={{ filter: 'grayscale(100%)' }}
@@ -82,31 +91,45 @@ export default function HomeClient({ coreValues }: HomeClientProps) {
           </div>
         </div>
 
-        {/* Images Section - Three images horizontally with spacing */}
-        <div className='flex flex-col sm:flex-row gap-4 sm:gap-6 md:gap-8 w-full px-4 sm:px-6 md:px-8 lg:px-12 pb-8 sm:pb-12 md:pb-16'>
-          <div className='relative w-full sm:flex-1 h-64 sm:h-auto sm:aspect-square md:h-96 overflow-hidden'>
-            <Image
-              src='/imgs/first-service.webp'
-              alt='Poiema Ministries Community'
-              fill
-              className='object-cover'
-            />
-          </div>
-          <div className='relative w-full sm:flex-1 h-64 sm:h-auto sm:aspect-square md:h-96 overflow-hidden'>
-            <Image
-              src='/imgs/second-service.webp'
-              alt='Poiema Ministries Worship'
-              fill
-              className='object-cover'
-            />
-          </div>
-          <div className='relative w-full sm:flex-1 h-64 sm:h-auto sm:aspect-square md:h-96 overflow-hidden'>
-            <Image
-              src='/imgs/offering-banner.png'
-              alt='Poiema Ministries Community'
-              fill
-              className='object-cover'
-            />
+        {/* Images Section - Infinite sliding carousel */}
+        <div className='w-full overflow-hidden pb-8 sm:pb-12 md:pb-16'>
+          <div className='relative w-full overflow-hidden'>
+            {/* Container for infinite sliding animation */}
+            <div className='flex animate-infinite-slide gap-4 sm:gap-6 md:gap-8'>
+              {/* First set of images */}
+              {GALLERY_IMAGES.map((imageSrc, idx) => (
+                <div
+                  key={`gallery-1-${idx}`}
+                  className='relative flex-shrink-0 w-[calc(100vw-2rem)] sm:w-[calc((100vw-6rem)/3)] md:w-[calc((100vw-8rem)/3)] lg:w-[calc((100vw-12rem)/3)]'
+                >
+                  <div className='relative w-full h-64 sm:h-auto sm:aspect-square md:h-96 overflow-hidden'>
+                    <Image
+                      src={imageSrc}
+                      alt={`Poiema Ministries Gallery ${idx + 1}`}
+                      fill
+                      className='object-cover'
+                      priority={idx < 3}
+                    />
+                  </div>
+                </div>
+              ))}
+              {/* Duplicate set for seamless loop */}
+              {GALLERY_IMAGES.map((imageSrc, idx) => (
+                <div
+                  key={`gallery-2-${idx}`}
+                  className='relative flex-shrink-0 w-[calc(100vw-2rem)] sm:w-[calc((100vw-6rem)/3)] md:w-[calc((100vw-8rem)/3)] lg:w-[calc((100vw-12rem)/3)]'
+                >
+                  <div className='relative w-full h-64 sm:h-auto sm:aspect-square md:h-96 overflow-hidden'>
+                    <Image
+                      src={imageSrc}
+                      alt={`Poiema Ministries Gallery ${idx + 1}`}
+                      fill
+                      className='object-cover'
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -186,6 +209,7 @@ export default function HomeClient({ coreValues }: HomeClientProps) {
                 alt='Summer service'
                 fill
                 className='object-cover'
+                loading='eager'
               />
             </div>
 
@@ -204,26 +228,26 @@ export default function HomeClient({ coreValues }: HomeClientProps) {
                 {/* Morning Schedule */}
                 <div className='flex flex-col gap-2'>
                   <h4 className='text-lg sm:text-xl md:text-2xl lg:text-[24px] font-bold text-primary-black leading-tight sm:leading-[30px] lg:leading-[35px]'>
-                    Morning
+                    1st Service
                   </h4>
                   <p className='text-base sm:text-lg md:text-xl lg:text-[24px] font-normal text-primary-black leading-relaxed sm:leading-[28px] lg:leading-[35px]'>
-                    11:15AM Service - 2nd Education Building, First Floor
+                    9:30AM - Poiema Ministries Main Sanctuary
                   </p>
                 </div>
 
                 {/* Afternoon Schedule */}
                 <div className='flex flex-col gap-2'>
                   <h4 className='text-lg sm:text-xl md:text-2xl lg:text-[24px] font-bold text-primary-black leading-tight sm:leading-[30px] lg:leading-[35px]'>
-                    Afternoon
+                    2nd Service
                   </h4>
                   <p className='text-base sm:text-lg md:text-xl lg:text-[24px] font-normal text-primary-black leading-relaxed sm:leading-[28px] lg:leading-[35px]'>
-                    02:00PM Service - Main Sanctuary
+                    11:30AM - Poiema Ministries Main Sanctuary
                   </p>
                 </div>
 
                 {/* Address */}
                 <p className='text-base sm:text-lg md:text-xl lg:text-[24px] font-bold text-primary-black leading-tight sm:leading-[28px] lg:leading-[35px] mt-2 sm:mt-4'>
-                  45-65 211th St Bayside, NY 11361
+                  45-60 211th Street Bayside, NY 11361
                 </p>
               </div>
             </div>
@@ -235,6 +259,7 @@ export default function HomeClient({ coreValues }: HomeClientProps) {
                 alt='Winter service'
                 fill
                 className='object-cover'
+                loading='eager'
               />
             </div>
           </div>
