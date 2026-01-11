@@ -5,6 +5,10 @@ import { client } from '../../sanity/lib/client';
 import { teamMembersQuery } from '../../sanity/lib/queries';
 import TeamMemberItem from './team-member-item';
 
+// Disable caching for this page since team members update frequently
+export const revalidate = 0;
+export const dynamic = 'force-dynamic';
+
 // Team definitions with display names and query values
 const TEAMS = [
   { displayName: 'Worship Team', queryValue: 'Worship' },
