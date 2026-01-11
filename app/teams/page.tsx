@@ -19,7 +19,10 @@ const TEAMS = [
   { displayName: 'Maintenance Team', queryValue: 'Maintenance' },
 ] as const;
 
-function filterMembersByTeam(members: TeamMember[], teamValue: string): TeamMember[] {
+function filterMembersByTeam(
+  members: TeamMember[],
+  teamValue: string,
+): TeamMember[] {
   return members.filter((member) => member.team?.includes(teamValue));
 }
 
@@ -29,7 +32,7 @@ export default async function Teams() {
   return (
     <div className='flex flex-col w-full min-h-screen gap-8 sm:gap-10 md:gap-12'>
       <div className='flex flex-col items-start w-full max-w-xl px-4 sm:px-6 md:px-8'>
-      <h1 className='text-4xl font-bold text-center mt-10 px-4 md:px-0'>
+        <h1 className='text-4xl font-bold text-center mt-10 px-4 md:px-0'>
           Meet Our Teams
         </h1>
       </div>
@@ -43,7 +46,10 @@ export default async function Teams() {
           }
 
           return (
-            <div key={team.queryValue} className='flex flex-col w-full gap-6 sm:gap-8'>
+            <div
+              key={team.queryValue}
+              className='flex flex-col w-full gap-6 sm:gap-8'
+            >
               {/* Team Heading */}
               <h2 className='text-1xl sm:text-2xl md:text-3xl font-bold text-primary-black px-4 md:px-0'>
                 {team.displayName}
