@@ -5,6 +5,10 @@ import SermonItem from './sermon-item';
 import { client } from '../../sanity/lib/client';
 import { sermonsQuery } from '../../sanity/lib/queries';
 
+// Disable caching for this page since sermons update frequently
+export const revalidate = 0;
+export const dynamic = 'force-dynamic';
+
 export default async function Sermons() {
   const renderSermons = async () => {
     const sermons: Sermon[] = await client.fetch(sermonsQuery);
