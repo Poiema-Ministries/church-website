@@ -38,3 +38,15 @@ export const announcementsQuery = groq`
     order
   }
 `;
+
+export const teamMembersQuery = groq`
+  *[_type == "teamMember"] | order(name asc) {
+    _id,
+    name,
+    image {
+      asset,
+      alt
+    },
+    team
+  }
+`;
