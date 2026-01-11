@@ -29,7 +29,9 @@ export default function TeamMemberItem({ teamMember }: TeamMemberItemProps) {
           />
         ) : (
           <div className='w-full aspect-square bg-gray-200 flex items-center justify-center'>
-            <span className='text-primary-black/40 text-xs sm:text-sm'>No Image</span>
+            <span className='text-primary-black/40 text-xs sm:text-sm'>
+              No Image
+            </span>
           </div>
         )}
       </div>

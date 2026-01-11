@@ -28,9 +28,11 @@ export const teamMemberType = defineType({
       name: 'team',
       title: 'Teams',
       type: 'array',
-      description: 'The teams this member serves on (e.g., "Worship", "Children", "Youth")',
+      description:
+        'The teams this member serves on (e.g., "Worship", "Children", "Youth")',
       of: [{ type: 'string' }],
-      validation: (rule) => rule.required().min(1).error('At least one team is required'),
+      validation: (rule) =>
+        rule.required().min(1).error('At least one team is required'),
     }),
   ],
   preview: {
@@ -40,7 +42,9 @@ export const teamMemberType = defineType({
       media: 'image',
     },
     prepare({ title, teams, media }) {
-      const teamsList = Array.isArray(teams) ? teams.join(', ') : (teams || 'No teams assigned');
+      const teamsList = Array.isArray(teams)
+        ? teams.join(', ')
+        : teams || 'No teams assigned';
       return {
         title: title || 'Unnamed Team Member',
         subtitle: teamsList,
