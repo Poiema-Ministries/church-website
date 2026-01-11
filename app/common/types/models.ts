@@ -30,3 +30,16 @@ export interface WebLink {
   title: string;
   href: string;
 }
+
+export interface TeamMember {
+  _id?: string;
+  name: string;
+  image?: {
+    asset?: {
+      _id: string;
+      url: string;
+    };
+    alt?: string;
+  };
+  team: string[];
+}
