@@ -1,6 +1,18 @@
 // Copyright 2025 Poiema Ministries. All Rights Reserved.
 
+import type { Metadata } from 'next';
 import Image from 'next/image';
+
+export const metadata: Metadata = {
+  title: 'Services',
+  description:
+    'Join us for worship services at Poiema Ministries. We offer two Sunday services at 9:30 AM and 11:30 AM. Come worship with us and experience God\'s presence in Bayside, NY.',
+  openGraph: {
+    title: 'Services | Poiema Ministries',
+    description:
+      'Join us for worship services at Poiema Ministries. We offer two Sunday services at 9:30 AM and 11:30 AM. Come worship with us and experience God\'s presence in Bayside, NY.',
+  },
+};
 
 export default function Services() {
   return (

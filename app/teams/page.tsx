@@ -1,5 +1,6 @@
 // Copyright 2025 Poiema Ministries. All Rights Reserved.
 
+import type { Metadata } from 'next';
 import { TeamMember } from '../common/types/models';
 import { client } from '../../sanity/lib/client';
 import { teamMembersQuery } from '../../sanity/lib/queries';
@@ -8,6 +9,17 @@ import TeamMemberItem from './team-member-item';
 // Disable caching for this page since team members update frequently
 export const revalidate = 0;
 export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  title: 'Meet Our Teams',
+  description:
+    'Meet the dedicated team members serving at Poiema Ministries. Our teams include Worship, Welcoming, Media, Outreach, and more, all working together to serve our community.',
+  openGraph: {
+    title: 'Meet Our Teams | Poiema Ministries',
+    description:
+      'Meet the dedicated team members serving at Poiema Ministries. Our teams include Worship, Welcoming, Media, Outreach, and more, all working together to serve our community.',
+  },
+};
 
 // Team definitions with display names and query values
 const TEAMS = [

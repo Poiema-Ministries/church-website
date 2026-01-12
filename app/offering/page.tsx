@@ -1,6 +1,23 @@
 // Copyright 2025 Poiema Ministries. All Rights Reserved.
+
+import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+
+export const metadata: Metadata = {
+  title: 'Online Offering',
+  description:
+    'Support Poiema Ministries through online giving. Your generosity helps us continue our mission of sharing the Gospel and serving our community. God loves a cheerful giver.',
+  openGraph: {
+    title: 'Online Offering | Poiema Ministries',
+    description:
+      'Support Poiema Ministries through online giving. Your generosity helps us continue our mission of sharing the Gospel and serving our community. God loves a cheerful giver.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
 
 export default function Offering() {
   return (

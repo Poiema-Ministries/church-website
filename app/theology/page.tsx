@@ -1,5 +1,18 @@
 // Copyright 2025 Poiema Ministries. All Rights Reserved.
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Theology',
+  description:
+    'Learn about the theological foundations of Poiema Ministries. We belong to the Presbyterian Church denomination and adhere to the Westminster Confession of Faith.',
+  openGraph: {
+    title: 'Theology | Poiema Ministries',
+    description:
+      'Learn about the theological foundations of Poiema Ministries. We belong to the Presbyterian Church denomination and adhere to the Westminster Confession of Faith.',
+  },
+};
+
 type TheologyCreed = string;
 
 const CREEDS: TheologyCreed[] = [
