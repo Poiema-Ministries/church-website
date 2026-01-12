@@ -15,8 +15,9 @@ const TEAMS = [
   { displayName: 'Welcoming Team', queryValue: 'Welcoming' },
   { displayName: "Heaven's Kitchen", queryValue: "Heaven's Kitchen" },
   { displayName: 'Community Group Leaders', queryValue: 'Community Group' },
-  { displayName: 'Media Team', queryValue: 'Media' },
+  { displayName: 'Media/Backstage Team', queryValue: 'Media' },
   { displayName: 'Maintenance Team', queryValue: 'Maintenance' },
+  { displayName: 'Outreach Team', queryValue: 'Event' },
 ] as const;
 
 function filterMembersByTeam(
