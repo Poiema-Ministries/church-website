@@ -1,10 +1,22 @@
 // Copyright 2025 Poiema Ministries. All Rights Reserved.
 
+import type { Metadata } from 'next';
 import SermonsClient from './sermons-client';
 
 // Disable caching for this page since sermons update frequently
 export const revalidate = 0;
 export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  title: 'Sermons',
+  description:
+    'Listen to sermons from Poiema Ministries. Join us as we explore God\'s Word and grow in our faith together through weekly messages from our pastors and guest speakers.',
+  openGraph: {
+    title: 'Sermons | Poiema Ministries',
+    description:
+      'Listen to sermons from Poiema Ministries. Join us as we explore God\'s Word and grow in our faith together through weekly messages from our pastors and guest speakers.',
+  },
+};
 
 export default function Sermons() {
   return (

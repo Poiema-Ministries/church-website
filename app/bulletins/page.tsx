@@ -1,5 +1,6 @@
 // Copyright 2025 Poiema Ministries. All Rights Reserved.
 
+import type { Metadata } from 'next';
 import BulletinItem from './bulletin-item';
 import AnnouncementItem from './announcement-item';
 import { Announcement, Bulletin } from '../common/types/models';
@@ -9,6 +10,17 @@ import { bulletinsQuery, announcementsQuery } from '../../sanity/lib/queries';
 // Disable caching for this page since bulletins update frequently
 export const revalidate = 0;
 export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  title: 'Bulletins & Announcements',
+  description:
+    'Stay up to date with the latest bulletins and announcements from Poiema Ministries. Find information about upcoming events, ministry updates, and community news.',
+  openGraph: {
+    title: 'Bulletins & Announcements | Poiema Ministries',
+    description:
+      'Stay up to date with the latest bulletins and announcements from Poiema Ministries. Find information about upcoming events, ministry updates, and community news.',
+  },
+};
 
 export default async function Bulletins() {
   const bulletins: Bulletin[] = await client.fetch(bulletinsQuery);

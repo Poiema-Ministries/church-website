@@ -1,8 +1,20 @@
 // Copyright 2025 Poiema Ministries. All Rights Reserved.
 
+import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getAssetsFromCollection } from '@/lib/cloudinary';
+
+export const metadata: Metadata = {
+  title: 'Past Events',
+  description:
+    'Browse photos and memories from past events at Poiema Ministries. See how God has been working in our community through various gatherings, celebrations, and ministry events.',
+  openGraph: {
+    title: 'Past Events | Poiema Ministries',
+    description:
+      'Browse photos and memories from past events at Poiema Ministries. See how God has been working in our community through various gatherings, celebrations, and ministry events.',
+  },
+};
 
 interface CoverImage {
   public_id: string;

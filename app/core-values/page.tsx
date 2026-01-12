@@ -1,8 +1,20 @@
 // Copyright 2025 Poiema Ministries. All Rights Reserved.
 
+import type { Metadata } from 'next';
 import { CoreValue } from '../common/types/models';
 import { client } from '../../sanity/lib/client';
 import { coreValuesQuery } from '../../sanity/lib/queries';
+
+export const metadata: Metadata = {
+  title: 'Core Values',
+  description:
+    'Discover the core values that guide Poiema Ministries. We are committed to loving God wholeheartedly, serving others as Jesus served us, and awakening and equipping disciples of Christ.',
+  openGraph: {
+    title: 'Core Values | Poiema Ministries',
+    description:
+      'Discover the core values that guide Poiema Ministries. We are committed to loving God wholeheartedly, serving others as Jesus served us, and awakening and equipping disciples of Christ.',
+  },
+};
 
 export default async function CoreValues() {
   const coreValues: CoreValue[] = await client.fetch(coreValuesQuery);
