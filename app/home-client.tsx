@@ -32,7 +32,7 @@ export default function HomeClient({ coreValues }: HomeClientProps) {
       <div className='relative w-full h-screen min-h-[600px] flex items-center overflow-hidden -mt-[140px] pt-[140px]'>
         {/* Background Image */}
         <Image
-          src='/imgs/home-banner.webp'
+          src='/imgs/home-banner.jpg'
           alt='Poiema Ministries'
           loading='eager'
           fill
@@ -45,7 +45,7 @@ export default function HomeClient({ coreValues }: HomeClientProps) {
         <div className='absolute inset-0 bg-black/40 z-0'></div>
 
         {/* Content - positioned on the top left, centered on mobile */}
-        <div className='relative z-20 w-full h-full flex items-start justify-center md:justify-start pt-10 sm:pt-16 md:pt-20 lg:pt-24'>
+        <div className='relative z-20 w-full h-full flex items-start justify-center md:justify-start pt-10 sm:pt-16 md:pt-20 lg:pt-10'>
           <div className='w-full max-w-7xl md:max-w-none mx-auto md:mx-0 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16'>
             <div
               className={`flex flex-col items-center md:items-start text-white transition-opacity duration-1000 ${
