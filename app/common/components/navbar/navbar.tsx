@@ -14,6 +14,16 @@ const NAV_ITEMS = [
     hasDropdown: false,
   },
   {
+    name: 'About Us',
+    hasDropdown: true,
+    links: [
+      { title: 'Meet Our Pastor', href: '/pastor' },
+      { title: 'Meet Our Teams', href: '/teams' },
+      { title: 'Core Values', href: '/core-values' },
+      { title: 'Theology', href: '/theology' },
+    ],
+  },
+  {
     name: 'Worship',
     hasDropdown: true,
     links: [
@@ -21,15 +31,6 @@ const NAV_ITEMS = [
       { title: 'Online Offering', href: '/offering' },
       { title: 'Bulletins', href: '/bulletins' },
       { title: 'Services', href: '/services' },
-    ],
-  },
-  {
-    name: 'About Us',
-    hasDropdown: true,
-    links: [
-      { title: 'Meet Our Teams', href: '/teams' },
-      { title: 'Core Values', href: '/core-values' },
-      { title: 'Theology', href: '/theology' },
     ],
   },
   {

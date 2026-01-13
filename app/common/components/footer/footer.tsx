@@ -6,6 +6,27 @@ import { WebLink, FooterLink } from '../../types/models';
 
 const FOOTER_LINKS: FooterLink[] = [
   {
+    title: 'About Us',
+    links: [
+      {
+        title: 'Meet Our Pastor',
+        href: '/pastor',
+      },
+      {
+        title: 'Meet Our Teams',
+        href: '/teams',
+      },
+      {
+        title: 'Core Values',
+        href: '/core-values',
+      },
+      {
+        title: 'Theology',
+        href: '/theology',
+      },
+    ],
+  },
+  {
     title: 'Worship',
     links: [
       {
@@ -23,23 +44,6 @@ const FOOTER_LINKS: FooterLink[] = [
       {
         title: 'Services',
         href: '/services',
-      },
-    ],
-  },
-  {
-    title: 'About Us',
-    links: [
-      {
-        title: 'Meet Our Teams',
-        href: '/teams',
-      },
-      {
-        title: 'Core Values',
-        href: '/core-values',
-      },
-      {
-        title: 'Theology',
-        href: '/theology',
       },
     ],
   },
