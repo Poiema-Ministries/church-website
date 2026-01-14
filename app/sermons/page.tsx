@@ -10,11 +10,11 @@ export const dynamic = 'force-dynamic';
 export const metadata: Metadata = {
   title: 'Sermons',
   description:
-    'Listen to sermons from Poiema Ministries. Join us as we explore God\'s Word and grow in our faith together through weekly messages from our pastors and guest speakers.',
+    "Listen to sermons from Poiema Ministries. Join us as we explore God's Word and grow in our faith together through weekly messages from our pastors and guest speakers.",
   openGraph: {
     title: 'Sermons | Poiema Ministries',
     description:
-      'Listen to sermons from Poiema Ministries. Join us as we explore God\'s Word and grow in our faith together through weekly messages from our pastors and guest speakers.',
+      "Listen to sermons from Poiema Ministries. Join us as we explore God's Word and grow in our faith together through weekly messages from our pastors and guest speakers.",
   },
 };
 

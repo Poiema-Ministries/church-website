@@ -2,7 +2,8 @@
 
 import { MetadataRoute } from 'next';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://poiemaministries.org';
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL || 'https://poiemaministries.org';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // Static pages with high priority
