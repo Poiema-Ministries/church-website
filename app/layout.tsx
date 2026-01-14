@@ -11,7 +11,8 @@ const kaiseiDecol = Kaisei_Decol({
   weight: ['400', '500', '700'],
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://poiemaministries.org';
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL || 'https://poiemaministries.org';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

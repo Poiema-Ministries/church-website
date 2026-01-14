@@ -3,7 +3,8 @@
 import { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://poiemaministries.org';
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL || 'https://poiemaministries.org';
 
   return {
     rules: [
