@@ -50,8 +50,8 @@ export default async function CoreValues() {
   };
   return (
     <div className='flex flex-col min-h-screen w-full gap-4 sm:gap-5 md:gap-7'>
-      <div className='flex flex-col items-start w-full max-w-xl'>
-        <h1 className='text-4xl font-bold text-center mt-10 ml-5'>
+      <div className='flex flex-col items-center md:items-start w-full max-w-xl'>
+        <h1 className='text-4xl font-bold text-center mt-10 px-4 md:ml-5'>
           Core Values
         </h1>
       </div>

@@ -17,8 +17,8 @@ export const metadata: Metadata = {
 export default function Services() {
   return (
     <div className='flex flex-col min-h-screen w-full gap-0'>
-      <div className='flex flex-col items-start w-full mb-1 ml-10'>
-        <h1 className='text-4xl font-bold text-center md:text-left pl-4 sm:pl-5 md:pl-7'>
+      <div className='flex flex-col items-center md:items-start w-full mb-1 px-4 md:ml-10'>
+        <h1 className='text-4xl font-bold text-center md:text-left md:pl-4 md:pl-7'>
           Services
         </h1>
       </div>
@@ -90,21 +90,25 @@ export default function Services() {
           </div>
         </div>
       </div>
-      <div className='flex flex-col justify-center items-center mt-10 mb-10'>
-        <div className='flex justify-center items-center mb-10'>
+      <div className='flex flex-col justify-center items-center mt-10 mb-10 px-4'>
+        <div className='flex justify-center items-center mb-6 sm:mb-10'>
           <span className='font-bold text-2xl'>Join Us</span>
         </div>
-        <div className='flex flex-row'>
-          <div>
-            <iframe
-              src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d188.88665353211056!2d-73.771167190982!3d40.757923579592216!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c261e761ccf2f5%3A0x914d53c41ca96477!2s45-60%20211th%20St%2C%20Bayside%2C%20NY%2011361!5e0!3m2!1sen!2sus!4v1762302108435!5m2!1sen!2sus'
-              width='410'
-              height='335'
-              style={{ border: 0 }}
-              loading='lazy'
-            ></iframe>
+        <div className='flex flex-col md:flex-row w-full max-w-4xl gap-6 md:gap-10 items-center md:items-start'>
+          <div className='w-full md:w-[410px]'>
+            <div className='relative w-full aspect-[410/335] overflow-hidden rounded'>
+              <iframe
+                src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d188.88665353211056!2d-73.771167190982!3d40.757923579592216!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c261e761ccf2f5%3A0x914d53c41ca96477!2s45-60%20211th%20St%2C%20Bayside%2C%20NY%2011361!5e0!3m2!1sen!2sus!4v1762302108435!5m2!1sen!2sus'
+                width='100%'
+                height='100%'
+                style={{ border: 0, position: 'absolute', top: 0, left: 0 }}
+                loading='lazy'
+                allowFullScreen
+                className='w-full h-full'
+              ></iframe>
+            </div>
           </div>
-          <div className='flex flex-col pl-10 md:pl-25 space-y-3'>
+          <div className='flex flex-col md:pl-10 space-y-3 text-center md:text-left w-full md:w-auto'>
             <p className='font-semibold'>
               Come worship with us
               <span className='block'>and experience God's presence.</span>

@@ -26,9 +26,11 @@ export default function Offering() {
         <Image
           src='/imgs/offering-banner.png'
           alt='Offering'
-          width={1000}
-          height={64}
-          className='absolute inset-0 w-full h-full object-cover'
+          fill
+          className='object-cover'
+          sizes='100vw'
+          priority
+          quality={90}
         />
         <h1 className='relative z-10 text-3xl sm:text-4xl md:text-5xl font-bold text-center mt-7 px-4 md:px-0 md:ml-5 text-white'>
           Online Offering
