@@ -166,7 +166,7 @@ export default function HomeClient({ coreValues }: HomeClientProps) {
             <div className='w-full border-t border-primary-black mt-10'></div>
             {coreValues.map((value: CoreValue & { _id?: string }) => (
               <div key={value._id} className='flex flex-col gap-3'>
-                <h3 className='text-xl sm:text-2xl md:text-3xl font-bold text-primary-black'>
+                <h3 className='text-xl sm:text-2xl md:text-3xl font-bold text-primary-black text-center md:text-left'>
                   {value.title}
                 </h3>
                 <p className='text-sm sm:text-base md:text-lg text-primary-black leading-relaxed'>

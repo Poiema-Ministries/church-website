@@ -33,11 +33,11 @@ const CREEDS: TheologyCreed[] = [
 export default function Theology() {
   return (
     <div className='flex flex-col min-h-screen w-full gap-4 sm:gap-5 md:gap-7'>
-      <div className='flex flex-col items-start w-full max-w-xl'>
-        <h1 className='text-4xl font-bold text-center mt-10 ml-5'>Theology</h1>
+      <div className='flex flex-col items-center md:items-start w-full max-w-xl'>
+        <h1 className='text-4xl font-bold text-center mt-10 px-4 md:ml-5'>Theology</h1>
       </div>
-      <div className='flex flex-col items-start w-full px-4 sm:px-6 md:px-8'>
-        <span className='font-bold w-full break-words'>
+      <div className='flex flex-col items-center md:items-start w-full px-4 sm:px-6 md:px-8'>
+        <span className='font-bold w-full break-words text-center md:text-left'>
           We belong to the World Korean Presbyterian Church denomination and
           adhere to the Westminster Confession of Faith and its 12 creeds, which
           are as follows:
