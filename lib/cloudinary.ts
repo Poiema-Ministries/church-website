@@ -22,11 +22,12 @@ export interface CloudinaryImage {
   context?: {
     alt?: string;
     caption?: string;
-    [key: string]: any;
+    [key: string]: unknown;
   };
   metadata?: {
     description?: string;
-    [key: string]: any;
+    caption?: string;
+    [key: string]: unknown;
   };
 }
 
@@ -77,7 +78,16 @@ export async function getImagesFromFolder(
 
     const result = await searchQuery.execute();
 
-    const images = (result.resources || []).map((resource: any) => ({
+    interface CloudinaryResource {
+      public_id: string;
+      secure_url: string;
+      width: number;
+      height: number;
+      format: string;
+      resource_type: string;
+    }
+
+    const images = (result.resources || []).map((resource: CloudinaryResource) => ({
       public_id: resource.public_id,
       secure_url: resource.secure_url,
       width: resource.width,
@@ -105,7 +115,7 @@ export async function getImagesFromFolder(
 export async function getAssetsFromCollection(
   collectionName: string,
   maxResults: number = 100,
-): Promise<(CloudinaryImage & { context?: any; metadata?: any })[]> {
+): Promise<CloudinaryImage[]> {
   try {
     // Validate environment variables
     const cloudName =
@@ -140,16 +150,37 @@ export async function getAssetsFromCollection(
 
     const result = await searchQuery.execute();
 
-    const assets = (result.resources || []).map((resource: any) => ({
-      public_id: resource.public_id,
-      secure_url: resource.secure_url,
-      width: resource.width,
-      height: resource.height,
-      format: resource.format,
-      resource_type: resource.resource_type,
-      context: resource.context || {},
-      metadata: resource.metadata || {},
-    }));
+    interface CloudinaryResourceWithMetadata {
+      public_id: string;
+      secure_url: string;
+      width: number;
+      height: number;
+      format: string;
+      resource_type: string;
+      context?: {
+        alt?: string;
+        caption?: string;
+        [key: string]: unknown;
+      };
+      metadata?: {
+        description?: string;
+        caption?: string;
+        [key: string]: unknown;
+      };
+    }
+
+    const assets: CloudinaryImage[] = (result.resources || []).map(
+      (resource: CloudinaryResourceWithMetadata) => ({
+        public_id: resource.public_id,
+        secure_url: resource.secure_url,
+        width: resource.width,
+        height: resource.height,
+        format: resource.format,
+        resource_type: resource.resource_type,
+        context: resource.context,
+        metadata: resource.metadata,
+      }),
+    );
 
     return assets;
   } catch (error) {
