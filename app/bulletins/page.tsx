@@ -27,7 +27,6 @@ export default async function Bulletins() {
   const announcements: Announcement[] = await client.fetch(announcementsQuery);
 
   const renderBulletins = () => {
-    console.log(bulletins);
     return bulletins.map(
       (bulletin: Bulletin & { _id?: string }, index: number) => {
         return <BulletinItem bulletin={bulletin} key={bulletin._id} />;

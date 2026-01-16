@@ -1,8 +1,8 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Copyright 2025 Poiema Ministries. All Rights Reserved.
 
 # dependencies
-/node_modules
-/.pnp
+node_modules/
+.pnp
 .pnp.*
 .yarn/*
 !.yarn/patches
@@ -11,18 +11,25 @@
 !.yarn/versions
 
 # testing
-/coverage
+coverage/
+*.lcov
+.nyc_output/
 
 # next.js
-/.next/
-/out/
+.next/
+out/
+.vercel
 
 # production
-/build
+build/
+dist/
 
 # misc
 .DS_Store
 *.pem
+*.log
+*.tsbuildinfo
+next-env.d.ts
 
 # debug
 npm-debug.log*
@@ -30,12 +37,34 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# env files
+.env
+.env*.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# vercel
-.vercel
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-*
 
-# typescript
+# Sanity
+.sanity/
+
+# TypeScript
 *.tsbuildinfo
-next-env.d.ts
+
+# Jest
+.jest-cache/
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
