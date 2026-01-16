@@ -2,7 +2,7 @@
 
 'use client';
 
-import { FieldValues, useForm } from 'react-hook-form';
+import { FieldValues, useForm, useWatch } from 'react-hook-form';
 import Form from '../common/components/form/form';
 import Input from '../common/components/input/input';
 import Select from '../common/components/select/select';
@@ -12,11 +12,14 @@ export default function NewMembersForm() {
   const {
     register,
     handleSubmit,
-    watch,
+    control,
     formState: { errors },
   } = useForm();
 
-  const attendedOtherChurches = watch('attendedOtherChurches');
+  const attendedOtherChurches = useWatch({
+    control,
+    name: 'attendedOtherChurches',
+  });
 
   const onFormSubmit = async (data: FieldValues) => {
     const formData = { ...data, message: data.message || '' };
