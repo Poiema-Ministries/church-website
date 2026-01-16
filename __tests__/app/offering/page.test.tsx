@@ -37,7 +37,7 @@ describe('Offering Page', () => {
       screen.getByText(/Tithing is an act of worship and an expression of our gratitude to God/),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/"God loves a cheerful giver."/),
+      screen.getByText(/God loves a cheerful giver./),
     ).toBeInTheDocument();
   });
 

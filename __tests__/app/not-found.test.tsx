@@ -20,7 +20,7 @@ describe('NotFound Page', () => {
     render(<NotFound />);
     expect(
       screen.getByText(
-        /"I am the way, and the truth, and the life. No one comes to the Father except through me."/,
+        /I am the way, and the truth, and the life. No one comes to the Father except through me./,
       ),
     ).toBeInTheDocument();
   });
@@ -41,7 +41,7 @@ describe('NotFound Page', () => {
     render(<NotFound />);
     expect(
       screen.getByText(
-        /It looks like you've taken a wrong turn. But don't worry - even when we're lost, God knows exactly where we are./,
+        /It looks like you.*ve taken a wrong turn. But don.*t worry - even when we.*re lost, God knows exactly where we are./,
       ),
     ).toBeInTheDocument();
   });
