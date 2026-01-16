@@ -1,5 +1,4 @@
 // Copyright 2025 Poiema Ministries. All Rights Reserved.
-
 const nextJest = require('next/jest');
 
 const createJestConfig = nextJest({

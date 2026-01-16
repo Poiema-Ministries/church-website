@@ -25,11 +25,10 @@ export async function GET(
       images: result.images || [],
       nextCursor: result.nextCursor || null,
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error fetching images:', error);
-    return NextResponse.json(
-      { error: error.message || 'Failed to fetch images' },
-      { status: 500 },
-    );
+    const errorMessage =
+      error instanceof Error ? error.message : 'Failed to fetch images';
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

@@ -1,6 +1,5 @@
 // Copyright 2025 Poiema Ministries. All Rights Reserved.
 
-import { notFound } from 'next/navigation';
 import { getAssetsFromCollection } from '@/lib/cloudinary';
 import EventGallery from './event-gallery';
 
@@ -34,9 +33,18 @@ export default async function EventPage({ params }: PageProps) {
   let eventTitle = slug ? formatTitle(slug) : 'Event';
   let originalCaption: string | null = null;
 
+interface CloudinaryAsset {
+  context?: {
+    caption?: string;
+  };
+  metadata?: {
+    caption?: string;
+  };
+}
+
   try {
     const assets = await getAssetsFromCollection('covers', 100);
-    const matchingAsset = assets.find((asset: any) => {
+    const matchingAsset = (assets as unknown as CloudinaryAsset[]).find((asset) => {
       const caption = asset.context?.caption || asset.metadata?.caption || '';
       return caption === slug || caption === decodeURIComponent(slug);
     });

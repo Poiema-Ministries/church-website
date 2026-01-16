@@ -64,11 +64,29 @@ function extractDate(description: string): string | null {
   return null;
 }
 
+interface CloudinaryAsset {
+  public_id: string;
+  secure_url: string;
+  width: number;
+  height: number;
+  format: string;
+  context?: {
+    alt?: string;
+    caption?: string;
+  };
+  metadata?: {
+    description?: string;
+    caption?: string;
+  };
+}
+
 async function getCovers(): Promise<CoverImage[]> {
   try {
     const assets = await getAssetsFromCollection('covers', 100);
 
-    const covers: CoverImage[] = assets.map((asset: any) => {
+    const covers: CoverImage[] = (
+      assets as unknown as CloudinaryAsset[]
+    ).map((asset) => {
       // Get title from caption in context or metadata
       const caption = asset.context?.caption || asset.metadata?.caption || '';
 

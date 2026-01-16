@@ -2,6 +2,7 @@
 
 // Learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
+import React from 'react';
 
 // Mock Next.js Image component
 jest.mock('next/image', () => ({
@@ -18,10 +19,17 @@ jest.mock('next/image', () => ({
     className?: string;
     [key: string]: unknown;
   }) {
-    // Remove Next.js specific props that aren't valid HTML attributes
-    const { fill, priority, quality, sizes, ...imgProps } = props;
-    // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
-    return require('react').createElement('img', imgProps);
+    // Extract only valid HTML img attributes, ignoring Next.js specific props
+    const validImgProps: Record<string, unknown> = {};
+    const nextJsProps = ['fill', 'priority', 'quality', 'sizes'];
+    
+    for (const [key, value] of Object.entries(props)) {
+      if (!nextJsProps.includes(key)) {
+        validImgProps[key] = value;
+      }
+    }
+    
+    return React.createElement('img', validImgProps);
   },
 }));
 

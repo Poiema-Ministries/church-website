@@ -27,16 +27,14 @@ export default async function Bulletins() {
   const announcements: Announcement[] = await client.fetch(announcementsQuery);
 
   const renderBulletins = () => {
-    return bulletins.map(
-      (bulletin: Bulletin & { _id?: string }, index: number) => {
-        return <BulletinItem bulletin={bulletin} key={bulletin._id} />;
-      },
-    );
+    return bulletins.map((bulletin: Bulletin & { _id?: string }) => {
+      return <BulletinItem bulletin={bulletin} key={bulletin._id} />;
+    });
   };
 
   const renderAnnouncements = () => {
     return announcements.map(
-      (announcement: Announcement & { _id?: string }, index: number) => {
+      (announcement: Announcement & { _id?: string }) => {
         return (
           <AnnouncementItem
             announcement={announcement}

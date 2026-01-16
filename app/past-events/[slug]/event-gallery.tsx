@@ -22,7 +22,6 @@ interface EventGalleryProps {
 
 export default function EventGallery({
   slug,
-  originalCaption,
 }: EventGalleryProps) {
   const [images, setImages] = useState<CloudinaryImage[]>([]);
   const [loading, setLoading] = useState(false);

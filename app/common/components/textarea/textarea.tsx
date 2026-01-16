@@ -10,7 +10,6 @@ interface TextareaProps {
 
 export default function Textarea({
   label,
-  placeholder,
   error,
   ...props
 }: TextareaProps) {
