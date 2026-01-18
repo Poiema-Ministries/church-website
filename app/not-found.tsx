@@ -13,16 +13,16 @@ export default function NotFound() {
           Page Not Found
         </h2>
         <p className='text-base sm:text-lg md:text-xl text-primary-black mb-4 leading-relaxed max-w-xl'>
-          &ldquo;I am the way, and the truth, and the life. No one comes to the Father
-          except through me.&rdquo;
+          &ldquo;I am the way, and the truth, and the life. No one comes to the
+          Father except through me.&rdquo;
         </p>
         <p className='text-sm sm:text-base text-primary-black/70 mb-2'>
           - John 14:6
         </p>
         <p className='text-sm sm:text-base md:text-lg text-primary-black/80 mt-6 mb-8 leading-relaxed max-w-lg'>
-          It looks like you&apos;ve taken a wrong turn. But don&apos;t worry - even when
-          we&apos;re lost, God knows exactly where we are. Let&apos;s get you back on the
-          right path.
+          It looks like you&apos;ve taken a wrong turn. But don&apos;t worry -
+          even when we&apos;re lost, God knows exactly where we are. Let&apos;s
+          get you back on the right path.
         </p>
         <Link
           href='/'

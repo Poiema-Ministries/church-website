@@ -33,19 +33,19 @@ const TEAMS = [
     displayName: 'Welcoming Team',
     queryValue: 'Welcoming',
     description:
-      'The Welcoming Team provides a warm and hospitable first impression for visitors and new members, guiding them to our worship services each Sunday morning. They exemplify Christ\'s love through their genuine care and commitment to helping everyone feel valued and included in our church family.',
+      "The Welcoming Team provides a warm and hospitable first impression for visitors and new members, guiding them to our worship services each Sunday morning. They exemplify Christ's love through their genuine care and commitment to helping everyone feel valued and included in our church family.",
   },
   {
     displayName: "Heaven's Kitchen",
     queryValue: "Heaven's Kitchen",
     description:
-      'Heaven\'s Kitchen ministers to our congregation by preparing and serving lunch following our worship services. This team demonstrates Christ\'s love through service, fostering fellowship and nurturing our community around the table.',
+      "Heaven's Kitchen ministers to our congregation by preparing and serving lunch following our worship services. This team demonstrates Christ's love through service, fostering fellowship and nurturing our community around the table.",
   },
   {
     displayName: 'Community Group Leaders',
     queryValue: 'Community Group',
     description:
-      'Community Group Leaders facilitate discipleship and spiritual growth by organizing small group discussions that deepen understanding of God\'s Word. They cultivate meaningful relationships and create spaces for prayer, accountability, and Christian fellowship, with groups organized annually to support our members\' faith journeys.',
+      "Community Group Leaders facilitate discipleship and spiritual growth by organizing small group discussions that deepen understanding of God's Word. They cultivate meaningful relationships and create spaces for prayer, accountability, and Christian fellowship, with groups organized annually to support our members' faith journeys.",
   },
   {
     displayName: 'Media/Backstage Team',
@@ -63,7 +63,7 @@ const TEAMS = [
     displayName: 'Outreach Team',
     queryValue: 'Event',
     description:
-      'The Outreach Team organizes events and initiatives that extend our ministry beyond our church walls, sharing the Gospel message with our broader community. They serve as ambassadors of Christ\'s love, demonstrating God\'s grace through service and creating opportunities for others to experience His transformative power.',
+      "The Outreach Team organizes events and initiatives that extend our ministry beyond our church walls, sharing the Gospel message with our broader community. They serve as ambassadors of Christ's love, demonstrating God's grace through service and creating opportunities for others to experience His transformative power.",
   },
 ] as const;
 
@@ -80,9 +80,7 @@ export default async function Teams() {
   return (
     <div className='flex flex-col w-full min-h-screen gap-8 sm:gap-10 md:gap-12'>
       <div className='flex flex-col items-center md:items-start w-full max-w-xl px-4 sm:px-6 md:px-8'>
-        <h1 className='text-4xl font-bold text-center mt-10'>
-          Meet Our Teams
-        </h1>
+        <h1 className='text-4xl font-bold text-center mt-10'>Meet Our Teams</h1>
       </div>
 
       <div className='flex flex-col w-full gap-12 sm:gap-14 md:gap-16 px-4 sm:px-6 md:px-8 pb-8 sm:pb-10 md:pb-12'>

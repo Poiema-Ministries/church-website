@@ -45,31 +45,31 @@ export async function GET() {
   try {
     const assets = await getAssetsFromCollection('covers', 100);
 
-    const covers: CoverImage[] = (
-      assets as unknown as CloudinaryAsset[]
-    ).map((asset) => {
-      // Get title from public_id (format: covers/2025_july_bbq)
-      const publicIdParts = asset.public_id.split('/');
-      const fileName = publicIdParts[publicIdParts.length - 1];
-      const title = formatTitle(fileName);
+    const covers: CoverImage[] = (assets as unknown as CloudinaryAsset[]).map(
+      (asset) => {
+        // Get title from public_id (format: covers/2025_july_bbq)
+        const publicIdParts = asset.public_id.split('/');
+        const fileName = publicIdParts[publicIdParts.length - 1];
+        const title = formatTitle(fileName);
 
-      // Get description from context or metadata
-      const description =
-        asset.context?.alt ||
-        asset.context?.caption ||
-        asset.metadata?.description ||
-        '';
+        // Get description from context or metadata
+        const description =
+          asset.context?.alt ||
+          asset.context?.caption ||
+          asset.metadata?.description ||
+          '';
 
-      return {
-        public_id: asset.public_id,
-        secure_url: asset.secure_url,
-        width: asset.width,
-        height: asset.height,
-        format: asset.format,
-        title,
-        description,
-      };
-    });
+        return {
+          public_id: asset.public_id,
+          secure_url: asset.secure_url,
+          width: asset.width,
+          height: asset.height,
+          format: asset.format,
+          title,
+          description,
+        };
+      },
+    );
 
     // Sort by title (year first, then event name) - most recent first
     covers.sort((a, b) => {

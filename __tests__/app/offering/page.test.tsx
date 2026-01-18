@@ -34,11 +34,11 @@ describe('Offering Page', () => {
   it('should display the giving description with Bible verse', () => {
     render(<Offering />);
     expect(
-      screen.getByText(/Tithing is an act of worship and an expression of our gratitude to God/),
+      screen.getByText(
+        /Tithing is an act of worship and an expression of our gratitude to God/,
+      ),
     ).toBeInTheDocument();
-    expect(
-      screen.getByText(/God loves a cheerful giver./),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/God loves a cheerful giver./)).toBeInTheDocument();
   });
 
   it('should display offering banner image', () => {

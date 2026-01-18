@@ -20,9 +20,7 @@ interface EventGalleryProps {
   originalCaption?: string;
 }
 
-export default function EventGallery({
-  slug,
-}: EventGalleryProps) {
+export default function EventGallery({ slug }: EventGalleryProps) {
   const [images, setImages] = useState<CloudinaryImage[]>([]);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -136,11 +134,11 @@ export default function EventGallery({
 
   return (
     <>
-      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8'>
+      <div className='grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4'>
         {images.map((image, index) => (
           <div
             key={image.public_id}
-            className='relative w-full aspect-[4/3] overflow-hidden cursor-pointer group'
+            className='relative w-full aspect-square overflow-hidden cursor-pointer group'
             onClick={() => openLightbox(index)}
           >
             <Image
@@ -148,7 +146,7 @@ export default function EventGallery({
               alt={`Event image ${image.public_id}`}
               fill
               className='object-cover transition-transform duration-300 group-hover:scale-105'
-              sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
+              sizes='(max-width: 640px) 50vw, 25vw'
               loading='lazy'
             />
           </div>
@@ -176,12 +174,6 @@ export default function EventGallery({
       {loading && (
         <div className='flex items-center justify-center py-8'>
           <p className='text-primary-black/70'>Loading more images...</p>
-        </div>
-      )}
-
-      {!hasMore && images.length > 0 && (
-        <div className='flex items-center justify-center py-8'>
-          <p className='text-primary-black/70'>All images loaded</p>
         </div>
       )}
     </>

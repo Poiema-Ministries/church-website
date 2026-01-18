@@ -27,7 +27,9 @@ describe('Services Page', () => {
       screen.getByText(/For those who can not make our 11:30AM service/),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/Our Sunday services are a reflection of the daily offerings/),
+      screen.getByText(
+        /Our Sunday services are a reflection of the daily offerings/,
+      ),
     ).toBeInTheDocument();
   });
 

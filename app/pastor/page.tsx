@@ -50,7 +50,9 @@ export default function Pastor() {
               This God-given passion led him to serve the young generation as a
               youth pastor for a decade at KPCB. As a youth pastor, he started
               youth discipleship training in 2018, emphasizing the importance of
-              discipleship training for teenagers.
+              discipleship training for teenagers. He was ordained by the New
+              York Presbytery of General Assembly of World Presbyterian Church
+              Denomination in 2018.
             </p>
             <p className='text-sm sm:text-base md:text-lg lg:text-base leading-relaxed text-center lg:text-left'>
               He loves mission and has joined KPCB DR (Dominican Republic)

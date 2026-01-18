@@ -79,10 +79,10 @@ export default function HomeClient({ coreValues }: HomeClientProps) {
               Welcome to Poiema Ministries
             </h2>
             <p className='text-xs sm:text-sm md:text-base text-primary-black leading-relaxed'>
-              We&apos;re all about loving God wholeheartedly and serving everyone as
-              Jesus came to serve us. We trust Jesus without compromise and
-              strive to continually awaken and equip disciples of Christ
-              wherever we go.
+              We&apos;re all about loving God wholeheartedly and serving
+              everyone as Jesus came to serve us. We trust Jesus without
+              compromise and strive to continually awaken and equip disciples of
+              Christ wherever we go.
             </p>
           </div>
         </div>

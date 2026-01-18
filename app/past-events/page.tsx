@@ -84,34 +84,34 @@ async function getCovers(): Promise<CoverImage[]> {
   try {
     const assets = await getAssetsFromCollection('covers', 100);
 
-    const covers: CoverImage[] = (
-      assets as unknown as CloudinaryAsset[]
-    ).map((asset) => {
-      // Get title from caption in context or metadata
-      const caption = asset.context?.caption || asset.metadata?.caption || '';
+    const covers: CoverImage[] = (assets as unknown as CloudinaryAsset[]).map(
+      (asset) => {
+        // Get title from caption in context or metadata
+        const caption = asset.context?.caption || asset.metadata?.caption || '';
 
-      // Store the original caption for use as folder name/slug
-      const originalCaption = caption;
+        // Store the original caption for use as folder name/slug
+        const originalCaption = caption;
 
-      // Format the caption if it's in underscore format (e.g., "2025_july_bbq")
-      const title =
-        caption && caption.includes('_') ? formatTitle(caption) : caption;
+        // Format the caption if it's in underscore format (e.g., "2025_july_bbq")
+        const title =
+          caption && caption.includes('_') ? formatTitle(caption) : caption;
 
-      // Get description from context alt or metadata description
-      const description =
-        asset.context?.alt || asset.metadata?.description || '';
+        // Get description from context alt or metadata description
+        const description =
+          asset.context?.alt || asset.metadata?.description || '';
 
-      return {
-        public_id: asset.public_id,
-        secure_url: asset.secure_url,
-        width: asset.width,
-        height: asset.height,
-        format: asset.format,
-        title: title || 'Untitled Event',
-        description,
-        originalCaption: originalCaption || '', // Store original caption for slug
-      };
-    });
+        return {
+          public_id: asset.public_id,
+          secure_url: asset.secure_url,
+          width: asset.width,
+          height: asset.height,
+          format: asset.format,
+          title: title || 'Untitled Event',
+          description,
+          originalCaption: originalCaption || '', // Store original caption for slug
+        };
+      },
+    );
 
     // Sort by title (year first, then event name) - most recent first
     covers.sort((a, b) => {

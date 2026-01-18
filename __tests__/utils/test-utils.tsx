@@ -6,11 +6,12 @@ import { NextFont } from 'next/dist/compiled/@next/font';
 
 // Mock Next.js font loader
 jest.mock('next/font/google', () => ({
-  Kaisei_Decol: () => ({
-    className: 'font-kaisei-decol',
-    variable: '--font-kaisei-decol',
-    style: {},
-  } as NextFont),
+  Kaisei_Decol: () =>
+    ({
+      className: 'font-kaisei-decol',
+      variable: '--font-kaisei-decol',
+      style: {},
+    }) as NextFont,
 }));
 
 // Custom render function that includes any providers

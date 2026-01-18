@@ -25,7 +25,7 @@ describe('Theology Page', () => {
     render(<Theology />);
     const list = screen.getByRole('list');
     expect(list).toBeInTheDocument();
-    
+
     const listItems = screen.getAllByRole('listitem');
     expect(listItems).toHaveLength(12);
   });
@@ -33,14 +33,18 @@ describe('Theology Page', () => {
   it('should display the first creed', () => {
     render(<Theology />);
     expect(
-      screen.getByText(/The Holy Scriptures of the Old and New Testaments are the Word of God/),
+      screen.getByText(
+        /The Holy Scriptures of the Old and New Testaments are the Word of God/,
+      ),
     ).toBeInTheDocument();
   });
 
   it('should display the last creed', () => {
     render(<Theology />);
     expect(
-      screen.getByText(/The dead shall receive the reward according to the good and evils done/),
+      screen.getByText(
+        /The dead shall receive the reward according to the good and evils done/,
+      ),
     ).toBeInTheDocument();
   });
 });

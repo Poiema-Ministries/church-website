@@ -30,7 +30,9 @@ jest.mock('@/app/teams/team-member-item', () => {
   };
 });
 
-const mockClient = client as unknown as { fetch: jest.MockedFunction<(...args: unknown[]) => Promise<unknown>> };
+const mockClient = client as unknown as {
+  fetch: jest.MockedFunction<(...args: unknown[]) => Promise<unknown>>;
+};
 
 describe('Teams Page', () => {
   beforeEach(() => {

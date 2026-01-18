@@ -24,7 +24,9 @@ describe('Pastor Page', () => {
       screen.getByText(/Pastor Sam was born in Korea and came to the US/),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/This God-given passion led him to serve the young generation/),
+      screen.getByText(
+        /This God-given passion led him to serve the young generation/,
+      ),
     ).toBeInTheDocument();
     expect(
       screen.getByText(/He loves mission and has joined KPCB DR/),

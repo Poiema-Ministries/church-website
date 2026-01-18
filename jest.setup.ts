@@ -22,13 +22,13 @@ jest.mock('next/image', () => ({
     // Extract only valid HTML img attributes, ignoring Next.js specific props
     const validImgProps: Record<string, unknown> = {};
     const nextJsProps = ['fill', 'priority', 'quality', 'sizes'];
-    
+
     for (const [key, value] of Object.entries(props)) {
       if (!nextJsProps.includes(key)) {
         validImgProps[key] = value;
       }
     }
-    
+
     return React.createElement('img', validImgProps);
   },
 }));

@@ -33,21 +33,23 @@ export default async function EventPage({ params }: PageProps) {
   let eventTitle = slug ? formatTitle(slug) : 'Event';
   let originalCaption: string | null = null;
 
-interface CloudinaryAsset {
-  context?: {
-    caption?: string;
-  };
-  metadata?: {
-    caption?: string;
-  };
-}
+  interface CloudinaryAsset {
+    context?: {
+      caption?: string;
+    };
+    metadata?: {
+      caption?: string;
+    };
+  }
 
   try {
     const assets = await getAssetsFromCollection('covers', 100);
-    const matchingAsset = (assets as unknown as CloudinaryAsset[]).find((asset) => {
-      const caption = asset.context?.caption || asset.metadata?.caption || '';
-      return caption === slug || caption === decodeURIComponent(slug);
-    });
+    const matchingAsset = (assets as unknown as CloudinaryAsset[]).find(
+      (asset) => {
+        const caption = asset.context?.caption || asset.metadata?.caption || '';
+        return caption === slug || caption === decodeURIComponent(slug);
+      },
+    );
 
     if (matchingAsset) {
       const caption =

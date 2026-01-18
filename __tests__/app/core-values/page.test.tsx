@@ -19,7 +19,9 @@ jest.mock('@/sanity/lib/client', () => ({
   },
 }));
 
-const mockClient = client as unknown as { fetch: jest.MockedFunction<(...args: unknown[]) => Promise<unknown>> };
+const mockClient = client as unknown as {
+  fetch: jest.MockedFunction<(...args: unknown[]) => Promise<unknown>>;
+};
 
 describe('Core Values Page', () => {
   beforeEach(() => {
@@ -58,8 +60,12 @@ describe('Core Values Page', () => {
 
     expect(screen.getByText('Love God')).toBeInTheDocument();
     expect(screen.getByText('Serve Others')).toBeInTheDocument();
-    expect(screen.getByText('We love God with all our heart')).toBeInTheDocument();
-    expect(screen.getByText('We serve others as Jesus served us')).toBeInTheDocument();
+    expect(
+      screen.getByText('We love God with all our heart'),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText('We serve others as Jesus served us'),
+    ).toBeInTheDocument();
   });
 
   it('should handle empty core values', async () => {

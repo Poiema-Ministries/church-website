@@ -31,7 +31,9 @@ jest.mock('@/app/home-client', () => {
   };
 });
 
-const mockClient = client as unknown as { fetch: jest.MockedFunction<(...args: unknown[]) => Promise<unknown>> };
+const mockClient = client as unknown as {
+  fetch: jest.MockedFunction<(...args: unknown[]) => Promise<unknown>>;
+};
 
 describe('Home Page', () => {
   beforeEach(() => {

@@ -2,7 +2,9 @@
 
 ## Overview
 
-This project uses Jest and React Testing Library for unit testing. All page components have corresponding test files that verify rendering, content presence, and basic functionality.
+This project uses Jest and React Testing Library for unit testing. All page
+components have corresponding test files that verify rendering, content
+presence, and basic functionality.
 
 ## Setup
 
@@ -14,11 +16,13 @@ Run the following command to install all testing dependencies:
 npm install --save-dev jest @testing-library/react @testing-library/jest-dom @testing-library/user-event jest-environment-jsdom @types/jest ts-jest
 ```
 
-**Note**: After installing dependencies, TypeScript errors in test files will be resolved. The linter may show errors until dependencies are installed.
+**Note**: After installing dependencies, TypeScript errors in test files will be
+resolved. The linter may show errors until dependencies are installed.
 
 ### Configuration Files
 
-- `jest.config.js` - Jest configuration (stays as `.js` - this is the standard format for Jest)
+- `jest.config.js` - Jest configuration (stays as `.js` - this is the standard
+  format for Jest)
 - `jest.setup.ts` - Test setup file with mocks (TypeScript)
 - `jest.d.ts` - TypeScript type declarations for Jest
 - `__mocks__/` - Mock files (TypeScript)
@@ -38,7 +42,8 @@ npm run test:coverage
 
 ## Test Structure
 
-Tests are organized in the `__tests__` directory mirroring the `app` directory structure:
+Tests are organized in the `__tests__` directory mirroring the `app` directory
+structure:
 
 ```
 __tests__/
@@ -76,10 +81,12 @@ Current test coverage includes:
 The following are mocked for testing:
 
 - **Next.js Image**: Renders as a standard `<img>` tag
-- **Next.js Router**: Mocked navigation hooks (`useRouter`, `usePathname`, `useSearchParams`)
+- **Next.js Router**: Mocked navigation hooks (`useRouter`, `usePathname`,
+  `useSearchParams`)
 - **Sanity Client**: Mocked fetch function for data fetching
 - **Cloudinary**: Mocked `getAssetsFromCollection` function
-- **Client Components**: Form components and complex client components are mocked
+- **Client Components**: Form components and complex client components are
+  mocked
 
 ## Writing New Tests
 
@@ -117,10 +124,10 @@ const mockClient = client as jest.Mocked<typeof client>;
 describe('My Page', () => {
   it('should render async data', async () => {
     mockClient.fetch.mockResolvedValue([{ id: '1', name: 'Test' }]);
-    
+
     const component = await MyPage();
     render(component);
-    
+
     expect(screen.getByText('Test')).toBeInTheDocument();
   });
 });
@@ -134,6 +141,7 @@ GitHub Actions automatically runs tests on:
 - Pushes to `main` and `develop` branches
 
 The workflow:
+
 1. Checks out the code
 2. Sets up Node.js 20
 3. Installs dependencies
@@ -145,12 +153,16 @@ The workflow:
 
 ## Best Practices
 
-1. **Test behavior, not implementation**: Focus on what users see and interact with
-2. **Use semantic queries**: Prefer `getByRole`, `getByLabelText`, `getByText` over `getByTestId`
+1. **Test behavior, not implementation**: Focus on what users see and interact
+   with
+2. **Use semantic queries**: Prefer `getByRole`, `getByLabelText`, `getByText`
+   over `getByTestId`
 3. **Keep tests isolated**: Each test should be independent
-4. **Mock external dependencies**: Sanity, Cloudinary, and other external services should be mocked
+4. **Mock external dependencies**: Sanity, Cloudinary, and other external
+   services should be mocked
 5. **Test edge cases**: Empty states, error states, and boundary conditions
-6. **Maintain coverage**: Aim for at least 60% code coverage (configured in `jest.config.js`)
+6. **Maintain coverage**: Aim for at least 60% code coverage (configured in
+   `jest.config.js`)
 
 ## Troubleshooting
 
@@ -160,12 +172,15 @@ Run `npm install` to ensure all dependencies are installed.
 
 ### Tests fail with TypeScript errors
 
-Make sure `@types/jest` is installed and your `tsconfig.json` includes test files.
+Make sure `@types/jest` is installed and your `tsconfig.json` includes test
+files.
 
 ### Async component tests fail
 
-Ensure you're using `await` for async components and rendering the returned JSX element.
+Ensure you're using `await` for async components and rendering the returned JSX
+element.
 
 ### Coverage thresholds not met
 
-Review the coverage report to identify untested code paths and add tests as needed.
+Review the coverage report to identify untested code paths and add tests as
+needed.

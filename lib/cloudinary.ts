@@ -87,14 +87,16 @@ export async function getImagesFromFolder(
       resource_type: string;
     }
 
-    const images = (result.resources || []).map((resource: CloudinaryResource) => ({
-      public_id: resource.public_id,
-      secure_url: resource.secure_url,
-      width: resource.width,
-      height: resource.height,
-      format: resource.format,
-      resource_type: resource.resource_type,
-    }));
+    const images = (result.resources || []).map(
+      (resource: CloudinaryResource) => ({
+        public_id: resource.public_id,
+        secure_url: resource.secure_url,
+        width: resource.width,
+        height: resource.height,
+        format: resource.format,
+        resource_type: resource.resource_type,
+      }),
+    );
 
     return {
       images,

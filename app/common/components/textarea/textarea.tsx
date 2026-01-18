@@ -8,11 +8,7 @@ interface TextareaProps {
   error?: string;
 }
 
-export default function Textarea({
-  label,
-  error,
-  ...props
-}: TextareaProps) {
+export default function Textarea({ label, error, ...props }: TextareaProps) {
   return (
     <div className='flex flex-col gap-2'>
       {label && (
