@@ -99,8 +99,11 @@ Before you begin, ensure you have the following installed:
 
 3. **Set up environment variables**
 
-   Create a `.env.local` file in the root directory. Contact the project
-   maintainer for the required environment variables.
+   Create a `.env.local` file in the root directory. You can use `.env.example`
+   as a reference. Required variables:
+   
+   - `RESEND_API_KEY` - Your Resend API key for email services
+   - Additional variables may be required based on your setup
 
 4. **Run the development server**
 

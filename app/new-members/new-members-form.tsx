@@ -69,7 +69,7 @@ export default function NewMembersForm() {
             'Your new member information has been received successfully. We are excited to welcome you to our ministry family! Someone will be in touch with you soon. God bless you!',
         });
       }
-    } catch (error) {
+    } catch {
       // Network or other errors
       setAlertModal({
         isOpen: true,

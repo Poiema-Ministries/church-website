@@ -3,10 +3,10 @@
 /**
  * Environment variables utility
  *
- * To use RESEND_API_KEY:
+ * To use environment variables:
  * 1. Create a .env.local file in the root directory
- * 2. Add: RESEND_API_KEY=your_api_key_here
- * 3. Access it using: getResendApiKey()
+ * 2. Add the required variables (see .env.example for reference)
+ * 3. Access them using the appropriate getter function
  *
  * Note: .env.local is gitignored and should not be committed
  */

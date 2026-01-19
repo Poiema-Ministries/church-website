@@ -63,7 +63,7 @@ export default function ContactUsForm() {
             'Thank you for reaching out to us! Your message has been received and we will get back to you as soon as possible. We appreciate your patience and look forward to connecting with you. God bless you!',
         });
       }
-    } catch (error) {
+    } catch {
       // Network or other errors
       setAlertModal({
         isOpen: true,

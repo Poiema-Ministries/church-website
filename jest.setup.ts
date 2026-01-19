@@ -92,3 +92,21 @@ global.ResizeObserver = class ResizeObserver {
 
   callback: ResizeObserverCallback;
 } as unknown as typeof ResizeObserver;
+
+// Mock Mixpanel
+jest.mock('mixpanel-browser', () => ({
+  __esModule: true,
+  default: {
+    init: jest.fn(),
+    track: jest.fn(),
+    identify: jest.fn(),
+    reset: jest.fn(),
+    register: jest.fn(),
+    people: {
+      set: jest.fn(),
+      increment: jest.fn(),
+    },
+    opt_out_tracking: jest.fn(),
+    opt_in_tracking: jest.fn(),
+  },
+}));

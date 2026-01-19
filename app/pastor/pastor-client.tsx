@@ -13,8 +13,12 @@ export default function PastorClient() {
   useEffect(() => {
     // Check for reduced motion preference
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const prefersReduced = mediaQuery.matches;
-    setPrefersReducedMotion(prefersReduced);
+    const initialPrefersReduced = mediaQuery.matches;
+
+    // Update state in next tick to avoid synchronous setState in effect
+    const initTimer = setTimeout(() => {
+      setPrefersReducedMotion(initialPrefersReduced);
+    }, 0);
 
     const handleChange = (e: MediaQueryListEvent) => {
       setPrefersReducedMotion(e.matches);
@@ -25,9 +29,10 @@ export default function PastorClient() {
     // Small delay to ensure smooth entrance after page load
     const timer = setTimeout(() => {
       setIsVisible(true);
-    }, prefersReduced ? 0 : 100);
+    }, initialPrefersReduced ? 0 : 100);
 
     return () => {
+      clearTimeout(initTimer);
       clearTimeout(timer);
       mediaQuery.removeEventListener('change', handleChange);
     };

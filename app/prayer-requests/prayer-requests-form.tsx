@@ -66,7 +66,7 @@ export default function PrayerRequestsForm() {
             'Thank you for sharing your prayer request with us. Our church community will lift you up in prayer. We believe in the power of prayer through our Lord and Savior Jesus Christ. May God bless you and provide you with peace!',
         });
       }
-    } catch (error) {
+    } catch {
       // Network or other errors
       setAlertModal({
         isOpen: true,
