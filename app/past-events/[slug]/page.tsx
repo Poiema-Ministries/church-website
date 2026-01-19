@@ -3,6 +3,10 @@
 import { getAssetsFromCollection } from '@/lib/cloudinary';
 import EventGallery from './event-gallery';
 
+// Disable caching for this page since new photos may be added to event albums periodically
+export const revalidate = 0;
+export const dynamic = 'force-dynamic';
+
 /**
  * Format title from underscore format (e.g., "2025_july_bbq") to display format (e.g., "2025 July BBQ")
  */

@@ -14,7 +14,7 @@ describe('Theology Page', () => {
   it('should display the introduction text', () => {
     render(<Theology />);
     expect(
-      screen.getByText(/We belong to the World Korean Presbyterian Church/),
+      screen.getByText(/We belong to the General Assembly of World Presbyterian Church denomination/),
     ).toBeInTheDocument();
     expect(
       screen.getByText(/Westminster Confession of Faith and its 12 creeds/),

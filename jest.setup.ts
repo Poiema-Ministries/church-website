@@ -56,3 +56,39 @@ jest.mock('next/navigation', () => ({
 
 // Mock environment variables
 process.env.NEXT_PUBLIC_SITE_URL = 'http://localhost:3000';
+
+// Polyfill for window.matchMedia (used in Pastor page)
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: jest.fn().mockImplementation((query) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(), // deprecated
+    removeListener: jest.fn(), // deprecated
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  })),
+});
+
+// Polyfill for ResizeObserver (used in ScrollableTeamSection)
+global.ResizeObserver = class ResizeObserver {
+  constructor(callback: ResizeObserverCallback) {
+    this.callback = callback;
+  }
+
+  observe() {
+    // Mock implementation
+  }
+
+  unobserve() {
+    // Mock implementation
+  }
+
+  disconnect() {
+    // Mock implementation
+  }
+
+  callback: ResizeObserverCallback;
+} as unknown as typeof ResizeObserver;

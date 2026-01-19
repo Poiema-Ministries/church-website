@@ -1,5 +1,6 @@
 // Copyright 2025 Poiema Ministries. All Rights Reserved.
 
+import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Teams from '@/app/teams/page';
 import { client } from '@/sanity/lib/client';
@@ -27,6 +28,17 @@ jest.mock('@/app/teams/team-member-item', () => {
     teamMember: { _id: string };
   }) {
     return <div data-testid={`team-member-${teamMember._id}`}>Team Member</div>;
+  };
+});
+
+// Mock the ScrollableTeamSection component
+jest.mock('@/app/teams/scrollable-team-section', () => {
+  return function MockScrollableTeamSection({
+    children,
+  }: {
+    children: React.ReactNode;
+  }) {
+    return <div data-testid='scrollable-team-section'>{children}</div>;
   };
 });
 

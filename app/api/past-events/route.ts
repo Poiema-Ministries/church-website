@@ -26,6 +26,46 @@ function formatTitle(title: string): string {
     .join(' ');
 }
 
+/**
+ * Extract date from description field
+ */
+function extractDate(description: string): string | null {
+  // Try to find date patterns in the description
+  const datePatterns = [
+    /([A-Za-z]+\s+\d{1,2},\s+\d{4})/, // "January 21, 2025"
+    /(\d{4}-\d{2}-\d{2})/, // "2025-01-21"
+    /(\d{1,2}\/\d{1,2}\/\d{4})/, // "01/21/2025"
+  ];
+
+  for (const pattern of datePatterns) {
+    const match = description.match(pattern);
+    if (match) {
+      return match[1];
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Parse date string into Date object for sorting
+ */
+function parseDate(dateString: string): Date | null {
+  try {
+    // Try parsing as-is (handles ISO format and most standard formats)
+    const date = new Date(dateString);
+
+    // Check if date is valid
+    if (isNaN(date.getTime())) {
+      return null;
+    }
+
+    return date;
+  } catch {
+    return null;
+  }
+}
+
 interface CloudinaryAsset {
   public_id: string;
   secure_url: string;
@@ -71,8 +111,28 @@ export async function GET() {
       },
     );
 
-    // Sort by title (year first, then event name) - most recent first
+    // Sort by date (most recent first), with fallback to title sorting
     covers.sort((a, b) => {
+      // Extract dates from descriptions
+      const dateA = a.description ? extractDate(a.description) : null;
+      const dateB = b.description ? extractDate(b.description) : null;
+
+      // If both have dates, sort by date
+      if (dateA && dateB) {
+        const parsedDateA = parseDate(dateA);
+        const parsedDateB = parseDate(dateB);
+
+        if (parsedDateA && parsedDateB) {
+          // Most recent first (descending order)
+          return parsedDateB.getTime() - parsedDateA.getTime();
+        }
+      }
+
+      // If only one has a date, prioritize the one with date (put it first)
+      if (dateA && !dateB) return -1;
+      if (!dateA && dateB) return 1;
+
+      // If neither has a date, sort by title (fallback)
       if (!a.title || !b.title) return 0;
       return b.title.localeCompare(a.title);
     });

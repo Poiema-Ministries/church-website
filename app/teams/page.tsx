@@ -5,6 +5,7 @@ import { TeamMember } from '../common/types/models';
 import { client } from '../../sanity/lib/client';
 import { teamMembersQuery } from '../../sanity/lib/queries';
 import TeamMemberItem from './team-member-item';
+import ScrollableTeamSection from './scrollable-team-section';
 
 // Disable caching for this page since team members update frequently
 export const revalidate = 0;
@@ -106,18 +107,18 @@ export default async function Teams() {
                 </p>
               </div>
 
-              {/* Horizontal Scrollable Grid - Shows 4 members at a time */}
-              <div className='w-full overflow-x-auto overflow-y-hidden scrollbar-hide pb-2'>
-                <div className='flex gap-4 sm:gap-6 md:gap-8 w-max'>
-                  {members.map((member) => (
-                    <div
-                      key={member._id}
-                      className='flex-shrink-0 w-[calc((100vw-2rem-3*1rem)/4)] sm:w-[calc((100vw-4rem-3*1.5rem)/4)] md:w-[calc((100vw-8rem-3*2rem)/4)] xl:w-64'
-                    >
-                      <TeamMemberItem teamMember={member} />
-                    </div>
-                  ))}
-                </div>
+              {/* Horizontal Scrollable Grid - Shows ~2.5 members on mobile for bigger images */}
+              <div className='px-4 md:px-0'>
+                <ScrollableTeamSection>
+                {members.map((member) => (
+                  <div
+                    key={member._id}
+                    className='flex-shrink-0 w-[calc((100vw-4rem-2*1rem)/2.5)] sm:w-[calc((100vw-5rem-2*1.25rem)/2.5)] md:w-[calc((100vw-4rem-3*1.5rem)/4)] lg:w-[calc((100vw-4rem-3*2rem)/4)] xl:w-80 snap-start'
+                  >
+                    <TeamMemberItem teamMember={member} />
+                  </div>
+                ))}
+                </ScrollableTeamSection>
               </div>
             </div>
           );

@@ -5,6 +5,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getAssetsFromCollection } from '@/lib/cloudinary';
 
+// Disable caching for this page since new photo albums may be uploaded periodically
+export const revalidate = 0;
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Past Events',
   description:
@@ -64,6 +68,25 @@ function extractDate(description: string): string | null {
   return null;
 }
 
+/**
+ * Parse date string into Date object for sorting
+ */
+function parseDate(dateString: string): Date | null {
+  try {
+    // Try parsing as-is (handles ISO format and most standard formats)
+    const date = new Date(dateString);
+    
+    // Check if date is valid
+    if (isNaN(date.getTime())) {
+      return null;
+    }
+    
+    return date;
+  } catch {
+    return null;
+  }
+}
+
 interface CloudinaryAsset {
   public_id: string;
   secure_url: string;
@@ -113,8 +136,28 @@ async function getCovers(): Promise<CoverImage[]> {
       },
     );
 
-    // Sort by title (year first, then event name) - most recent first
+    // Sort by date (most recent first), with fallback to title sorting
     covers.sort((a, b) => {
+      // Extract dates from descriptions
+      const dateA = a.description ? extractDate(a.description) : null;
+      const dateB = b.description ? extractDate(b.description) : null;
+
+      // If both have dates, sort by date
+      if (dateA && dateB) {
+        const parsedDateA = parseDate(dateA);
+        const parsedDateB = parseDate(dateB);
+
+        if (parsedDateA && parsedDateB) {
+          // Most recent first (descending order)
+          return parsedDateB.getTime() - parsedDateA.getTime();
+        }
+      }
+
+      // If only one has a date, prioritize the one with date (put it first)
+      if (dateA && !dateB) return -1;
+      if (!dateA && dateB) return 1;
+
+      // If neither has a date, sort by title (fallback)
       if (!a.title || !b.title) return 0;
       return b.title.localeCompare(a.title);
     });
