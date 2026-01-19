@@ -7,32 +7,74 @@ import { FieldValues, useForm } from 'react-hook-form';
 import Form from '../common/components/form/form';
 import Input from '../common/components/input/input';
 import Textarea from '../common/components/textarea/textarea';
+import AlertModal from '../common/components/alert-modal/alert-modal';
 
 export default function PrayerRequestsForm() {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
 
+  const [alertModal, setAlertModal] = useState<{
+    isOpen: boolean;
+    type: 'success' | 'error';
+    title: string;
+    message: string;
+  }>({
+    isOpen: false,
+    type: 'success',
+    title: '',
+    message: '',
+  });
+
   const onFormSubmit = async (data: FieldValues) => {
-    const formData = {
-      name: `${data.firstName} ${data.lastName}`,
-      prayerRequest: data.prayerRequest,
-    };
+    try {
+      const formData = {
+        name: `${data.firstName} ${data.lastName}`,
+        prayerRequest: data.prayerRequest,
+      };
 
-    const response = await fetch('/api/prayer-request', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
+      const response = await fetch('/api/prayer-request', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-    if (!response.ok) {
-      throw new Error('Failed to send prayer request');
-    } else {
-      alert('Prayer request sent successfully');
+      await response.json();
+
+      if (!response.ok) {
+        // Show user-friendly error message
+        setAlertModal({
+          isOpen: true,
+          type: 'error',
+          title: 'Prayer Request Not Sent',
+          message:
+            'We apologize, but we encountered an issue sending your prayer request. Please try again, and know that we are still here to pray for you. You can also reach out to us directly. God bless you!',
+        });
+      } else {
+        // Success - reset form and show success message
+        reset();
+        setAlertModal({
+          isOpen: true,
+          type: 'success',
+          title: 'Prayer Request Received',
+          message:
+            'Thank you for sharing your prayer request with us. Our church community will lift you up in prayer. We believe in the power of prayer through our Lord and Savior Jesus Christ. May God bless you and provide you with peace!',
+        });
+      }
+    } catch {
+      // Network or other errors
+      setAlertModal({
+        isOpen: true,
+        type: 'error',
+        title: 'Connection Issue',
+        message:
+          'We apologize, but we are having trouble connecting right now. Please check your internet connection and try again. Know that we are still praying for you. Thank you for your patience!',
+      });
     }
   };
 
@@ -79,6 +121,22 @@ export default function PrayerRequestsForm() {
           })}
         />
       </div>
+
+      {/* Alert Modal */}
+      <AlertModal
+        isOpen={alertModal.isOpen}
+        type={alertModal.type}
+        title={alertModal.title}
+        message={alertModal.message}
+        onClose={() =>
+          setAlertModal({
+            ...alertModal,
+            isOpen: false,
+          })
+        }
+        autoClose={alertModal.type === 'success'}
+        autoCloseDelay={7000}
+      />
     </Form>
   );
 }

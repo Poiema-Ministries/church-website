@@ -1,8 +1,11 @@
 // Copyright 2025 Poiema Ministries. All Rights Reserved.
 
-import { notFound } from 'next/navigation';
 import { getAssetsFromCollection } from '@/lib/cloudinary';
 import EventGallery from './event-gallery';
+
+// Disable caching for this page since new photos may be added to event albums periodically
+export const revalidate = 0;
+export const dynamic = 'force-dynamic';
 
 /**
  * Format title from underscore format (e.g., "2025_july_bbq") to display format (e.g., "2025 July BBQ")
@@ -34,12 +37,23 @@ export default async function EventPage({ params }: PageProps) {
   let eventTitle = slug ? formatTitle(slug) : 'Event';
   let originalCaption: string | null = null;
 
+  interface CloudinaryAsset {
+    context?: {
+      caption?: string;
+    };
+    metadata?: {
+      caption?: string;
+    };
+  }
+
   try {
     const assets = await getAssetsFromCollection('covers', 100);
-    const matchingAsset = assets.find((asset: any) => {
-      const caption = asset.context?.caption || asset.metadata?.caption || '';
-      return caption === slug || caption === decodeURIComponent(slug);
-    });
+    const matchingAsset = (assets as unknown as CloudinaryAsset[]).find(
+      (asset) => {
+        const caption = asset.context?.caption || asset.metadata?.caption || '';
+        return caption === slug || caption === decodeURIComponent(slug);
+      },
+    );
 
     if (matchingAsset) {
       const caption =

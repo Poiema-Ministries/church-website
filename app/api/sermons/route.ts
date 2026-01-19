@@ -12,8 +12,8 @@ export async function GET(request: Request) {
     const cursor = searchParams.get('cursor') || null;
     const fetchLimit = SERMONS_PER_PAGE + 1; // Fetch one extra to check if there are more
 
-    let query;
-    let params: Record<string, any> = {};
+    let query: string;
+    const params: Record<string, unknown> = {};
 
     if (cursor) {
       // Use date as cursor (since we're ordering by date desc)
@@ -56,11 +56,10 @@ export async function GET(request: Request) {
       nextCursor,
       hasMore,
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error fetching sermons:', error);
-    return NextResponse.json(
-      { error: error.message || 'Failed to fetch sermons' },
-      { status: 500 },
-    );
+    const errorMessage =
+      error instanceof Error ? error.message : 'Failed to fetch sermons';
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

@@ -60,7 +60,7 @@ export default function Offering() {
             that He is the source of every blessing in our lives. Your
             generosity allows us to continue our mission of sharing the Gospel
             and serving our local community. As 2 Corinthians 9:7 reminds us,
-            "God loves a cheerful giver."
+            &ldquo;God loves a cheerful giver.&rdquo;
           </p>
         </div>
       </div>

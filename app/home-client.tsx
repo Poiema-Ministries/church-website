@@ -4,7 +4,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { CoreValue } from './common/types/models';
 
 const GALLERY_IMAGES: string[] = [
@@ -20,11 +20,7 @@ interface HomeClientProps {
 }
 
 export default function HomeClient({ coreValues }: HomeClientProps) {
-  const [isVisible, setIsVisible] = useState<boolean>(false);
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
+  const [isVisible] = useState<boolean>(true);
 
   return (
     <div className='relative w-full'>
@@ -57,7 +53,7 @@ export default function HomeClient({ coreValues }: HomeClientProps) {
                 <p className='font-semibold text-lg sm:text-xl md:text-2xl leading-normal'>
                   poiema
                 </p>
-                <p className='italic leading-normal'>poy'-ah-meh</p>
+                <p className='italic leading-normal'>poy&apos;-ah-meh</p>
                 <p className='font-semibold leading-normal'>
                   Greek word for workmanship or masterpiece
                 </p>
@@ -83,10 +79,10 @@ export default function HomeClient({ coreValues }: HomeClientProps) {
               Welcome to Poiema Ministries
             </h2>
             <p className='text-xs sm:text-sm md:text-base text-primary-black leading-relaxed'>
-              We're all about loving God wholeheartedly and serving everyone as
-              Jesus came to serve us. We trust Jesus without compromise and
-              strive to continually awaken and equip disciples of Christ
-              wherever we go.
+              We&apos;re all about loving God wholeheartedly and serving
+              everyone as Jesus came to serve us. We trust Jesus without
+              compromise and strive to continually awaken and equip disciples of
+              Christ wherever we go.
             </p>
           </div>
         </div>

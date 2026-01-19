@@ -60,12 +60,11 @@ export default function Navbar() {
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState<string | null>(
     null,
   );
-  const [isScrolledPastHero, setIsScrolledPastHero] = useState(false);
   const isHomePage = pathname === '/';
+  const [isScrolledPastHero, setIsScrolledPastHero] = useState(!isHomePage);
 
   useEffect(() => {
     if (!isHomePage) {
-      setIsScrolledPastHero(true);
       return;
     }
 
@@ -90,7 +89,7 @@ export default function Navbar() {
     setOpenDropdown(name);
   };
 
-  const handleDropdownClose = (name: string) => {
+  const handleDropdownClose = () => {
     const timeout = setTimeout(() => {
       setOpenDropdown(null);
     }, 150);
@@ -199,7 +198,7 @@ export default function Navbar() {
                 <div
                   className='relative'
                   onMouseEnter={() => handleDropdownOpen(item.name)}
-                  onMouseLeave={() => handleDropdownClose(item.name)}
+                  onMouseLeave={() => handleDropdownClose()}
                 >
                   <button
                     className={`block py-2 text-sm cursor-pointer transition-colors ${

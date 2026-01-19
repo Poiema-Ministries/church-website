@@ -73,11 +73,11 @@ export default function Services() {
             <div className='flex-1 md:text-left text-2xs sm:text-xs md:text-sm mt-2 md:mt-3 space-y-3'>
               <p className='font-semibold'>
                 Our Sunday services are a reflection of the daily offerings we
-                give God but in a communal setting. For it is written, "For
-                where two or three are gathered in my name, there am I among
-                them." and we believe that this day of rest honors the Sabbath
-                as more than ritual but one of the steps we take along the
-                narrow path.
+                give God but in a communal setting. For it is written,
+                &ldquo;For where two or three are gathered in my name, there am
+                I among them.&rdquo; and we believe that this day of rest honors
+                the Sabbath as more than ritual but one of the steps we take
+                along the narrow path.
               </p>
               <p className='font-semibold'>
                 We worship in many ways, joining together song, sermon, and
@@ -111,7 +111,7 @@ export default function Services() {
           <div className='flex flex-col md:pl-10 space-y-3 text-center md:text-left w-full md:w-auto'>
             <p className='font-semibold'>
               Come worship with us
-              <span className='block'>and experience God's presence.</span>
+              <span className='block'>and experience God&apos;s presence.</span>
             </p>
             <div className='flex flex-col space-y-1'>
               <span className='underline'>Address</span>

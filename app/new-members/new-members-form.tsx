@@ -2,35 +2,82 @@
 
 'use client';
 
-import { FieldValues, useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { FieldValues, useForm, useWatch } from 'react-hook-form';
 import Form from '../common/components/form/form';
 import Input from '../common/components/input/input';
 import Select from '../common/components/select/select';
 import Textarea from '../common/components/textarea/textarea';
+import AlertModal from '../common/components/alert-modal/alert-modal';
 
 export default function NewMembersForm() {
   const {
     register,
     handleSubmit,
-    watch,
+    control,
     formState: { errors },
+    reset,
   } = useForm();
 
-  const attendedOtherChurches = watch('attendedOtherChurches');
+  const [alertModal, setAlertModal] = useState<{
+    isOpen: boolean;
+    type: 'success' | 'error';
+    title: string;
+    message: string;
+  }>({
+    isOpen: false,
+    type: 'success',
+    title: '',
+    message: '',
+  });
+
+  const attendedOtherChurches = useWatch({
+    control,
+    name: 'attendedOtherChurches',
+  });
 
   const onFormSubmit = async (data: FieldValues) => {
-    const formData = { ...data, message: data.message || '' };
-    const response = await fetch('/api/new-member', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
-    if (!response.ok) {
-      throw new Error('Failed to send new member submission');
-    } else {
-      alert('New member submission sent successfully');
+    try {
+      const formData = { ...data, message: data.message || '' };
+      const response = await fetch('/api/new-member', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      await response.json();
+
+      if (!response.ok) {
+        // Show user-friendly error message
+        setAlertModal({
+          isOpen: true,
+          type: 'error',
+          title: 'Submission Not Sent',
+          message:
+            'We apologize, but we encountered an issue sending your new member information. Please try again later, or feel free to reach out to us directly. We appreciate your patience!',
+        });
+      } else {
+        // Success - reset form and show success message
+        reset();
+        setAlertModal({
+          isOpen: true,
+          type: 'success',
+          title: 'Thank You!',
+          message:
+            'Your new member information has been received successfully. We are excited to welcome you to our ministry family! Someone will be in touch with you soon. God bless you!',
+        });
+      }
+    } catch {
+      // Network or other errors
+      setAlertModal({
+        isOpen: true,
+        type: 'error',
+        title: 'Connection Issue',
+        message:
+          'We apologize, but we are having trouble connecting right now. Please check your internet connection and try again. Thank you for your understanding!',
+      });
     }
   };
 
@@ -220,6 +267,22 @@ export default function NewMembersForm() {
           <Textarea label='Message' {...register('message')} />
         </div>
       </div>
+
+      {/* Alert Modal */}
+      <AlertModal
+        isOpen={alertModal.isOpen}
+        type={alertModal.type}
+        title={alertModal.title}
+        message={alertModal.message}
+        onClose={() =>
+          setAlertModal({
+            ...alertModal,
+            isOpen: false,
+          })
+        }
+        autoClose={alertModal.type === 'success'}
+        autoCloseDelay={6000}
+      />
     </Form>
   );
 }

@@ -5,6 +5,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getAssetsFromCollection } from '@/lib/cloudinary';
 
+// Disable caching for this page since new photo albums may be uploaded periodically
+export const revalidate = 0;
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Past Events',
   description:
@@ -64,39 +68,96 @@ function extractDate(description: string): string | null {
   return null;
 }
 
+/**
+ * Parse date string into Date object for sorting
+ */
+function parseDate(dateString: string): Date | null {
+  try {
+    // Try parsing as-is (handles ISO format and most standard formats)
+    const date = new Date(dateString);
+    
+    // Check if date is valid
+    if (isNaN(date.getTime())) {
+      return null;
+    }
+    
+    return date;
+  } catch {
+    return null;
+  }
+}
+
+interface CloudinaryAsset {
+  public_id: string;
+  secure_url: string;
+  width: number;
+  height: number;
+  format: string;
+  context?: {
+    alt?: string;
+    caption?: string;
+  };
+  metadata?: {
+    description?: string;
+    caption?: string;
+  };
+}
+
 async function getCovers(): Promise<CoverImage[]> {
   try {
     const assets = await getAssetsFromCollection('covers', 100);
 
-    const covers: CoverImage[] = assets.map((asset: any) => {
-      // Get title from caption in context or metadata
-      const caption = asset.context?.caption || asset.metadata?.caption || '';
+    const covers: CoverImage[] = (assets as unknown as CloudinaryAsset[]).map(
+      (asset) => {
+        // Get title from caption in context or metadata
+        const caption = asset.context?.caption || asset.metadata?.caption || '';
 
-      // Store the original caption for use as folder name/slug
-      const originalCaption = caption;
+        // Store the original caption for use as folder name/slug
+        const originalCaption = caption;
 
-      // Format the caption if it's in underscore format (e.g., "2025_july_bbq")
-      const title =
-        caption && caption.includes('_') ? formatTitle(caption) : caption;
+        // Format the caption if it's in underscore format (e.g., "2025_july_bbq")
+        const title =
+          caption && caption.includes('_') ? formatTitle(caption) : caption;
 
-      // Get description from context alt or metadata description
-      const description =
-        asset.context?.alt || asset.metadata?.description || '';
+        // Get description from context alt or metadata description
+        const description =
+          asset.context?.alt || asset.metadata?.description || '';
 
-      return {
-        public_id: asset.public_id,
-        secure_url: asset.secure_url,
-        width: asset.width,
-        height: asset.height,
-        format: asset.format,
-        title: title || 'Untitled Event',
-        description,
-        originalCaption: originalCaption || '', // Store original caption for slug
-      };
-    });
+        return {
+          public_id: asset.public_id,
+          secure_url: asset.secure_url,
+          width: asset.width,
+          height: asset.height,
+          format: asset.format,
+          title: title || 'Untitled Event',
+          description,
+          originalCaption: originalCaption || '', // Store original caption for slug
+        };
+      },
+    );
 
-    // Sort by title (year first, then event name) - most recent first
+    // Sort by date (most recent first), with fallback to title sorting
     covers.sort((a, b) => {
+      // Extract dates from descriptions
+      const dateA = a.description ? extractDate(a.description) : null;
+      const dateB = b.description ? extractDate(b.description) : null;
+
+      // If both have dates, sort by date
+      if (dateA && dateB) {
+        const parsedDateA = parseDate(dateA);
+        const parsedDateB = parseDate(dateB);
+
+        if (parsedDateA && parsedDateB) {
+          // Most recent first (descending order)
+          return parsedDateB.getTime() - parsedDateA.getTime();
+        }
+      }
+
+      // If only one has a date, prioritize the one with date (put it first)
+      if (dateA && !dateB) return -1;
+      if (!dateA && dateB) return 1;
+
+      // If neither has a date, sort by title (fallback)
       if (!a.title || !b.title) return 0;
       return b.title.localeCompare(a.title);
     });
