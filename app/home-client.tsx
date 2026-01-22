@@ -53,7 +53,7 @@ export default function HomeClient({ coreValues }: HomeClientProps) {
                 <p className='font-semibold text-lg sm:text-xl md:text-2xl leading-normal'>
                   poiema
                 </p>
-                <p className='italic leading-normal'>poy&apos;-ah-meh</p>
+                <p className='italic leading-normal'>poy&apos;-ah-mah</p>
                 <p className='font-semibold leading-normal'>
                   Greek word for workmanship or masterpiece
                 </p>
