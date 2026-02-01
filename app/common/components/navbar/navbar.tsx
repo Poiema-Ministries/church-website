@@ -184,6 +184,7 @@ export default function Navbar() {
             height={140}
             alt='Poiema Ministries'
             priority
+            quality={90}
             className={shouldShowWhiteLogo ? 'brightness-0 invert' : ''}
             style={
               shouldShowWhiteLogo ? { filter: 'brightness(0) invert(1)' } : {}
