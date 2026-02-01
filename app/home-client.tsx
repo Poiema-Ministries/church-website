@@ -26,15 +26,16 @@ export default function HomeClient({ coreValues }: HomeClientProps) {
     <div className='relative w-full'>
       {/* Hero Section - starts at absolute top */}
       <div className='relative w-full h-screen min-h-[600px] flex items-center overflow-hidden -mt-[140px] pt-[140px]'>
-        {/* Background Image */}
+        {/* Background Image - LCP element, optimized */}
         <Image
           src='/imgs/home-banner.jpg'
           alt='Poiema Ministries'
-          loading='eager'
           fill
           className='object-cover'
           style={{ filter: 'grayscale(100%)' }}
           priority
+          quality={85}
+          sizes='100vw'
         />
 
         {/* Black Overlay */}
@@ -104,7 +105,10 @@ export default function HomeClient({ coreValues }: HomeClientProps) {
                       alt={`Poiema Ministries Gallery ${idx + 1}`}
                       fill
                       className='object-cover'
-                      priority={idx < 3}
+                      priority={idx < 2}
+                      loading={idx < 2 ? 'eager' : 'lazy'}
+                      quality={idx < 2 ? 85 : 75}
+                      sizes='(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 25vw'
                     />
                   </div>
                 </div>
@@ -121,6 +125,9 @@ export default function HomeClient({ coreValues }: HomeClientProps) {
                       alt={`Poiema Ministries Gallery ${idx + 1}`}
                       fill
                       className='object-cover'
+                      loading='lazy'
+                      quality={75}
+                      sizes='(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 25vw'
                     />
                   </div>
                 </div>
@@ -153,6 +160,8 @@ export default function HomeClient({ coreValues }: HomeClientProps) {
                   fill
                   className='object-contain'
                   sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 40vw'
+                  loading='lazy'
+                  quality={85}
                 />
               </div>
             </div>
@@ -205,7 +214,9 @@ export default function HomeClient({ coreValues }: HomeClientProps) {
                 alt='Summer service'
                 fill
                 className='object-cover'
-                loading='eager'
+                loading='lazy'
+                quality={80}
+                sizes='300px'
               />
             </div>
 
@@ -255,7 +266,9 @@ export default function HomeClient({ coreValues }: HomeClientProps) {
                 alt='Winter service'
                 fill
                 className='object-cover'
-                loading='eager'
+                loading='lazy'
+                quality={80}
+                sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'
               />
             </div>
           </div>

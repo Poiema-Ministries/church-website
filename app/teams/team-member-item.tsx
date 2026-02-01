@@ -25,7 +25,8 @@ export default function TeamMemberItem({ teamMember }: TeamMemberItemProps) {
             height={0}
             className='w-full h-auto object-contain'
             sizes='(max-width: 640px) 25vw, (max-width: 1024px) 20vw, 250px'
-            unoptimized={false}
+            loading='lazy'
+            quality={80}
           />
         ) : (
           <div className='w-full aspect-square bg-gray-200 flex items-center justify-center'>

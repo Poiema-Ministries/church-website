@@ -78,14 +78,16 @@ export default function PastorClient() {
             }}
             >
             <div className='relative overflow-hidden rounded-sm'>
-              <Image
-                src='/imgs/pastor.jpg'
-                width={400}
-                height={270}
-                alt='Pastor Sam Jung'
-                className='w-full h-auto transition-transform duration-700 ease-out hover:scale-105'
-                sizes='(max-width: 640px) 100vw, (max-width: 1024px) 400px, 320px'
-              />
+                  <Image
+                    src='/imgs/pastor.jpg'
+                    width={400}
+                    height={270}
+                    alt='Pastor Sam Jung'
+                    className='w-full h-auto transition-transform duration-700 ease-out hover:scale-105'
+                    sizes='(max-width: 640px) 100vw, (max-width: 1024px) 400px, 320px'
+                    priority
+                    quality={85}
+                  />
               {/* Subtle gradient overlay that appears on load */}
               <div
                 className={`absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent pointer-events-none transition-opacity duration-1000 ${

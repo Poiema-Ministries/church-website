@@ -9,6 +9,9 @@ const kaiseiDecol = Kaisei_Decol({
   variable: '--font-kaisei-decol',
   subsets: ['latin'],
   weight: ['400', '500', '700'],
+  display: 'swap', // Prevent FOIT and reduce CLS
+  preload: true, // Preload critical font
+  fallback: ['serif'], // Fallback font to prevent layout shift
 });
 
 const siteUrl =
