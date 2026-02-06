@@ -14,11 +14,11 @@ export const dynamic = 'force-dynamic';
 export const metadata: Metadata = {
   title: 'Meet Our Teams',
   description:
-    'Meet the dedicated team members serving at Poiema Ministries. Our teams include Worship, Welcoming, Media, Outreach, and more, all working together to serve our community.',
+    'Meet the dedicated team members serving at Poiema Ministries. Our teams include Worship, Welcoming, Media, Outreach, Volleyball, and more, all working together to serve our community.',
   openGraph: {
     title: 'Meet Our Teams | Poiema Ministries',
     description:
-      'Meet the dedicated team members serving at Poiema Ministries. Our teams include Worship, Welcoming, Media, Outreach, and more, all working together to serve our community.',
+      'Meet the dedicated team members serving at Poiema Ministries. Our teams include Worship, Welcoming, Media, Outreach, Volleyball, and more, all working together to serve our community.',
   },
 };
 
@@ -65,6 +65,12 @@ const TEAMS = [
     queryValue: 'Event',
     description:
       "The Outreach Team organizes events and initiatives that extend our ministry beyond our church walls, sharing the Gospel message with our broader community. They serve as ambassadors of Christ's love, demonstrating God's grace through service and creating opportunities for others to experience His transformative power.",
+  },
+  {
+    displayName: 'Volleyball Team Leaders',
+    queryValue: 'Volleyball',
+    description:
+      "The Volleyball Team Leaders foster Christian fellowship and community through the sport of volleyball. They organize practices, build team unity, and lead our ministry in annual church volleyball tournaments. Through their leadership, they create opportunities for members to grow in relationship with one another while glorifying God through healthy competition and teamwork.",
   },
 ] as const;
 

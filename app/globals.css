@@ -9,6 +9,11 @@
   --primary-black: #3f3c3c;
 }
 
+/* Prevent layout shift during font load */
+body {
+  font-display: swap;
+}
+
 @theme inline {
   --color-background: var(--background);
   --primary-black: var(--primary-black);

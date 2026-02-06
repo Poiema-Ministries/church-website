@@ -145,4 +145,27 @@ describe('Teams Page', () => {
     expect(screen.getByTestId('team-member-1')).toBeInTheDocument();
     expect(screen.getByTestId('team-member-2')).toBeInTheDocument();
   });
+
+  it('should display Volleyball Team Leaders section when members are available', async () => {
+    const mockTeamMembers = [
+      {
+        _id: '1',
+        name: 'Volleyball Leader',
+        team: ['Volleyball'],
+      },
+    ];
+
+    mockClient.fetch.mockResolvedValue(mockTeamMembers as never);
+
+    const component = await Teams();
+    render(component);
+
+    expect(screen.getByText('Volleyball Team Leaders')).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        /The Volleyball Team Leaders foster Christian fellowship and community through the sport of volleyball/,
+      ),
+    ).toBeInTheDocument();
+    expect(screen.getByTestId('team-member-1')).toBeInTheDocument();
+  });
 });
