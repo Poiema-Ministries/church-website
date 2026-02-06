@@ -14,7 +14,20 @@ export default function SermonItem({
   isLast = false,
 }: SermonItemProps) {
   const formatDate = (date: Date | string) => {
-    const dateObj = typeof date === 'string' ? new Date(date) : date;
+    let dateObj: Date;
+    if (typeof date === 'string') {
+      // Sanity date-only strings (YYYY-MM-DD) are parsed as UTC midnight,
+      // which shifts to previous day in western timezones. Parse as local date.
+      const match = date.match(/^(\d{4})-(\d{2})-(\d{2})/);
+      if (match) {
+        const [, y, m, d] = match;
+        dateObj = new Date(Number(y), Number(m) - 1, Number(d));
+      } else {
+        dateObj = new Date(date);
+      }
+    } else {
+      dateObj = date;
+    }
     return dateObj.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
