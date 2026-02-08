@@ -25,10 +25,16 @@ export async function POST(req: Request) {
 
     // Spam checks
     if (isHoneypotFilled(requestData)) {
-      return NextResponse.json({ error: 'Invalid submission' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'Invalid submission' },
+        { status: 400 },
+      );
     }
     if (isSubmissionTooFast(requestData.formLoadedAt)) {
-      return NextResponse.json({ error: 'Invalid submission' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'Invalid submission' },
+        { status: 400 },
+      );
     }
 
     const {
@@ -52,7 +58,10 @@ export async function POST(req: Request) {
       isSuspiciousName(firstName, lastName) ||
       isSuspiciousMessage(message || '')
     ) {
-      return NextResponse.json({ error: 'Invalid submission' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'Invalid submission' },
+        { status: 400 },
+      );
     }
 
     const html = generateNewMemberEmail({

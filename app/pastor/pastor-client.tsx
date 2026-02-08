@@ -27,9 +27,12 @@ export default function PastorClient() {
     mediaQuery.addEventListener('change', handleChange);
 
     // Small delay to ensure smooth entrance after page load
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, initialPrefersReduced ? 0 : 100);
+    const timer = setTimeout(
+      () => {
+        setIsVisible(true);
+      },
+      initialPrefersReduced ? 0 : 100,
+    );
 
     return () => {
       clearTimeout(initTimer);
@@ -46,10 +49,8 @@ export default function PastorClient() {
       {/* Title with fade-in and slide-up */}
       <div className='flex flex-col items-center lg:items-start w-full mb-6 sm:mb-8 lg:mb-8 px-4 sm:px-5 lg:px-0 lg:ml-10'>
         <h1
-              className={`text-3xl sm:text-4xl lg:text-3xl font-bold text-center lg:text-left w-full lg:pl-4 xl:pl-7 transition-all duration-700 ease-out ${
-            isVisible
-              ? 'opacity-100 translate-y-0'
-              : 'opacity-0 translate-y-4'
+          className={`text-3xl sm:text-4xl lg:text-3xl font-bold text-center lg:text-left w-full lg:pl-4 xl:pl-7 transition-all duration-700 ease-out ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}
           style={{
             transitionDelay: prefersReducedMotion ? '0ms' : '0ms',
@@ -63,12 +64,12 @@ export default function PastorClient() {
       <div className='flex flex-col lg:flex-row w-full px-4 sm:px-5 lg:px-0 lg:ml-10 lg:pl-4 xl:pl-7 gap-6 sm:gap-8 lg:gap-8 items-center lg:items-start'>
         {/* Image with fade-in, scale, and subtle float animation */}
         <div className='flex w-full lg:w-auto justify-center lg:justify-start flex-shrink-0'>
-            <div
-              className={`relative w-full max-w-full sm:max-w-[400px] lg:max-w-[320px] transition-all duration-1000 ease-out ${
-                isVisible
-                  ? 'opacity-100 scale-100 translate-y-0'
-                  : 'opacity-0 scale-95 translate-y-8'
-              }`}
+          <div
+            className={`relative w-full max-w-full sm:max-w-[400px] lg:max-w-[320px] transition-all duration-1000 ease-out ${
+              isVisible
+                ? 'opacity-100 scale-100 translate-y-0'
+                : 'opacity-0 scale-95 translate-y-8'
+            }`}
             style={{
               transitionDelay: prefersReducedMotion ? '0ms' : '200ms',
               animation:
@@ -76,18 +77,18 @@ export default function PastorClient() {
                   ? 'subtle-float 6s ease-in-out infinite'
                   : 'none',
             }}
-            >
+          >
             <div className='relative overflow-hidden rounded-sm'>
-                  <Image
-                    src='/imgs/pastor.jpg'
-                    width={400}
-                    height={270}
-                    alt='Pastor Sam Jung'
-                    className='w-full h-auto transition-transform duration-700 ease-out hover:scale-105'
-                    sizes='(max-width: 640px) 100vw, (max-width: 1024px) 400px, 320px'
-                    priority
-                    quality={85}
-                  />
+              <Image
+                src='/imgs/pastor.jpg'
+                width={400}
+                height={270}
+                alt='Pastor Sam Jung'
+                className='w-full h-auto transition-transform duration-700 ease-out hover:scale-105'
+                sizes='(max-width: 640px) 100vw, (max-width: 1024px) 400px, 320px'
+                priority
+                quality={85}
+              />
               {/* Subtle gradient overlay that appears on load */}
               <div
                 className={`absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent pointer-events-none transition-opacity duration-1000 ${
@@ -140,11 +141,11 @@ export default function PastorClient() {
                     ? 'opacity-100 translate-y-0'
                     : 'opacity-0 translate-y-6'
                 }`}
-              style={{
-                transitionDelay: prefersReducedMotion
-                  ? '0ms'
-                  : `${400 + index * 150}ms`,
-              }}
+                style={{
+                  transitionDelay: prefersReducedMotion
+                    ? '0ms'
+                    : `${400 + index * 150}ms`,
+                }}
               >
                 {paragraph}
               </p>

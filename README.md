@@ -101,7 +101,6 @@ Before you begin, ensure you have the following installed:
 
    Create a `.env.local` file in the root directory. You can use `.env.example`
    as a reference. Required variables:
-   
    - `RESEND_API_KEY` - Your Resend API key for email services
    - Additional variables may be required based on your setup
 

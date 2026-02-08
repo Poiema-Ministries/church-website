@@ -26,16 +26,22 @@ export async function POST(req: Request) {
 
     // Spam checks
     if (isHoneypotFilled(requestData)) {
-      return NextResponse.json({ error: 'Invalid submission' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'Invalid submission' },
+        { status: 400 },
+      );
     }
     if (isSubmissionTooFast(requestData.formLoadedAt)) {
-      return NextResponse.json({ error: 'Invalid submission' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'Invalid submission' },
+        { status: 400 },
+      );
     }
-    if (
-      isSuspiciousFullName(name) ||
-      isSuspiciousMessage(prayerRequest)
-    ) {
-      return NextResponse.json({ error: 'Invalid submission' }, { status: 400 });
+    if (isSuspiciousFullName(name) || isSuspiciousMessage(prayerRequest)) {
+      return NextResponse.json(
+        { error: 'Invalid submission' },
+        { status: 400 },
+      );
     }
 
     const html = generatePrayerRequestEmail({

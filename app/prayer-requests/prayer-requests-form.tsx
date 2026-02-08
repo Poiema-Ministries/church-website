@@ -40,7 +40,7 @@ export default function PrayerRequestsForm() {
       const formData = {
         name: `${data.firstName} ${data.lastName}`,
         prayerRequest: data.prayerRequest,
-        formLoadedAt: formLoadedAt.current ?? Date.now(),
+        formLoadedAt: formLoadedAt.current ?? 0,
         [HONEYPOT_FIELD_NAME]: data[HONEYPOT_FIELD_NAME],
       };
 

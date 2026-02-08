@@ -47,7 +47,7 @@ export default function NewMembersForm() {
       const formData = {
         ...data,
         message: data.message || '',
-        formLoadedAt: formLoadedAt.current ?? Date.now(),
+        formLoadedAt: formLoadedAt.current ?? 0,
       };
       const response = await fetch('/api/new-member', {
         method: 'POST',

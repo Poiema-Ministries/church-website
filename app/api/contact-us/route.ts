@@ -39,10 +39,7 @@ export async function POST(req: Request) {
 
     const { firstName, lastName, email, ageGroup, message } = requestData;
 
-    if (
-      isSuspiciousName(firstName, lastName) ||
-      isSuspiciousMessage(message)
-    ) {
+    if (isSuspiciousName(firstName, lastName) || isSuspiciousMessage(message)) {
       return NextResponse.json(
         { error: 'Invalid submission' },
         { status: 400 },

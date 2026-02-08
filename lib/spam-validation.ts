@@ -67,7 +67,9 @@ export function isSuspiciousName(firstName: string, lastName: string): boolean {
  * Validates full name string (e.g. "First Last" from combined field).
  */
 export function isSuspiciousFullName(fullName: string): boolean {
-  const parts = String(fullName || '').trim().split(/\s+/);
+  const parts = String(fullName || '')
+    .trim()
+    .split(/\s+/);
   const first = parts[0] || '';
   const last = parts.slice(1).join(' ') || '';
   return isSuspiciousName(first, last);

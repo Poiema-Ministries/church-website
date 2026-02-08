@@ -56,13 +56,8 @@ export default function AlertModal({
   if (!isOpen) return null;
 
   const borderColor =
-    type === 'success'
-      ? 'border-l-green-500'
-      : 'border-l-red-500';
-  const bgColor =
-    type === 'success'
-      ? 'bg-green-50/50'
-      : 'bg-red-50/50';
+    type === 'success' ? 'border-l-green-500' : 'border-l-red-500';
+  const bgColor = type === 'success' ? 'bg-green-50/50' : 'bg-red-50/50';
 
   return (
     <div

@@ -38,19 +38,25 @@ export const announcementType = defineType({
         collapsed: true,
       },
       validation: (rule) =>
-        rule.custom((value: { image?: unknown; width?: number; height?: number } | undefined) => {
-          if (!value) return true;
-          const hasImage = value.image != null;
-          const hasWidth = value.width != null && value.width > 0;
-          const hasHeight = value.height != null && value.height > 0;
-          if (hasImage && (!hasWidth || !hasHeight)) {
-            return 'Width and height are required when an image is added';
-          }
-          if (!hasImage && (value.width != null || value.height != null)) {
-            return 'Width and height should only be set when an image is added';
-          }
-          return true;
-        }),
+        rule.custom(
+          (
+            value:
+              | { image?: unknown; width?: number; height?: number }
+              | undefined,
+          ) => {
+            if (!value) return true;
+            const hasImage = value.image != null;
+            const hasWidth = value.width != null && value.width > 0;
+            const hasHeight = value.height != null && value.height > 0;
+            if (hasImage && (!hasWidth || !hasHeight)) {
+              return 'Width and height are required when an image is added';
+            }
+            if (!hasImage && (value.width != null || value.height != null)) {
+              return 'Width and height should only be set when an image is added';
+            }
+            return true;
+          },
+        ),
       fields: [
         {
           name: 'image',

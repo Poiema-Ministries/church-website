@@ -40,7 +40,7 @@ export default function ContactUsForm() {
     try {
       const formData = {
         ...data,
-        formLoadedAt: formLoadedAt.current ?? Date.now(),
+        formLoadedAt: formLoadedAt.current ?? 0,
       };
       const response = await fetch('/api/contact-us', {
         method: 'POST',
