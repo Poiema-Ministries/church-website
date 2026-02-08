@@ -8,6 +8,16 @@ interface Describable {
 
 export interface Announcement extends Describable {
   order?: number;
+  announcementImage?: {
+    image?: {
+      asset?: {
+        _id: string;
+        url: string;
+      };
+    };
+    width: number;
+    height: number;
+  };
 }
 export type CoreValue = Describable;
 export type Bulletin = Describable;

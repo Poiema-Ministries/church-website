@@ -14,8 +14,22 @@ export default function ScrollableTeamSection({
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showLeftGradient, setShowLeftGradient] = useState(false);
   const [showRightGradient, setShowRightGradient] = useState(false);
-  const [hasScrolled, setHasScrolled] = useState(false);
-  const [isScrollable, setIsScrollable] = useState(false);
+
+  const scrollAmount = 320; // Roughly one team member card width
+
+  const scrollLeft = () => {
+    scrollContainerRef.current?.scrollBy({
+      left: -scrollAmount,
+      behavior: 'smooth',
+    });
+  };
+
+  const scrollRight = () => {
+    scrollContainerRef.current?.scrollBy({
+      left: scrollAmount,
+      behavior: 'smooth',
+    });
+  };
 
   useEffect(() => {
     const scrollContainer = scrollContainerRef.current;
@@ -27,15 +41,6 @@ export default function ScrollableTeamSection({
       const isAtStart = scrollLeft <= 1; // Small threshold for rounding
       const isAtEnd = scrollLeft + clientWidth >= scrollWidth - 1; // -1 for rounding errors
 
-      setIsScrollable(canScroll);
-
-      // Track if user has scrolled
-      if (scrollLeft > 1) {
-        setHasScrolled(true);
-      }
-
-      // Always show right gradient when scrollable and not at end (to hint there's more)
-      // Show left gradient only when scrolled
       setShowLeftGradient(!isAtStart && canScroll);
       setShowRightGradient(!isAtEnd && canScroll);
     };
@@ -80,6 +85,31 @@ export default function ScrollableTeamSection({
         />
       )}
 
+      {/* Left scroll button */}
+      {showLeftGradient && (
+        <button
+          type='button'
+          onClick={scrollLeft}
+          className='absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 text-primary-black/70 bg-background/90 backdrop-blur-sm rounded-full border border-primary-black/15 shadow-md hover:bg-background hover:text-primary-black hover:border-primary-black/25 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-black/20 focus:ring-offset-2'
+          aria-label='Scroll left'
+        >
+          <svg
+            className='w-4 h-4 sm:w-5 sm:h-5'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+            aria-hidden='true'
+          >
+            <path
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeWidth={2.5}
+              d='M15 19l-7-7 7-7'
+            />
+          </svg>
+        </button>
+      )}
+
       {/* Right gradient overlay - subtle, shows more content is available */}
       {showRightGradient && (
         <div
@@ -88,71 +118,29 @@ export default function ScrollableTeamSection({
         />
       )}
 
-      {/* Mobile scroll hint - smaller and more subtle */}
-      {showRightGradient && !hasScrolled && isScrollable && (
-        <div className='absolute bottom-3 right-3 z-20 pointer-events-none md:hidden transition-all duration-500 opacity-100'>
-          <div className='flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-primary-black/70 bg-background/90 backdrop-blur-sm rounded-full border border-primary-black/15 shadow-md animate-bounce-subtle'>
-            <svg
-              className='w-3.5 h-3.5'
-              fill='none'
-              stroke='currentColor'
-              viewBox='0 0 24 24'
-              aria-hidden='true'
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth={2.5}
-                d='M9 5l7 7-7 7'
-              />
-            </svg>
-            <span>Swipe</span>
-          </div>
-        </div>
-      )}
-
-      {/* Tablet scroll hint - visible on tablets too, disappears after scroll */}
-      {showRightGradient && !hasScrolled && isScrollable && (
-        <div className='absolute bottom-4 right-4 z-20 pointer-events-none hidden md:flex lg:hidden transition-all duration-500 opacity-100'>
-          <div className='flex items-center justify-center w-11 h-11 text-sm text-primary-black/75 bg-background/90 backdrop-blur-md rounded-full border-2 border-primary-black/25 shadow-lg animate-bounce-subtle'>
-            <svg
-              className='w-5 h-5 animate-pulse'
-              fill='none'
-              stroke='currentColor'
-              viewBox='0 0 24 24'
-              aria-hidden='true'
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth={3}
-                d='M9 5l7 7-7 7'
-              />
-            </svg>
-          </div>
-        </div>
-      )}
-
-      {/* Desktop scroll hint - subtle arrow indicators */}
+      {/* Right scroll button */}
       {showRightGradient && (
-        <div className='absolute bottom-3 right-4 z-10 pointer-events-none hidden lg:flex xl:bottom-4 xl:right-6 items-center gap-1'>
-          <div className='flex items-center justify-center w-8 h-8 text-xs text-primary-black/50 bg-background/70 backdrop-blur-sm rounded-full border border-primary-black/10 shadow-sm'>
-            <svg
-              className='w-4 h-4 animate-pulse'
-              fill='none'
-              stroke='currentColor'
-              viewBox='0 0 24 24'
-              aria-hidden='true'
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth={2.5}
-                d='M9 5l7 7-7 7'
-              />
-            </svg>
-          </div>
-        </div>
+        <button
+          type='button'
+          onClick={scrollRight}
+          className='absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 text-primary-black/70 bg-background/90 backdrop-blur-sm rounded-full border border-primary-black/15 shadow-md hover:bg-background hover:text-primary-black hover:border-primary-black/25 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-black/20 focus:ring-offset-2'
+          aria-label='Scroll right'
+        >
+          <svg
+            className='w-4 h-4 sm:w-5 sm:h-5'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+            aria-hidden='true'
+          >
+            <path
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeWidth={2.5}
+              d='M9 5l7 7-7 7'
+            />
+          </svg>
+        </button>
       )}
 
       {/* Scrollable container with touch-optimized scrolling */}

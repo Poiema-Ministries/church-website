@@ -35,7 +35,14 @@ export const announcementsQuery = groq`
     _id,
     title,
     description,
-    order
+    order,
+    announcementImage {
+      image {
+        asset
+      },
+      width,
+      height
+    }
   }
 `;
 
