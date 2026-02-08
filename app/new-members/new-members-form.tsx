@@ -2,7 +2,7 @@
 
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { FieldValues, useForm, useWatch } from 'react-hook-form';
 import { HONEYPOT_FIELD_NAME } from '@/lib/spam-validation';
 import Form from '../common/components/form/form';
@@ -12,9 +12,9 @@ import Textarea from '../common/components/textarea/textarea';
 import AlertModal from '../common/components/alert-modal/alert-modal';
 
 export default function NewMembersForm() {
-  const formLoadedAt = useRef<number | null>(null);
+  const [formLoadedAt, setFormLoadedAt] = useState<number | null>(null);
   useEffect(() => {
-    formLoadedAt.current = Date.now();
+    setFormLoadedAt(Date.now());
   }, []);
 
   const {
@@ -47,7 +47,7 @@ export default function NewMembersForm() {
       const formData = {
         ...data,
         message: data.message || '',
-        formLoadedAt: formLoadedAt.current ?? 0,
+        formLoadedAt: formLoadedAt ?? 0,
       };
       const response = await fetch('/api/new-member', {
         method: 'POST',
