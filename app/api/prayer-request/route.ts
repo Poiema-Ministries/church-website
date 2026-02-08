@@ -3,16 +3,43 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { generatePrayerRequestEmail } from '@/app/common/utils/email-templates';
+import {
+  isHoneypotFilled,
+  isSubmissionTooFast,
+  isSuspiciousFullName,
+  isSuspiciousMessage,
+} from '@/lib/spam-validation';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: Request) {
   try {
-    const { name, prayerRequest } = await req.json();
+    const requestData = await req.json();
+    const { name, prayerRequest } = requestData;
 
     if (!name || !prayerRequest) {
       return NextResponse.json(
         { error: 'Missing required fields' },
+        { status: 400 },
+      );
+    }
+
+    // Spam checks
+    if (isHoneypotFilled(requestData)) {
+      return NextResponse.json(
+        { error: 'Invalid submission' },
+        { status: 400 },
+      );
+    }
+    if (isSubmissionTooFast(requestData.formLoadedAt)) {
+      return NextResponse.json(
+        { error: 'Invalid submission' },
+        { status: 400 },
+      );
+    }
+    if (isSuspiciousFullName(name) || isSuspiciousMessage(prayerRequest)) {
+      return NextResponse.json(
+        { error: 'Invalid submission' },
         { status: 400 },
       );
     }

@@ -75,12 +75,12 @@ function parseDate(dateString: string): Date | null {
   try {
     // Try parsing as-is (handles ISO format and most standard formats)
     const date = new Date(dateString);
-    
+
     // Check if date is valid
     if (isNaN(date.getTime())) {
       return null;
     }
-    
+
     return date;
   } catch {
     return null;

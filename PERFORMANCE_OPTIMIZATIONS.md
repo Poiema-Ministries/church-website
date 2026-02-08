@@ -1,10 +1,12 @@
 # Performance Optimizations
 
-This document outlines the performance optimizations implemented to improve Core Web Vitals and overall website performance.
+This document outlines the performance optimizations implemented to improve Core
+Web Vitals and overall website performance.
 
 ## Issues Addressed
 
 Based on performance metrics showing poor scores:
+
 - **LCP (Largest Contentful Paint)**: > 4000ms (Target: < 2500ms)
 - **FCP (First Contentful Paint)**: > 3000ms (Target: < 1800ms)
 - **CLS (Cumulative Layout Shift)**: > 0.25 (Target: < 0.1)
@@ -14,14 +16,17 @@ Based on performance metrics showing poor scores:
 ## Optimizations Implemented
 
 ### 1. Font Loading Optimization
+
 - **File**: `app/layout.tsx`
 - **Changes**:
-  - Added `display: 'swap'` to prevent FOIT (Flash of Invisible Text) and reduce CLS
+  - Added `display: 'swap'` to prevent FOIT (Flash of Invisible Text) and reduce
+    CLS
   - Enabled `preload: true` for critical font
   - Added fallback font (`serif`) to prevent layout shift
 - **Impact**: Reduces CLS and improves FCP
 
 ### 2. Next.js Configuration Enhancements
+
 - **File**: `next.config.ts`
 - **Changes**:
   - Enabled AVIF and WebP image formats for better compression
@@ -35,6 +40,7 @@ Based on performance metrics showing poor scores:
 - **Impact**: Reduces bundle size, improves image loading, better caching
 
 ### 3. Image Optimization
+
 - **Files**: Multiple image components across the app
 - **Changes**:
   - Added explicit `quality` settings (75-85) based on importance
@@ -46,15 +52,18 @@ Based on performance metrics showing poor scores:
 - **Impact**: Significantly improves LCP and reduces initial bundle size
 
 ### 4. Code Splitting
-- **Files**: 
+
+- **Files**:
   - `app/page.tsx` - Dynamic import for HomeClient
-  - `app/common/components/layout-wrapper.tsx` - Dynamic imports for Navbar and Footer
+  - `app/common/components/layout-wrapper.tsx` - Dynamic imports for Navbar and
+    Footer
 - **Changes**:
   - Used `next/dynamic` for large client components
   - Maintained SSR for SEO benefits
 - **Impact**: Reduces initial JavaScript bundle size, improves FCP and INP
 
 ### 5. CSS Optimization
+
 - **File**: `app/globals.css`
 - **Changes**:
   - Added `font-display: swap` to body to prevent layout shift
@@ -63,23 +72,27 @@ Based on performance metrics showing poor scores:
 ## Specific Image Optimizations
 
 ### Hero Image (LCP Element)
+
 - Priority loading enabled
 - Quality set to 85
 - Proper `sizes='100vw'` attribute
 - Removed unnecessary `loading='eager'` (priority handles this)
 
 ### Gallery Images
+
 - First 2 images: `priority` and `eager` loading
 - Remaining images: `lazy` loading
 - Quality: 85 for priority, 75 for lazy
 - Proper `sizes` attributes for responsive loading
 
 ### Team Member Images
+
 - Lazy loading enabled
 - Quality set to 80
 - Proper `sizes` attributes
 
 ### Event Gallery Images
+
 - Lazy loading enabled
 - Quality set to 75
 - Proper `sizes` attributes
@@ -113,10 +126,12 @@ Based on performance metrics showing poor scores:
 
 ### Future Optimizations to Consider
 
-1. **Image CDN**: Consider using Cloudinary or similar for automatic image optimization
+1. **Image CDN**: Consider using Cloudinary or similar for automatic image
+   optimization
 2. **Service Worker**: Implement for offline support and caching
 3. **Resource Hints**: Add `preconnect` and `dns-prefetch` for external domains
-4. **Bundle Analysis**: Run `@next/bundle-analyzer` to identify large dependencies
+4. **Bundle Analysis**: Run `@next/bundle-analyzer` to identify large
+   dependencies
 5. **Font Subsetting**: Consider subsetting fonts to reduce file size
 6. **Critical CSS**: Extract and inline critical CSS for above-the-fold content
 7. **Third-party Scripts**: Defer non-critical third-party scripts
@@ -131,6 +146,7 @@ Based on performance metrics showing poor scores:
 ## Testing
 
 After deployment, verify improvements using:
+
 - Google PageSpeed Insights
 - WebPageTest
 - Chrome DevTools Lighthouse

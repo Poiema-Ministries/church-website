@@ -70,7 +70,7 @@ const TEAMS = [
     displayName: 'Volleyball Team Leaders',
     queryValue: 'Volleyball',
     description:
-      "The Volleyball Team Leaders foster Christian fellowship and community through the sport of volleyball. They organize practices, build team unity, and lead our ministry in annual church volleyball tournaments. Through their leadership, they create opportunities for members to grow in relationship with one another while glorifying God through healthy competition and teamwork.",
+      'The Volleyball Team Leaders foster Christian fellowship and community through the sport of volleyball. They organize practices, build team unity, and lead our ministry in annual church volleyball tournaments. Through their leadership, they create opportunities for members to grow in relationship with one another while glorifying God through healthy competition and teamwork.',
   },
 ] as const;
 
@@ -116,14 +116,14 @@ export default async function Teams() {
               {/* Horizontal Scrollable Grid - Shows ~2.5 members on mobile for bigger images */}
               <div className='px-4 md:px-0'>
                 <ScrollableTeamSection>
-                {members.map((member) => (
-                  <div
-                    key={member._id}
-                    className='flex-shrink-0 w-[calc((100vw-4rem-2*1rem)/2.5)] sm:w-[calc((100vw-5rem-2*1.25rem)/2.5)] md:w-[calc((100vw-4rem-3*1.5rem)/4)] lg:w-[calc((100vw-4rem-3*2rem)/4)] xl:w-80 snap-start'
-                  >
-                    <TeamMemberItem teamMember={member} />
-                  </div>
-                ))}
+                  {members.map((member) => (
+                    <div
+                      key={member._id}
+                      className='flex-shrink-0 w-[calc((100vw-4rem-2*1rem)/2.5)] sm:w-[calc((100vw-5rem-2*1.25rem)/2.5)] md:w-[calc((100vw-4rem-3*1.5rem)/4)] lg:w-[calc((100vw-4rem-3*2rem)/4)] xl:w-80 snap-start'
+                    >
+                      <TeamMemberItem teamMember={member} />
+                    </div>
+                  ))}
                 </ScrollableTeamSection>
               </div>
             </div>
