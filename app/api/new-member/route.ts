@@ -3,6 +3,12 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { generateNewMemberEmail } from '@/app/common/utils/email-templates';
+import {
+  isHoneypotFilled,
+  isSubmissionTooFast,
+  isSuspiciousName,
+  isSuspiciousMessage,
+} from '@/lib/spam-validation';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -15,6 +21,14 @@ export async function POST(req: Request) {
         { error: 'Missing required fields' },
         { status: 400 },
       );
+    }
+
+    // Spam checks
+    if (isHoneypotFilled(requestData)) {
+      return NextResponse.json({ error: 'Invalid submission' }, { status: 400 });
+    }
+    if (isSubmissionTooFast(requestData.formLoadedAt)) {
+      return NextResponse.json({ error: 'Invalid submission' }, { status: 400 });
     }
 
     const {
@@ -33,6 +47,13 @@ export async function POST(req: Request) {
       howDidYouHearAboutUs,
       message,
     } = requestData;
+
+    if (
+      isSuspiciousName(firstName, lastName) ||
+      isSuspiciousMessage(message || '')
+    ) {
+      return NextResponse.json({ error: 'Invalid submission' }, { status: 400 });
+    }
 
     const html = generateNewMemberEmail({
       firstName,

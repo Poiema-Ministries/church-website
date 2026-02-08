@@ -2,8 +2,9 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { FieldValues, useForm, useWatch } from 'react-hook-form';
+import { HONEYPOT_FIELD_NAME } from '@/lib/spam-validation';
 import Form from '../common/components/form/form';
 import Input from '../common/components/input/input';
 import Select from '../common/components/select/select';
@@ -11,6 +12,11 @@ import Textarea from '../common/components/textarea/textarea';
 import AlertModal from '../common/components/alert-modal/alert-modal';
 
 export default function NewMembersForm() {
+  const formLoadedAt = useRef<number | null>(null);
+  useEffect(() => {
+    formLoadedAt.current = Date.now();
+  }, []);
+
   const {
     register,
     handleSubmit,
@@ -38,7 +44,11 @@ export default function NewMembersForm() {
 
   const onFormSubmit = async (data: FieldValues) => {
     try {
-      const formData = { ...data, message: data.message || '' };
+      const formData = {
+        ...data,
+        message: data.message || '',
+        formLoadedAt: formLoadedAt.current ?? Date.now(),
+      };
       const response = await fetch('/api/new-member', {
         method: 'POST',
         headers: {
@@ -90,6 +100,21 @@ export default function NewMembersForm() {
       }}
       onFormSubmit={handleSubmit(onFormSubmit)}
     >
+      {/* Honeypot - hidden from users, bots fill it */}
+      <div
+        className='absolute -left-[9999px] w-px h-px overflow-hidden'
+        aria-hidden='true'
+      >
+        <label htmlFor={HONEYPOT_FIELD_NAME}>Leave this field empty</label>
+        <input
+          type='text'
+          id={HONEYPOT_FIELD_NAME}
+          tabIndex={-1}
+          autoComplete='off'
+          {...register(HONEYPOT_FIELD_NAME)}
+        />
+      </div>
+
       <div className='flex flex-col gap-4 w-full mt-5 mb-5'>
         <div className='flex flex-col sm:flex-row gap-4 sm:gap-2'>
           <div className='flex-1'>
