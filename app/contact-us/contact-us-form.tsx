@@ -14,7 +14,8 @@ import AlertModal from '../common/components/alert-modal/alert-modal';
 export default function ContactUsForm() {
   const [formLoadedAt, setFormLoadedAt] = useState<number | null>(null);
   useEffect(() => {
-    setFormLoadedAt(Date.now());
+    const id = setTimeout(() => setFormLoadedAt(Date.now()), 0);
+    return () => clearTimeout(id);
   }, []);
 
   const {
