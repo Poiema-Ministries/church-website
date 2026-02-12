@@ -191,6 +191,35 @@ export function generateNewMemberEmail(data: {
 }
 
 /**
+ * Generate upcoming event registration email
+ */
+export function generateUpcomingEventEmail(data: {
+  eventTitle: string;
+  fields: Record<string, string>;
+}): string {
+  const fieldEntries = Object.entries(data.fields);
+
+  const fieldsHtml = fieldEntries
+    .map(([label, value], index) => {
+      const style =
+        index === 0 ? EMAIL_STYLES.fieldFirst : EMAIL_STYLES.field;
+      return `
+        <p style="${style}">
+          <strong>${label}:</strong><br/>
+          <span style="${EMAIL_STYLES.content}">${value}</span>
+        </p>
+      `;
+    })
+    .join('');
+
+  return generateEmailTemplate({
+    title: `Event Registration: ${data.eventTitle}`,
+    introText: `A new registration has been submitted for <strong>${data.eventTitle}</strong> through the Poiema Ministries website. Below are the details:`,
+    content: fieldsHtml,
+  });
+}
+
+/**
  * Generate prayer request email
  */
 export function generatePrayerRequestEmail(data: {
