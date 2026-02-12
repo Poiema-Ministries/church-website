@@ -57,3 +57,47 @@ export const teamMembersQuery = groq`
     team
   }
 `;
+
+export const upcomingEventsQuery = groq`
+  *[_type == "upcomingEvent" && registrationDeadline >= now()] | order(order asc) {
+    _id,
+    title,
+    slug,
+    bannerImage {
+      asset,
+      hotspot
+    },
+    description,
+    eventDate,
+    registrationDeadline,
+    fields[] {
+      _key,
+      label,
+      inputType,
+      dropdownOptions
+    },
+    order
+  }
+`;
+
+export const upcomingEventBySlugQuery = groq`
+  *[_type == "upcomingEvent" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    bannerImage {
+      asset,
+      hotspot
+    },
+    description,
+    eventDate,
+    registrationDeadline,
+    fields[] {
+      _key,
+      label,
+      inputType,
+      dropdownOptions
+    },
+    order
+  }
+`;
