@@ -53,3 +53,33 @@ export interface TeamMember {
   };
   team: string[];
 }
+
+export interface EventFormField {
+  _key: string;
+  label: string;
+  inputType: 'text' | 'textarea' | 'dropdown';
+  dropdownOptions?: string[];
+}
+
+export interface UpcomingEvent {
+  _id: string;
+  title: string;
+  slug: {
+    current: string;
+  };
+  bannerImage: {
+    asset?: {
+      _id: string;
+      url: string;
+    };
+    hotspot?: {
+      x: number;
+      y: number;
+    };
+  };
+  description?: string;
+  eventDate: string;
+  registrationDeadline: string;
+  fields: EventFormField[];
+  order: number;
+}
