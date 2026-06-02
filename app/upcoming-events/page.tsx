@@ -7,6 +7,7 @@ import { client } from '@/sanity/lib/client';
 import { upcomingEventsQuery } from '@/sanity/lib/queries';
 import { urlFor } from '@/sanity/lib/image';
 import { UpcomingEvent } from '../common/types/models';
+import { formatEventDateRange } from '../common/utils/format-event-date';
 
 export const revalidate = 0;
 export const dynamic = 'force-dynamic';
@@ -21,19 +22,6 @@ export const metadata: Metadata = {
       'View and register for upcoming events at Poiema Ministries. Join us for fellowship, worship, and community gatherings.',
   },
 };
-
-/**
- * Formats a date string (YYYY-MM-DD) into a readable format.
- * e.g. "2025-07-15" -> "July 15, 2025"
- */
-function formatEventDate(dateString: string): string {
-  const date = new Date(dateString + 'T00:00:00');
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-}
 
 export default async function UpcomingEvents() {
   const events: UpcomingEvent[] = await client.fetch(upcomingEventsQuery);
@@ -71,7 +59,7 @@ export default async function UpcomingEvents() {
                     {event.title}
                   </h2>
                   <p className='text-white/90 text-sm sm:text-base md:text-lg font-medium drop-shadow-md'>
-                    {formatEventDate(event.eventDate)}
+                    {formatEventDateRange(event.eventDate, event.eventEndDate)}
                   </p>
                 </div>
               </div>

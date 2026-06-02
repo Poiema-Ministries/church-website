@@ -57,8 +57,9 @@ export interface TeamMember {
 export interface EventFormField {
   _key: string;
   label: string;
-  inputType: 'text' | 'textarea' | 'dropdown';
+  inputType: 'text' | 'phone' | 'textarea' | 'dropdown' | 'checkbox';
   dropdownOptions?: string[];
+  checkboxOptions?: string[];
 }
 
 export interface UpcomingEvent {
@@ -79,6 +80,7 @@ export interface UpcomingEvent {
   };
   description?: string;
   eventDate: string;
+  eventEndDate?: string;
   registrationDeadline: string;
   fields: EventFormField[];
   order: number;

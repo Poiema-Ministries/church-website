@@ -6,6 +6,10 @@ import { useState, useEffect } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { HONEYPOT_FIELD_NAME } from '@/lib/spam-validation';
 import { UpcomingEvent } from '@/app/common/types/models';
+import {
+  formatEventDate,
+  formatEventDateRange,
+} from '@/app/common/utils/format-event-date';
 import Form from '@/app/common/components/form/form';
 import Input from '@/app/common/components/input/input';
 import Textarea from '@/app/common/components/textarea/textarea';
@@ -14,19 +18,6 @@ import AlertModal from '@/app/common/components/alert-modal/alert-modal';
 
 interface EventRegistrationFormProps {
   event: UpcomingEvent;
-}
-
-/**
- * Formats a date string (YYYY-MM-DD) into a readable format.
- * e.g. "2025-07-15" -> "July 15, 2025"
- */
-function formatEventDate(dateString: string): string {
-  const date = new Date(dateString + 'T00:00:00');
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
 }
 
 /**
@@ -70,11 +61,16 @@ export default function EventRegistrationForm({
 
   const onFormSubmit = async (data: FieldValues) => {
     try {
-      // Build a clean submission object with labels as keys
+      // Build a clean submission object with labels as keys.
+      // Checkbox groups produce an array, which we flatten to a
+      // comma-separated string for the email.
       const fields: Record<string, string> = {};
       for (const field of event.fields) {
         const fieldName = labelToFieldName(field.label);
-        fields[field.label] = data[fieldName] || '';
+        const value = data[fieldName];
+        fields[field.label] = Array.isArray(value)
+          ? value.filter(Boolean).join(', ')
+          : value || '';
       }
 
       const formData = {
@@ -137,7 +133,7 @@ export default function EventRegistrationForm({
       <div className='flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6 mt-4 mb-2 text-sm text-primary-black/70'>
         <span>
           <strong className='text-primary-black'>Event Date:</strong>{' '}
-          {formatEventDate(event.eventDate)}
+          {formatEventDateRange(event.eventDate, event.eventEndDate)}
         </span>
         <span className='hidden sm:inline text-primary-black/30'>|</span>
         <span>
@@ -214,6 +210,72 @@ export default function EventRegistrationForm({
                   />
                 </div>
               </div>
+            );
+          }
+
+          if (field.inputType === 'phone') {
+            return (
+              <div
+                key={field._key}
+                className='flex flex-col sm:flex-row gap-4 sm:gap-2'
+              >
+                <div className='flex-1'>
+                  <Input
+                    label={field.label}
+                    type='tel'
+                    placeholder='(123) 456-7890'
+                    error={errorMessage}
+                    {...register(fieldName, {
+                      required: `${field.label} is required`,
+                      validate: (value) => {
+                        const digits = String(value || '').replace(/\D/g, '');
+                        return (
+                          (digits.length >= 10 && digits.length <= 15) ||
+                          'Please enter a valid phone number'
+                        );
+                      },
+                    })}
+                  />
+                </div>
+              </div>
+            );
+          }
+
+          if (field.inputType === 'checkbox' && field.checkboxOptions) {
+            return (
+              <fieldset
+                key={field._key}
+                className='flex flex-col gap-2 w-full mt-1'
+              >
+                <legend className='text-sm font-semibold text-primary-black mb-1'>
+                  {field.label}
+                </legend>
+                <div className='flex flex-col gap-2.5'>
+                  {field.checkboxOptions.map((option) => (
+                    <label
+                      key={option}
+                      className='flex items-center gap-3 text-sm text-primary-black cursor-pointer'
+                    >
+                      <input
+                        type='checkbox'
+                        value={option}
+                        className='h-4 w-4 shrink-0 accent-primary-black border border-black cursor-pointer'
+                        {...register(fieldName, {
+                          validate: (value) =>
+                            (Array.isArray(value)
+                              ? value.length > 0
+                              : Boolean(value)) ||
+                            `Please select at least one option for ${field.label}`,
+                        })}
+                      />
+                      <span>{option}</span>
+                    </label>
+                  ))}
+                </div>
+                {errorMessage && (
+                  <span className='text-sm text-red-500'>{errorMessage}</span>
+                )}
+              </fieldset>
             );
           }
 

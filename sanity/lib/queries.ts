@@ -69,12 +69,14 @@ export const upcomingEventsQuery = groq`
     },
     description,
     eventDate,
+    eventEndDate,
     registrationDeadline,
     fields[] {
       _key,
       label,
       inputType,
-      dropdownOptions
+      dropdownOptions,
+      checkboxOptions
     },
     order
   }
@@ -91,12 +93,14 @@ export const upcomingEventBySlugQuery = groq`
     },
     description,
     eventDate,
+    eventEndDate,
     registrationDeadline,
     fields[] {
       _key,
       label,
       inputType,
-      dropdownOptions
+      dropdownOptions,
+      checkboxOptions
     },
     order
   }
