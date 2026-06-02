@@ -6,6 +6,10 @@ import Link from 'next/link';
 import { client } from '@/sanity/lib/client';
 import { upcomingEventBySlugQuery } from '@/sanity/lib/queries';
 import { UpcomingEvent } from '@/app/common/types/models';
+import {
+  formatEventDate,
+  formatEventDateRange,
+} from '@/app/common/utils/format-event-date';
 import EventRegistrationForm from './event-registration-form';
 
 export const revalidate = 0;
@@ -23,19 +27,6 @@ interface PageProps {
 function isRegistrationClosed(registrationDeadline: string): boolean {
   const deadlineEnd = new Date(registrationDeadline + 'T23:59:59');
   return new Date() > deadlineEnd;
-}
-
-/**
- * Formats a date string (YYYY-MM-DD) into a readable format.
- * e.g. "2025-07-15" -> "July 15, 2025"
- */
-function formatEventDate(dateString: string): string {
-  const date = new Date(dateString + 'T00:00:00');
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
 }
 
 export async function generateMetadata({
@@ -87,7 +78,7 @@ export default async function EventPage({ params }: PageProps) {
             {event.title}
           </h1>
           <p className='text-sm sm:text-base text-primary-black/70 mt-2'>
-            {formatEventDate(event.eventDate)}
+            {formatEventDateRange(event.eventDate, event.eventEndDate)}
           </p>
           <div className='mt-6 sm:mt-8 p-6 sm:p-8 border border-primary-black/15 rounded-md bg-secondary/50'>
             <p className='text-base sm:text-lg text-primary-black font-semibold'>

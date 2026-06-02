@@ -47,8 +47,25 @@ export const upcomingEventType = defineType({
       name: 'eventDate',
       title: 'Event Date',
       type: 'date',
-      description: 'The date the event is happening',
+      description: 'The date the event is happening (or the start date)',
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'eventEndDate',
+      title: 'Event End Date',
+      type: 'date',
+      description:
+        'Optional. The last day of the event for multi-day events. If set, the event date will be shown as a range (e.g., "April 11 – April 20, 2026").',
+      validation: (rule) =>
+        rule.custom((value, context) => {
+          const parent = context.document as
+            | { eventDate?: string }
+            | undefined;
+          if (value && parent?.eventDate && value < parent.eventDate) {
+            return 'Event End Date must be on or after the Event Date';
+          }
+          return true;
+        }),
     }),
     defineField({
       name: 'registrationDeadline',
@@ -86,8 +103,10 @@ export const upcomingEventType = defineType({
               options: {
                 list: [
                   { title: 'Text', value: 'text' },
+                  { title: 'Phone Number', value: 'phone' },
                   { title: 'Textarea', value: 'textarea' },
-                  { title: 'Dropdown', value: 'dropdown' },
+                  { title: 'Dropdown (Single Choice)', value: 'dropdown' },
+                  { title: 'Checkbox (Multiple Choice)', value: 'checkbox' },
                 ],
                 layout: 'radio',
               },
@@ -116,19 +135,47 @@ export const upcomingEventType = defineType({
                   return true;
                 }),
             }),
+            defineField({
+              name: 'checkboxOptions',
+              title: 'Checkbox Options',
+              type: 'array',
+              description:
+                'The options the user can check. The user may select one or more. Only used when Input Type is set to "Checkbox".',
+              of: [{ type: 'string' }],
+              hidden: ({ parent }) => parent?.inputType !== 'checkbox',
+              validation: (rule) =>
+                rule.custom((value, context) => {
+                  const parent = context.parent as
+                    | { inputType?: string }
+                    | undefined;
+                  if (
+                    parent?.inputType === 'checkbox' &&
+                    (!Array.isArray(value) || value.length < 2)
+                  ) {
+                    return 'Checkbox fields require at least 2 options';
+                  }
+                  return true;
+                }),
+            }),
           ],
           preview: {
             select: {
               title: 'label',
               subtitle: 'inputType',
-              options: 'dropdownOptions',
+              dropdownOptions: 'dropdownOptions',
+              checkboxOptions: 'checkboxOptions',
             },
-            prepare({ title, subtitle, options }) {
+            prepare({ title, subtitle, dropdownOptions, checkboxOptions }) {
               const typeLabel = subtitle || 'text';
-              const optionCount =
-                subtitle === 'dropdown' && Array.isArray(options)
-                  ? ` (${options.length} options)`
-                  : '';
+              let optionCount = '';
+              if (subtitle === 'dropdown' && Array.isArray(dropdownOptions)) {
+                optionCount = ` (${dropdownOptions.length} options)`;
+              } else if (
+                subtitle === 'checkbox' &&
+                Array.isArray(checkboxOptions)
+              ) {
+                optionCount = ` (${checkboxOptions.length} options)`;
+              }
               return {
                 title: title || 'Untitled Field',
                 subtitle: `Type: ${typeLabel}${optionCount}`,
@@ -153,12 +200,19 @@ export const upcomingEventType = defineType({
     select: {
       title: 'title',
       eventDate: 'eventDate',
+      eventEndDate: 'eventEndDate',
       registrationDeadline: 'registrationDeadline',
       media: 'bannerImage',
     },
-    prepare({ title, eventDate, registrationDeadline, media }) {
+    prepare({ title, eventDate, eventEndDate, registrationDeadline, media }) {
       const parts: string[] = [];
-      if (eventDate) parts.push(`Event: ${eventDate}`);
+      if (eventDate) {
+        parts.push(
+          eventEndDate
+            ? `Event: ${eventDate} → ${eventEndDate}`
+            : `Event: ${eventDate}`,
+        );
+      }
       if (registrationDeadline) parts.push(`Deadline: ${registrationDeadline}`);
       return {
         title: title || 'Untitled Event',
