@@ -38,11 +38,14 @@ function hasSuspiciousPattern(text: string, minLength: number): boolean {
   const upperRatio = upperCount / letters.length;
   if (upperRatio > 0.35 && letters.length > 15) return true;
 
-  // Long consecutive consonant sequences (e.g. "YezYLHgC", "WegLPWlf") - rare in real text
+  // Long consecutive consonant sequences (e.g. "YezYLHgC", "WegLPWlf") - rare in real text.
+  // Iterate the original text (not the letters-only string) so the run resets at
+  // spaces/punctuation. This avoids false positives where separate words concatenate
+  // into a fake run (e.g. "...13th (Thursday)..." -> "thTh").
   const consonants = 'bcdfghjklmnpqrstvwxzBCDFGHJKLMNPQRSTVWXZ';
   let maxConsecutive = 0;
   let current = 0;
-  for (const c of letters) {
+  for (const c of text) {
     if (consonants.includes(c)) {
       current++;
       maxConsecutive = Math.max(maxConsecutive, current);
