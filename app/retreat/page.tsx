@@ -16,7 +16,7 @@ import {
   RetreatScheduleDay,
 } from '../common/types/models';
 
-export const revalidate = SANITY_RETREAT_REVALIDATE_SECONDS;
+export const revalidate = 0;
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
