@@ -1,4 +1,4 @@
-// Copyright 2025 Poiema Ministries. All Rights Reserved.
+// Copyright 2026 Poiema Ministries. All Rights Reserved.
 
 import { render, screen } from '@testing-library/react';
 import RetreatPage from '@/app/retreat/page';

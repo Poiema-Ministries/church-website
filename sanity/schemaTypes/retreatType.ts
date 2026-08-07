@@ -1,4 +1,4 @@
-// Copyright 2025 Poiema Ministries. All Rights Reserved.
+// Copyright 2026 Poiema Ministries. All Rights Reserved.
 
 import { defineField, defineType } from 'sanity';
 
