@@ -7,6 +7,7 @@ import { bulletinType } from './bulletinType';
 import { announcementType } from './announcementType';
 import { upcomingEventType } from './upcomingEventType';
 import { teamMemberType } from './teamMemberType';
+import { retreatType } from './retreatType';
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -16,5 +17,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     announcementType,
     upcomingEventType,
     teamMemberType,
+    retreatType,
   ],
 };

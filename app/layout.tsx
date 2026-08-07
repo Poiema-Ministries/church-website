@@ -3,6 +3,12 @@
 import type { Metadata } from 'next';
 import { Kaisei_Decol } from 'next/font/google';
 import LayoutWrapper from './common/components/layout-wrapper';
+import { client } from '../sanity/lib/client';
+import { retreatEnabledQuery } from '../sanity/lib/queries';
+import {
+  SANITY_RETREAT_REVALIDATE_SECONDS,
+  SANITY_TAGS,
+} from '../sanity/lib/cache';
 import './globals.css';
 
 const kaiseiDecol = Kaisei_Decol({
@@ -72,15 +78,34 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  let showRetreat = false;
+  try {
+    const retreat = await client
+      .withConfig({ useCdn: false })
+      .fetch<{ isEnabled?: boolean } | null>(
+        retreatEnabledQuery,
+        {},
+        {
+          next: {
+            revalidate: SANITY_RETREAT_REVALIDATE_SECONDS,
+            tags: [SANITY_TAGS.retreat, SANITY_TAGS.all],
+          },
+        },
+      );
+    showRetreat = Boolean(retreat?.isEnabled);
+  } catch {
+    showRetreat = false;
+  }
+
   return (
     <html lang='en' className='overflow-x-hidden'>
       <body className={`${kaiseiDecol.variable} antialiased overflow-x-hidden`}>
-        <LayoutWrapper>{children}</LayoutWrapper>
+        <LayoutWrapper showRetreat={showRetreat}>{children}</LayoutWrapper>
       </body>
     </html>
   );

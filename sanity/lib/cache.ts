@@ -7,6 +7,8 @@
 
 export const SANITY_REVALIDATE_SECONDS = 300;
 export const SANITY_EVENTS_REVALIDATE_SECONDS = 60;
+/** Retreat content (esp. question visibility) can change during the event. */
+export const SANITY_RETREAT_REVALIDATE_SECONDS = 0;
 export const CLOUDINARY_REVALIDATE_SECONDS = 3600;
 
 export const SANITY_TAGS = {
@@ -17,6 +19,7 @@ export const SANITY_TAGS = {
   teamMember: 'sanity:teamMember',
   coreValue: 'sanity:coreValue',
   sermon: 'sanity:sermon',
+  retreat: 'sanity:retreat',
 } as const;
 
 export type SanityDocumentType =
@@ -25,7 +28,8 @@ export type SanityDocumentType =
   | 'upcomingEvent'
   | 'teamMember'
   | 'coreValue'
-  | 'sermon';
+  | 'sermon'
+  | 'retreat';
 
 export const SANITY_TYPE_TO_TAG: Record<SanityDocumentType, string> = {
   bulletin: SANITY_TAGS.bulletin,
@@ -34,6 +38,7 @@ export const SANITY_TYPE_TO_TAG: Record<SanityDocumentType, string> = {
   teamMember: SANITY_TAGS.teamMember,
   coreValue: SANITY_TAGS.coreValue,
   sermon: SANITY_TAGS.sermon,
+  retreat: SANITY_TAGS.retreat,
 };
 
 export const SANITY_TYPE_TO_PATHS: Record<SanityDocumentType, string[]> = {
@@ -43,4 +48,5 @@ export const SANITY_TYPE_TO_PATHS: Record<SanityDocumentType, string[]> = {
   teamMember: ['/teams'],
   coreValue: ['/core-values', '/'],
   sermon: ['/sermons'],
+  retreat: ['/retreat'],
 };

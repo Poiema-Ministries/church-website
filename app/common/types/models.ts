@@ -85,3 +85,46 @@ export interface UpcomingEvent {
   fields: EventFormField[];
   order: number;
 }
+
+export interface RetreatActivity {
+  _key: string;
+  title: string;
+  startTime: string;
+  endTime: string;
+  note?: string;
+}
+
+export interface RetreatScheduleDay {
+  _key: string;
+  dayLabel: string;
+  date?: string;
+  activities: RetreatActivity[];
+}
+
+export interface RetreatQuestionSection {
+  _key: string;
+  isVisible: boolean;
+  sermonTitle: string;
+  bibleVerse: string;
+  reflectionQuestions: string[];
+}
+
+export interface Retreat {
+  _id: string;
+  isEnabled: boolean;
+  themeTitle: string;
+  subtitle: string;
+  speaker: string;
+  themeImage?: {
+    asset?: {
+      _id: string;
+      url: string;
+    };
+    hotspot?: {
+      x: number;
+      y: number;
+    };
+  };
+  scheduleDays?: RetreatScheduleDay[];
+  questionSections?: RetreatQuestionSection[];
+}

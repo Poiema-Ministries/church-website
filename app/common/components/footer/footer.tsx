@@ -4,84 +4,101 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { WebLink, FooterLink } from '../../types/models';
 
-const FOOTER_LINKS: FooterLink[] = [
-  {
-    title: 'About Us',
-    links: [
-      {
-        title: 'Meet Our Pastor',
-        href: '/pastor',
-      },
-      {
-        title: 'Meet Our Teams',
-        href: '/teams',
-      },
-      {
-        title: 'Core Values',
-        href: '/core-values',
-      },
-      {
-        title: 'Theology',
-        href: '/theology',
-      },
-    ],
-  },
-  {
-    title: 'Worship',
-    links: [
-      {
-        title: 'Sermons',
-        href: '/sermons',
-      },
-      {
-        title: 'Online Offering',
-        href: '/offering',
-      },
-      {
-        title: 'Bulletins',
-        href: '/bulletins',
-      },
-      {
-        title: 'Services',
-        href: '/services',
-      },
-    ],
-  },
-  {
-    title: 'Events',
-    links: [
-      {
-        title: 'Past Events',
-        href: '/past-events',
-      },
-      {
-        title: 'Upcoming Events',
-        href: '/upcoming-events',
-      },
-    ],
-  },
-  {
-    title: 'Get Involved',
-    links: [
-      {
-        title: 'New Members',
-        href: '/new-members',
-      },
-      {
-        title: 'Prayer Requests',
-        href: '/prayer-requests',
-      },
-      {
-        title: 'Contact Us',
-        href: '/contact-us',
-      },
-    ],
-  },
-];
+function getFooterLinks(showRetreat: boolean): FooterLink[] {
+  const eventLinks: WebLink[] = [
+    {
+      title: 'Past Events',
+      href: '/past-events',
+    },
+    {
+      title: 'Upcoming Events',
+      href: '/upcoming-events',
+    },
+  ];
 
-export default function Footer() {
+  if (showRetreat) {
+    eventLinks.push({
+      title: 'Retreat',
+      href: '/retreat',
+    });
+  }
+
+  return [
+    {
+      title: 'About Us',
+      links: [
+        {
+          title: 'Meet Our Pastor',
+          href: '/pastor',
+        },
+        {
+          title: 'Meet Our Teams',
+          href: '/teams',
+        },
+        {
+          title: 'Core Values',
+          href: '/core-values',
+        },
+        {
+          title: 'Theology',
+          href: '/theology',
+        },
+      ],
+    },
+    {
+      title: 'Worship',
+      links: [
+        {
+          title: 'Sermons',
+          href: '/sermons',
+        },
+        {
+          title: 'Online Offering',
+          href: '/offering',
+        },
+        {
+          title: 'Bulletins',
+          href: '/bulletins',
+        },
+        {
+          title: 'Services',
+          href: '/services',
+        },
+      ],
+    },
+    {
+      title: 'Events',
+      links: eventLinks,
+    },
+    {
+      title: 'Get Involved',
+      links: [
+        {
+          title: 'New Members',
+          href: '/new-members',
+        },
+        {
+          title: 'Prayer Requests',
+          href: '/prayer-requests',
+        },
+        {
+          title: 'Contact Us',
+          href: '/contact-us',
+        },
+      ],
+    },
+  ];
+}
+
+export default function Footer({
+  showRetreat = false,
+}: {
+  showRetreat?: boolean;
+}) {
+  const footerLinks = getFooterLinks(showRetreat);
+
   const renderFooterLinks = () => {
-    return FOOTER_LINKS.map((footerLink: FooterLink) => {
+    return footerLinks.map((footerLink: FooterLink) => {
       const { title, links } = footerLink;
       return (
         <div className='flex flex-col items-center md:items-start' key={title}>
