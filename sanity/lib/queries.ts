@@ -105,3 +105,42 @@ export const upcomingEventBySlugQuery = groq`
     order
   }
 `;
+
+export const retreatEnabledQuery = groq`
+  *[_type == "retreat"] | order(_updatedAt desc)[0] {
+    isEnabled
+  }
+`;
+
+export const retreatQuery = groq`
+  *[_type == "retreat"] | order(_updatedAt desc)[0] {
+    _id,
+    isEnabled,
+    themeTitle,
+    subtitle,
+    speaker,
+    themeImage {
+      asset,
+      hotspot
+    },
+    scheduleDays[] {
+      _key,
+      dayLabel,
+      date,
+      activities[] {
+        _key,
+        title,
+        startTime,
+        endTime,
+        note
+      }
+    },
+    questionSections[] {
+      _key,
+      isVisible,
+      sermonTitle,
+      bibleVerse,
+      reflectionQuestions
+    }
+  }
+`;

@@ -7,52 +7,70 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
-const NAV_ITEMS = [
-  {
-    name: 'Home',
-    href: '/',
-    hasDropdown: false,
-  },
-  {
-    name: 'About Us',
-    hasDropdown: true,
-    links: [
-      { title: 'Meet Our Pastor', href: '/pastor' },
-      { title: 'Meet Our Teams', href: '/teams' },
-      { title: 'Core Values', href: '/core-values' },
-      { title: 'Theology', href: '/theology' },
-    ],
-  },
-  {
-    name: 'Worship',
-    hasDropdown: true,
-    links: [
-      { title: 'Sermons', href: '/sermons' },
-      { title: 'Online Offering', href: '/offering' },
-      { title: 'Bulletins', href: '/bulletins' },
-      { title: 'Services', href: '/services' },
-    ],
-  },
-  {
-    name: 'Events',
-    hasDropdown: true,
-    links: [
-      { title: 'Past Events', href: '/past-events' },
-      { title: 'Upcoming Events', href: '/upcoming-events' },
-    ],
-  },
-  {
-    name: 'Get Involved',
-    hasDropdown: true,
-    links: [
-      { title: 'New Members', href: '/new-members' },
-      { title: 'Prayer Requests', href: '/prayer-requests' },
-      { title: 'Contact Us', href: '/contact-us' },
-    ],
-  },
-];
+type NavLink = { title: string; href: string };
 
-export default function Navbar() {
+type NavItem = {
+  name: string;
+  href?: string;
+  hasDropdown: boolean;
+  links?: NavLink[];
+};
+
+function getNavItems(showRetreat: boolean): NavItem[] {
+  const eventLinks: NavLink[] = [
+    { title: 'Past Events', href: '/past-events' },
+    { title: 'Upcoming Events', href: '/upcoming-events' },
+  ];
+
+  if (showRetreat) {
+    eventLinks.push({ title: 'Retreat', href: '/retreat' });
+  }
+
+  return [
+    {
+      name: 'Home',
+      href: '/',
+      hasDropdown: false,
+    },
+    {
+      name: 'About Us',
+      hasDropdown: true,
+      links: [
+        { title: 'Meet Our Pastor', href: '/pastor' },
+        { title: 'Meet Our Teams', href: '/teams' },
+        { title: 'Core Values', href: '/core-values' },
+        { title: 'Theology', href: '/theology' },
+      ],
+    },
+    {
+      name: 'Worship',
+      hasDropdown: true,
+      links: [
+        { title: 'Sermons', href: '/sermons' },
+        { title: 'Online Offering', href: '/offering' },
+        { title: 'Bulletins', href: '/bulletins' },
+        { title: 'Services', href: '/services' },
+      ],
+    },
+    {
+      name: 'Events',
+      hasDropdown: true,
+      links: eventLinks,
+    },
+    {
+      name: 'Get Involved',
+      hasDropdown: true,
+      links: [
+        { title: 'New Members', href: '/new-members' },
+        { title: 'Prayer Requests', href: '/prayer-requests' },
+        { title: 'Contact Us', href: '/contact-us' },
+      ],
+    },
+  ];
+}
+
+export default function Navbar({ showRetreat = false }: { showRetreat?: boolean }) {
+  const NAV_ITEMS = getNavItems(showRetreat);
   const pathname = usePathname();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [closeTimeout, setCloseTimeout] = useState<NodeJS.Timeout | null>(null);
@@ -281,7 +299,7 @@ export default function Navbar() {
                       <div
                         className={`overflow-hidden transition-all duration-300 ease-in-out ${
                           mobileDropdownOpen === item.name
-                            ? 'max-h-96 opacity-100'
+                            ? 'max-h-[28rem] opacity-100'
                             : 'max-h-0 opacity-0'
                         }`}
                       >

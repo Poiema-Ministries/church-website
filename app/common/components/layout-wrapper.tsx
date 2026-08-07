@@ -8,17 +8,19 @@ import Footer from './footer/footer';
 
 export default function LayoutWrapper({
   children,
+  showRetreat = false,
 }: {
   children: React.ReactNode;
+  showRetreat?: boolean;
 }) {
   const pathname = usePathname();
   const isStudio = pathname?.startsWith('/studio');
 
   return (
     <>
-      {!isStudio && <Navbar />}
+      {!isStudio && <Navbar showRetreat={showRetreat} />}
       {children}
-      {!isStudio && <Footer />}
+      {!isStudio && <Footer showRetreat={showRetreat} />}
     </>
   );
 }

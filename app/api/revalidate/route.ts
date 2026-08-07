@@ -65,6 +65,10 @@ export async function POST(req: Request) {
     revalidatePath(path);
   }
 
+  if (documentType === 'retreat') {
+    revalidatePath('/', 'layout');
+  }
+
   if (documentType === 'upcomingEvent' && slug) {
     revalidatePath(`/upcoming-events/${slug}`);
   }
@@ -76,6 +80,8 @@ export async function POST(req: Request) {
     paths:
       documentType === 'upcomingEvent' && slug
         ? [...paths, `/upcoming-events/${slug}`]
-        : paths,
+        : documentType === 'retreat'
+          ? [...paths, '/']
+          : paths,
   });
 }

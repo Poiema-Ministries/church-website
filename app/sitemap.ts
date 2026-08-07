@@ -1,12 +1,17 @@
 // Copyright 2025 Poiema Ministries. All Rights Reserved.
 
 import { MetadataRoute } from 'next';
+import { client } from '@/sanity/lib/client';
+import { retreatEnabledQuery } from '@/sanity/lib/queries';
+import {
+  SANITY_RETREAT_REVALIDATE_SECONDS,
+  SANITY_TAGS,
+} from '@/sanity/lib/cache';
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL || 'https://poiemaministries.org';
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  // Static pages with high priority
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: siteUrl,
@@ -34,6 +39,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${siteUrl}/past-events`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${siteUrl}/upcoming-events`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
@@ -81,6 +92,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
     },
   ];
+
+  const retreat = await client
+    .withConfig({ useCdn: false })
+    .fetch<{ isEnabled?: boolean } | null>(
+      retreatEnabledQuery,
+      {},
+      {
+        next: {
+          revalidate: SANITY_RETREAT_REVALIDATE_SECONDS,
+          tags: [SANITY_TAGS.retreat, SANITY_TAGS.all],
+        },
+      },
+    );
+
+  if (retreat?.isEnabled) {
+    staticPages.push({
+      url: `${siteUrl}/retreat`,
+      lastModified: new Date(),
+      changeFrequency: 'always',
+      priority: 0.9,
+    });
+  }
 
   return staticPages;
 }
