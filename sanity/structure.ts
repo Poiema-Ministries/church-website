@@ -8,6 +8,12 @@ export const structure: StructureResolver = (S) =>
     .title('Content')
     .items([
       S.listItem()
+        .title('Pastor')
+        .id('pastor')
+        .child(
+          S.document().schemaType('pastor').documentId('pastor').title('Pastor'),
+        ),
+      S.listItem()
         .title('Retreat')
         .id('retreat')
         .child(
@@ -15,6 +21,7 @@ export const structure: StructureResolver = (S) =>
         ),
       S.divider(),
       ...S.documentTypeListItems().filter(
-        (listItem) => listItem.getId() !== 'retreat',
+        (listItem) =>
+          listItem.getId() !== 'retreat' && listItem.getId() !== 'pastor',
       ),
     ]);

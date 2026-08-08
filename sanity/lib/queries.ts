@@ -106,6 +106,18 @@ export const upcomingEventBySlugQuery = groq`
   }
 `;
 
+export const pastorQuery = groq`
+  *[_type == "pastor"] | order(_updatedAt desc)[0] {
+    _id,
+    name,
+    image {
+      asset,
+      hotspot
+    },
+    description
+  }
+`;
+
 export const retreatEnabledQuery = groq`
   *[_type == "retreat"] | order(_updatedAt desc)[0] {
     isEnabled
