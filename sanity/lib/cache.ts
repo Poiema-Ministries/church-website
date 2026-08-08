@@ -20,6 +20,7 @@ export const SANITY_TAGS = {
   coreValue: 'sanity:coreValue',
   sermon: 'sanity:sermon',
   retreat: 'sanity:retreat',
+  pastor: 'sanity:pastor',
 } as const;
 
 export type SanityDocumentType =
@@ -29,7 +30,8 @@ export type SanityDocumentType =
   | 'teamMember'
   | 'coreValue'
   | 'sermon'
-  | 'retreat';
+  | 'retreat'
+  | 'pastor';
 
 export const SANITY_TYPE_TO_TAG: Record<SanityDocumentType, string> = {
   bulletin: SANITY_TAGS.bulletin,
@@ -39,6 +41,7 @@ export const SANITY_TYPE_TO_TAG: Record<SanityDocumentType, string> = {
   coreValue: SANITY_TAGS.coreValue,
   sermon: SANITY_TAGS.sermon,
   retreat: SANITY_TAGS.retreat,
+  pastor: SANITY_TAGS.pastor,
 };
 
 export const SANITY_TYPE_TO_PATHS: Record<SanityDocumentType, string[]> = {
@@ -49,4 +52,5 @@ export const SANITY_TYPE_TO_PATHS: Record<SanityDocumentType, string[]> = {
   coreValue: ['/core-values', '/'],
   sermon: ['/sermons'],
   retreat: ['/retreat'],
+  pastor: ['/pastor'],
 };

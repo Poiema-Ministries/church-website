@@ -5,7 +5,17 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 
-export default function PastorClient() {
+interface PastorClientProps {
+  name: string;
+  imageSrc: string;
+  description: string[];
+}
+
+export default function PastorClient({
+  name,
+  imageSrc,
+  description,
+}: PastorClientProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -80,10 +90,10 @@ export default function PastorClient() {
           >
             <div className='relative overflow-hidden rounded-sm'>
               <Image
-                src='/imgs/pastor.jpg'
+                src={imageSrc}
                 width={400}
                 height={270}
-                alt='Pastor Sam Jung'
+                alt={name}
                 className='w-full h-auto transition-transform duration-700 ease-out hover:scale-105'
                 sizes='(max-width: 640px) 100vw, (max-width: 1024px) 400px, 320px'
                 priority
@@ -114,29 +124,13 @@ export default function PastorClient() {
               transitionDelay: prefersReducedMotion ? '0ms' : '300ms',
             }}
           >
-            Pastor Sam Jung
+            {name}
           </h2>
           <div className='flex flex-col gap-4 sm:gap-4 lg:gap-4 text-primary-black'>
-            {[
-              `Pastor Sam was born in Korea and came to the US in 2009 to study
-              family counseling. He has been here at KPCB since August 2015. He
-              is passionate to lead people to come to Jesus and follow him so
-              that they can make Jesus known to others.`,
-              `This God-given passion led him to serve the young generation as a
-              youth pastor for a decade at KPCB. As a youth pastor, he started
-              youth discipleship training in 2018, emphasizing the importance of
-              discipleship training for teenagers. He was ordained by the New
-              York Presbytery of General Assembly of World Presbyterian Church
-              Denomination in 2018.`,
-              `He loves mission and has joined KPCB DR (Dominican Republic)
-              mission trips in 2019, 2023, 2024, and 2025 as a mission lead
-              pastor. He is also passionate about counseling ministry as an
-              effective tool of supporting churches. He and his wife Miyoung
-              have two kids: Casey and Hanah.`,
-            ].map((paragraph, index) => (
+            {description.map((paragraph, index) => (
               <p
                 key={index}
-                className={`text-sm sm:text-base md:text-lg lg:text-base leading-relaxed text-center lg:text-left transition-all duration-700 ease-out ${
+                className={`text-sm sm:text-base md:text-lg lg:text-base leading-relaxed text-center lg:text-left whitespace-pre-line transition-all duration-700 ease-out ${
                   isVisible
                     ? 'opacity-100 translate-y-0'
                     : 'opacity-0 translate-y-6'

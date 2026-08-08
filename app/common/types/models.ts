@@ -86,6 +86,22 @@ export interface UpcomingEvent {
   order: number;
 }
 
+export interface Pastor {
+  _id: string;
+  name: string;
+  image: {
+    asset?: {
+      _id: string;
+      url: string;
+    };
+    hotspot?: {
+      x: number;
+      y: number;
+    };
+  };
+  description: string[];
+}
+
 export interface RetreatActivity {
   _key: string;
   title: string;
