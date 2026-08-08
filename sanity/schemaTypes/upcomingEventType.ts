@@ -195,6 +195,22 @@ export const upcomingEventType = defineType({
         'Order in which this event should be displayed (lower numbers appear first)',
       validation: (rule) => rule.required().integer().min(1),
     }),
+    defineField({
+      name: 'googleSheetId',
+      title: 'Google Sheet ID',
+      type: 'string',
+      readOnly: true,
+      description:
+        'Auto-populated on the first registration. Maps this event to its Google Sheet.',
+    }),
+    defineField({
+      name: 'googleSheetUrl',
+      title: 'Google Sheet URL',
+      type: 'url',
+      readOnly: true,
+      description:
+        'Link to the registration spreadsheet. Available after the first submission.',
+    }),
   ],
   preview: {
     select: {
