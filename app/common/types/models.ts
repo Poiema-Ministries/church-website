@@ -84,6 +84,8 @@ export interface UpcomingEvent {
   registrationDeadline: string;
   fields: EventFormField[];
   order: number;
+  googleSheetId?: string;
+  googleSheetUrl?: string;
 }
 
 export interface RetreatActivity {
