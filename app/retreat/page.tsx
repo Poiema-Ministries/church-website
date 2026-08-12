@@ -15,6 +15,7 @@ import {
   RetreatQuestionSection,
   RetreatScheduleDay,
 } from '../common/types/models';
+import { parseBiblePassage } from '../common/utils/parse-bible-passage';
 
 export const revalidate = 0;
 export const dynamic = 'force-dynamic';
@@ -107,16 +108,50 @@ function ScheduleDay({ day }: { day: RetreatScheduleDay }) {
   );
 }
 
+function BiblePassage({ text }: { text: string }) {
+  const verses = parseBiblePassage(text);
+
+  return (
+    <blockquote className='mt-5 pl-4 sm:pl-5 border-l-2 border-primary-black/25'>
+      {verses ? (
+        <p className='text-base sm:text-lg leading-[1.9] text-primary-black'>
+          {verses.map((verse, index) => (
+            <span key={`${verse.number}-${index}`}>
+              {index > 0 ? (verse.lines.length > 1 ? <br /> : ' ') : null}
+              <sup className='mr-1 select-none text-[0.7em] font-semibold text-primary-black/45 align-super'>
+                {verse.number}
+              </sup>
+              {verse.lines.map((line, lineIndex) => (
+                <span key={lineIndex}>
+                  {lineIndex > 0 && <br />}
+                  {line}
+                </span>
+              ))}
+            </span>
+          ))}
+        </p>
+      ) : (
+        <p className='text-base sm:text-lg leading-[1.9] text-primary-black whitespace-pre-wrap'>
+          {text.trim()}
+        </p>
+      )}
+    </blockquote>
+  );
+}
+
 function QuestionSection({ section }: { section: RetreatQuestionSection }) {
   return (
     <article className='border-t border-primary-black/20 pt-8 first:border-t-0 first:pt-0'>
-      <h3 className='text-xl sm:text-2xl font-bold text-primary-black'>
-        {section.sermonTitle}
-      </h3>
-      <p className='mt-2 text-sm sm:text-base italic text-primary-black/80'>
-        {section.bibleVerse}
-      </p>
-      <ol className='mt-5 list-decimal pl-5 space-y-3'>
+      <header>
+        <h3 className='text-xl sm:text-2xl font-bold text-primary-black'>
+          {section.sermonTitle}
+        </h3>
+        <p className='mt-1 text-base sm:text-lg font-medium text-primary-black/75'>
+          {section.bibleVerse}
+        </p>
+      </header>
+      {section.bibleVerseText && <BiblePassage text={section.bibleVerseText} />}
+      <ol className='mt-6 list-decimal pl-5 space-y-3'>
         {section.reflectionQuestions?.map((question, index) => (
           <li
             key={`${section._key}-${index}`}

@@ -152,6 +152,7 @@ export const retreatQuery = groq`
       isVisible,
       sermonTitle,
       bibleVerse,
+      bibleVerseText,
       reflectionQuestions
     }
   }

@@ -175,10 +175,18 @@ export const retreatType = defineType({
             }),
             defineField({
               name: 'bibleVerse',
-              title: 'Bible Verse',
+              title: 'Verse Reference',
               type: 'string',
               description: 'e.g., Isaiah 40:1–11',
               validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: 'bibleVerseText',
+              title: 'Scripture Text',
+              type: 'text',
+              rows: 10,
+              description:
+                'Paste the passage shown on the retreat page. Start each verse on a new line with its number, for example:\n1 Comfort, comfort my people, says your God.\n2 Speak tenderly to Jerusalem...',
             }),
             defineField({
               name: 'reflectionQuestions',
