@@ -122,6 +122,7 @@ export interface RetreatQuestionSection {
   isVisible: boolean;
   sermonTitle: string;
   bibleVerse: string;
+  bibleVerseText?: string;
   reflectionQuestions: string[];
 }
 

@@ -94,6 +94,8 @@ const mockRetreat = {
       isVisible: true,
       sermonTitle: 'Comfort My People',
       bibleVerse: 'Isaiah 40:1',
+      bibleVerseText:
+        '1 Comfort, comfort my people, says your God.\n2 Speak tenderly to Jerusalem.',
       reflectionQuestions: [
         "How have you experienced God's comfort?",
         'Who needs comfort this week?',
@@ -150,6 +152,12 @@ describe('Retreat Page', () => {
     expect(screen.getByText('8:30 AM – 9:00 AM')).toBeInTheDocument();
     expect(screen.getByText('Reflection Questions')).toBeInTheDocument();
     expect(screen.getByText('Isaiah 40:1')).toBeInTheDocument();
+    expect(
+      screen.getByText('Comfort, comfort my people, says your God.'),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText('Speak tenderly to Jerusalem.'),
+    ).toBeInTheDocument();
     expect(
       screen.getByText("How have you experienced God's comfort?"),
     ).toBeInTheDocument();
