@@ -126,6 +126,13 @@ export interface RetreatQuestionSection {
   reflectionQuestions: string[];
 }
 
+export interface RetreatGroup {
+  _key: string;
+  name?: string;
+  leader: string;
+  members: string[];
+}
+
 export interface Retreat {
   _id: string;
   isEnabled: boolean;
@@ -143,5 +150,9 @@ export interface Retreat {
     };
   };
   scheduleDays?: RetreatScheduleDay[];
+  areGroupsVisible?: boolean;
+  groups?: RetreatGroup[];
+  areBuddyQuestionsVisible?: boolean;
+  buddyQuestions?: string[];
   questionSections?: RetreatQuestionSection[];
 }

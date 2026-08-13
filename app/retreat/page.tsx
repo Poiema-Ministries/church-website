@@ -12,6 +12,7 @@ import {
 } from '@/sanity/lib/cache';
 import {
   Retreat,
+  RetreatGroup,
   RetreatQuestionSection,
   RetreatScheduleDay,
 } from '../common/types/models';
@@ -23,11 +24,11 @@ export const dynamic = 'force-dynamic';
 export const metadata: Metadata = {
   title: 'Retreat',
   description:
-    'View the schedule, theme, and reflection questions for the Poiema Ministries retreat.',
+    'View the schedule, groups, buddy questions, theme, and reflection questions for the Poiema Ministries retreat.',
   openGraph: {
     title: 'Retreat | Poiema Ministries',
     description:
-      'View the schedule, theme, and reflection questions for the Poiema Ministries retreat.',
+      'View the schedule, groups, buddy questions, theme, and reflection questions for the Poiema Ministries retreat.',
   },
 };
 
@@ -117,7 +118,7 @@ function BiblePassage({ text }: { text: string }) {
         <p className='text-base sm:text-lg leading-[1.9] text-primary-black'>
           {verses.map((verse, index) => (
             <span key={`${verse.number}-${index}`}>
-              {index > 0 ? (verse.lines.length > 1 ? <br /> : ' ') : null}
+              {index > 0 ? verse.lines.length > 1 ? <br /> : ' ' : null}
               <sup className='mr-1 select-none text-[0.7em] font-semibold text-primary-black/45 align-super'>
                 {verse.number}
               </sup>
@@ -136,6 +137,44 @@ function BiblePassage({ text }: { text: string }) {
         </p>
       )}
     </blockquote>
+  );
+}
+
+function groupsGridClass(count: number) {
+  if (count <= 1) return 'grid-cols-1';
+  if (count === 2) return 'grid-cols-1 sm:grid-cols-2';
+  if (count === 3) return 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3';
+  if (count === 4) return 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4';
+  return 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5';
+}
+
+function GroupCard({ group, index }: { group: RetreatGroup; index: number }) {
+  const groupName = group.name?.trim() || `Group ${index + 1}`;
+
+  return (
+    <article className='flex flex-col min-w-0 border border-primary-black/15 bg-background'>
+      <header className='bg-secondary px-4 py-3 border-b border-primary-black/15'>
+        <p className='text-xs tracking-wide uppercase text-primary-black/60'>
+          {groupName}
+        </p>
+        <h3 className='mt-1 text-lg sm:text-xl font-bold text-primary-black leading-tight'>
+          {group.leader}
+        </h3>
+        <p className='mt-0.5 text-xs sm:text-sm text-primary-black/70'>
+          Leader
+        </p>
+      </header>
+      <ul className='px-4 py-4 space-y-2.5'>
+        {group.members?.map((member, memberIndex) => (
+          <li
+            key={`${group._key}-${memberIndex}`}
+            className='text-sm sm:text-base text-primary-black leading-relaxed'
+          >
+            {member}
+          </li>
+        ))}
+      </ul>
+    </article>
   );
 }
 
@@ -168,18 +207,26 @@ function QuestionSection({ section }: { section: RetreatQuestionSection }) {
 export default async function RetreatPage() {
   const retreat: Retreat | null = await client
     .withConfig({ useCdn: false })
-    .fetch(retreatQuery, {}, {
-      next: {
-        revalidate: SANITY_RETREAT_REVALIDATE_SECONDS,
-        tags: [SANITY_TAGS.retreat, SANITY_TAGS.all],
+    .fetch(
+      retreatQuery,
+      {},
+      {
+        next: {
+          revalidate: SANITY_RETREAT_REVALIDATE_SECONDS,
+          tags: [SANITY_TAGS.retreat, SANITY_TAGS.all],
+        },
       },
-    });
+    );
 
   if (!retreat?.isEnabled) {
     notFound();
   }
 
   const scheduleDays = retreat.scheduleDays ?? [];
+  const groups = retreat.areGroupsVisible ? (retreat.groups ?? []) : [];
+  const buddyQuestions = retreat.areBuddyQuestionsVisible
+    ? (retreat.buddyQuestions ?? [])
+    : [];
   const visibleSections =
     retreat.questionSections?.filter((section) => section.isVisible) ?? [];
 
@@ -213,6 +260,45 @@ export default async function RetreatPage() {
 
           <ThemePanel retreat={retreat} className='hidden md:flex' />
         </div>
+
+        {groups.length > 0 && (
+          <section
+            aria-label='Retreat groups'
+            className='mt-14 sm:mt-16 md:mt-20 pt-10 border-t border-primary-black/20'
+          >
+            <h2 className='text-2xl sm:text-3xl font-bold text-primary-black mb-8'>
+              Groups
+            </h2>
+            <div
+              className={`grid gap-4 sm:gap-5 ${groupsGridClass(groups.length)}`}
+            >
+              {groups.map((group, index) => (
+                <GroupCard key={group._key} group={group} index={index} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {buddyQuestions.length > 0 && (
+          <section
+            aria-label='Buddy questions'
+            className='mt-14 sm:mt-16 md:mt-20 pt-10 border-t border-primary-black/20'
+          >
+            <h2 className='text-2xl sm:text-3xl font-bold text-primary-black mb-8'>
+              Buddy Questions
+            </h2>
+            <ol className='list-decimal pl-5 space-y-3 max-w-3xl'>
+              {buddyQuestions.map((question, index) => (
+                <li
+                  key={`buddy-${index}`}
+                  className='text-sm sm:text-base text-primary-black leading-relaxed pl-1'
+                >
+                  {question}
+                </li>
+              ))}
+            </ol>
+          </section>
+        )}
 
         {visibleSections.length > 0 && (
           <section

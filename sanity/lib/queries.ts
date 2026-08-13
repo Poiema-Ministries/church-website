@@ -147,6 +147,15 @@ export const retreatQuery = groq`
         note
       }
     },
+    areGroupsVisible,
+    groups[] {
+      _key,
+      name,
+      leader,
+      members
+    },
+    areBuddyQuestionsVisible,
+    buddyQuestions,
     questionSections[] {
       _key,
       isVisible,

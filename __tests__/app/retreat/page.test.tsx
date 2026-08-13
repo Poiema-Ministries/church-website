@@ -49,6 +49,8 @@ jest.mock('@/sanity/lib/image', () => ({
 const mockRetreat = {
   _id: 'retreat',
   isEnabled: true,
+  areGroupsVisible: true,
+  areBuddyQuestionsVisible: true,
   themeTitle: 'Comfort My People',
   subtitle: 'Winter Retreat 2026',
   speaker: 'Pastor Samuel Jung',
@@ -87,6 +89,24 @@ const mockRetreat = {
         },
       ],
     },
+  ],
+  groups: [
+    {
+      _key: 'group-1',
+      name: 'Group 1',
+      leader: 'Grace Yuen',
+      members: ['Kenneth Kim', 'Isaac Jeong', 'Samuel Lee'],
+    },
+    {
+      _key: 'group-2',
+      name: 'Group 2',
+      leader: 'Paul Ball',
+      members: ['Woojin Kim', 'Vincent Jeong'],
+    },
+  ],
+  buddyQuestions: [
+    'Introduce yourself and share some fun facts about yourself (hobbies, job, major, etc.)!',
+    'Rank 3 Things: Chicken, Beef, Pork',
   ],
   questionSections: [
     {
@@ -133,7 +153,7 @@ describe('Retreat Page', () => {
     expect(notFound).toHaveBeenCalled();
   });
 
-  it('renders theme, schedule, and visible questions', async () => {
+  it('renders theme, schedule, groups, buddy questions, and visible questions', async () => {
     mockFetch.mockResolvedValue(mockRetreat);
 
     const component = await RetreatPage();
@@ -150,6 +170,20 @@ describe('Retreat Page', () => {
     expect(screen.getByText('Friday')).toBeInTheDocument();
     expect(screen.getByText('Departure')).toBeInTheDocument();
     expect(screen.getByText('8:30 AM – 9:00 AM')).toBeInTheDocument();
+    expect(screen.getByText('Groups')).toBeInTheDocument();
+    expect(screen.getByText('Group 1')).toBeInTheDocument();
+    expect(screen.getByText('Grace Yuen')).toBeInTheDocument();
+    expect(screen.getByText('Kenneth Kim')).toBeInTheDocument();
+    expect(screen.getByText('Paul Ball')).toBeInTheDocument();
+    expect(screen.getByText('Buddy Questions')).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        'Introduce yourself and share some fun facts about yourself (hobbies, job, major, etc.)!',
+      ),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText('Rank 3 Things: Chicken, Beef, Pork'),
+    ).toBeInTheDocument();
     expect(screen.getByText('Reflection Questions')).toBeInTheDocument();
     expect(screen.getByText('Isaiah 40:1')).toBeInTheDocument();
     expect(
@@ -190,5 +224,46 @@ describe('Retreat Page', () => {
     render(component);
 
     expect(screen.getByText('Schedule coming soon.')).toBeInTheDocument();
+  });
+
+  it('hides groups section when no groups are configured', async () => {
+    mockFetch.mockResolvedValue({
+      ...mockRetreat,
+      groups: [],
+    });
+
+    const component = await RetreatPage();
+    render(component);
+
+    expect(screen.queryByText('Groups')).not.toBeInTheDocument();
+    expect(screen.queryByText('Grace Yuen')).not.toBeInTheDocument();
+  });
+
+  it('hides groups section when the groups toggle is off', async () => {
+    mockFetch.mockResolvedValue({
+      ...mockRetreat,
+      areGroupsVisible: false,
+    });
+
+    const component = await RetreatPage();
+    render(component);
+
+    expect(screen.queryByText('Groups')).not.toBeInTheDocument();
+    expect(screen.queryByText('Grace Yuen')).not.toBeInTheDocument();
+  });
+
+  it('hides buddy questions when the toggle is off', async () => {
+    mockFetch.mockResolvedValue({
+      ...mockRetreat,
+      areBuddyQuestionsVisible: false,
+    });
+
+    const component = await RetreatPage();
+    render(component);
+
+    expect(screen.queryByText('Buddy Questions')).not.toBeInTheDocument();
+    expect(
+      screen.queryByText('Rank 3 Things: Chicken, Beef, Pork'),
+    ).not.toBeInTheDocument();
   });
 });
