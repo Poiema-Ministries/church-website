@@ -290,6 +290,69 @@ export const retreatType = defineType({
         },
       ],
     }),
+    defineField({
+      name: 'areLinksVisible',
+      title: 'Show Links on Retreat Page',
+      type: 'boolean',
+      description:
+        'Turn on to display the Links section. Leave off to hide it until ready.',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'links',
+      title: 'Links',
+      type: 'array',
+      description:
+        'Links shown after Reflection Questions when "Show Links on Retreat Page" is on. Each link also has its own visibility toggle.',
+      of: [
+        {
+          type: 'object',
+          name: 'retreatLink',
+          title: 'Link',
+          fields: [
+            defineField({
+              name: 'isVisible',
+              title: 'Show on Retreat Page',
+              type: 'boolean',
+              description: 'Turn off to hide this link without deleting it.',
+              initialValue: true,
+            }),
+            defineField({
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+              description:
+                'Optional label shown before the URL (e.g., "Sign-up Form").',
+            }),
+            defineField({
+              name: 'url',
+              title: 'Link',
+              type: 'url',
+              description: 'The URL to display (required).',
+              validation: (rule) =>
+                rule.required().uri({
+                  scheme: ['http', 'https'],
+                }),
+            }),
+          ],
+          preview: {
+            select: {
+              title: 'title',
+              url: 'url',
+              isVisible: 'isVisible',
+            },
+            prepare({ title, url, isVisible }) {
+              return {
+                title: title || url || 'Untitled link',
+                subtitle: `${isVisible ? 'Visible' : 'Hidden'}${
+                  url ? ` · ${url}` : ''
+                }`,
+              };
+            },
+          },
+        },
+      ],
+    }),
   ],
   preview: {
     select: {

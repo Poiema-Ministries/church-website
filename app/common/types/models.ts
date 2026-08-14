@@ -133,6 +133,13 @@ export interface RetreatGroup {
   members: string[];
 }
 
+export interface RetreatLink {
+  _key: string;
+  isVisible: boolean;
+  title?: string;
+  url: string;
+}
+
 export interface Retreat {
   _id: string;
   isEnabled: boolean;
@@ -155,4 +162,6 @@ export interface Retreat {
   areBuddyQuestionsVisible?: boolean;
   buddyQuestions?: string[];
   questionSections?: RetreatQuestionSection[];
+  areLinksVisible?: boolean;
+  links?: RetreatLink[];
 }
