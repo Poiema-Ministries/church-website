@@ -51,6 +51,7 @@ const mockRetreat = {
   isEnabled: true,
   areGroupsVisible: true,
   areBuddyQuestionsVisible: true,
+  areLinksVisible: true,
   themeTitle: 'Comfort My People',
   subtitle: 'Winter Retreat 2026',
   speaker: 'Pastor Samuel Jung',
@@ -129,6 +130,25 @@ const mockRetreat = {
       reflectionQuestions: ['Should not appear'],
     },
   ],
+  links: [
+    {
+      _key: 'link-1',
+      isVisible: true,
+      title: 'Sign-up Form',
+      url: 'https://example.com/signup',
+    },
+    {
+      _key: 'link-2',
+      isVisible: true,
+      url: 'https://example.com/notes',
+    },
+    {
+      _key: 'link-3',
+      isVisible: false,
+      title: 'Hidden Link',
+      url: 'https://example.com/hidden',
+    },
+  ],
 };
 
 describe('Retreat Page', () => {
@@ -153,7 +173,7 @@ describe('Retreat Page', () => {
     expect(notFound).toHaveBeenCalled();
   });
 
-  it('renders theme, schedule, groups, buddy questions, and visible questions', async () => {
+  it('renders theme, schedule, groups, buddy questions, visible questions, and links', async () => {
     mockFetch.mockResolvedValue(mockRetreat);
 
     const component = await RetreatPage();
@@ -197,6 +217,18 @@ describe('Retreat Page', () => {
     ).toBeInTheDocument();
     expect(screen.queryByText('Hidden Sermon')).not.toBeInTheDocument();
     expect(screen.queryByText('Should not appear')).not.toBeInTheDocument();
+    expect(screen.getByText('Links')).toBeInTheDocument();
+    expect(screen.getByText(/Sign-up Form:/)).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: 'https://example.com/signup' }),
+    ).toHaveAttribute('href', 'https://example.com/signup');
+    expect(
+      screen.getByRole('link', { name: 'https://example.com/notes' }),
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/Hidden Link:/)).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('link', { name: 'https://example.com/hidden' }),
+    ).not.toBeInTheDocument();
   });
 
   it('hides reflection section when no questions are visible', async () => {
@@ -265,5 +297,18 @@ describe('Retreat Page', () => {
     expect(
       screen.queryByText('Rank 3 Things: Chicken, Beef, Pork'),
     ).not.toBeInTheDocument();
+  });
+
+  it('hides links section when the links toggle is off', async () => {
+    mockFetch.mockResolvedValue({
+      ...mockRetreat,
+      areLinksVisible: false,
+    });
+
+    const component = await RetreatPage();
+    render(component);
+
+    expect(screen.queryByText('Links')).not.toBeInTheDocument();
+    expect(screen.queryByText(/Sign-up Form:/)).not.toBeInTheDocument();
   });
 });

@@ -163,6 +163,13 @@ export const retreatQuery = groq`
       bibleVerse,
       bibleVerseText,
       reflectionQuestions
+    },
+    areLinksVisible,
+    links[] {
+      _key,
+      isVisible,
+      title,
+      url
     }
   }
 `;

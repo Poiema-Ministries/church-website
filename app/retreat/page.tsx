@@ -13,6 +13,7 @@ import {
 import {
   Retreat,
   RetreatGroup,
+  RetreatLink,
   RetreatQuestionSection,
   RetreatScheduleDay,
 } from '../common/types/models';
@@ -24,11 +25,11 @@ export const dynamic = 'force-dynamic';
 export const metadata: Metadata = {
   title: 'Retreat',
   description:
-    'View the schedule, groups, buddy questions, theme, and reflection questions for the Poiema Ministries retreat.',
+    'View the schedule, groups, buddy questions, theme, reflection questions, and links for the Poiema Ministries retreat.',
   openGraph: {
     title: 'Retreat | Poiema Ministries',
     description:
-      'View the schedule, groups, buddy questions, theme, and reflection questions for the Poiema Ministries retreat.',
+      'View the schedule, groups, buddy questions, theme, reflection questions, and links for the Poiema Ministries retreat.',
   },
 };
 
@@ -178,6 +179,24 @@ function GroupCard({ group, index }: { group: RetreatGroup; index: number }) {
   );
 }
 
+function LinkItem({ link }: { link: RetreatLink }) {
+  const title = link.title?.trim();
+
+  return (
+    <li className='text-sm sm:text-base text-primary-black leading-relaxed break-words pl-1'>
+      {title ? <span className='font-semibold'>{title}: </span> : null}
+      <a
+        href={link.url}
+        target='_blank'
+        rel='noopener noreferrer'
+        className='underline underline-offset-2 hover:text-primary-black/70'
+      >
+        {link.url}
+      </a>
+    </li>
+  );
+}
+
 function QuestionSection({ section }: { section: RetreatQuestionSection }) {
   return (
     <article className='border-t border-primary-black/20 pt-8 first:border-t-0 first:pt-0'>
@@ -229,6 +248,9 @@ export default async function RetreatPage() {
     : [];
   const visibleSections =
     retreat.questionSections?.filter((section) => section.isVisible) ?? [];
+  const links = retreat.areLinksVisible
+    ? (retreat.links?.filter((link) => link.isVisible && link.url) ?? [])
+    : [];
 
   return (
     <div className='flex flex-col w-full bg-background min-h-screen'>
@@ -313,6 +335,22 @@ export default async function RetreatPage() {
                 <QuestionSection key={section._key} section={section} />
               ))}
             </div>
+          </section>
+        )}
+
+        {links.length > 0 && (
+          <section
+            aria-label='Retreat links'
+            className='mt-14 sm:mt-16 md:mt-20 pt-10 border-t border-primary-black/20'
+          >
+            <h2 className='text-2xl sm:text-3xl font-bold text-primary-black mb-8'>
+              Links
+            </h2>
+            <ul className='list-disc pl-5 space-y-3 max-w-3xl'>
+              {links.map((link) => (
+                <LinkItem key={link._key} link={link} />
+              ))}
+            </ul>
           </section>
         )}
       </div>
