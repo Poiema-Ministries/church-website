@@ -50,9 +50,11 @@ export async function POST(req: Request) {
 
   if (!documentType || !isSanityDocumentType(documentType)) {
     revalidateTag(SANITY_TAGS.all, 'max');
+    revalidatePath('/');
     return NextResponse.json({
       revalidated: true,
       scope: 'all',
+      paths: ['/'],
     });
   }
 
@@ -65,6 +67,8 @@ export async function POST(req: Request) {
     revalidatePath(path);
   }
 
+  revalidatePath('/');
+
   if (documentType === 'retreat') {
     revalidatePath('/', 'layout');
   }
@@ -73,15 +77,15 @@ export async function POST(req: Request) {
     revalidatePath(`/upcoming-events/${slug}`);
   }
 
+  const revalidatedPaths = new Set<string>(['/', ...paths]);
+  if (documentType === 'upcomingEvent' && slug) {
+    revalidatedPaths.add(`/upcoming-events/${slug}`);
+  }
+
   return NextResponse.json({
     revalidated: true,
     type: documentType,
     tag,
-    paths:
-      documentType === 'upcomingEvent' && slug
-        ? [...paths, `/upcoming-events/${slug}`]
-        : documentType === 'retreat'
-          ? [...paths, '/']
-          : paths,
+    paths: [...revalidatedPaths],
   });
 }

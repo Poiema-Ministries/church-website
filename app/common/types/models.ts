@@ -86,6 +86,20 @@ export interface UpcomingEvent {
   order: number;
 }
 
+export interface HomePage {
+  _id: string;
+  heroImage?: {
+    asset?: {
+      _id: string;
+      url: string;
+    };
+    hotspot?: {
+      x: number;
+      y: number;
+    };
+  };
+}
+
 export interface Pastor {
   _id: string;
   name: string;
