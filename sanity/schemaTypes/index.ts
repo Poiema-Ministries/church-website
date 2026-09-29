@@ -9,9 +9,11 @@ import { upcomingEventType } from './upcomingEventType';
 import { teamMemberType } from './teamMemberType';
 import { retreatType } from './retreatType';
 import { pastorType } from './pastorType';
+import { homePageType } from './homePageType';
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
+    homePageType,
     coreValueType,
     sermonType,
     bulletinType,

@@ -2,6 +2,16 @@
 
 import { groq } from 'next-sanity';
 
+export const homePageQuery = groq`
+  *[_type == "homePage"] | order(_updatedAt desc)[0] {
+    _id,
+    heroImage {
+      asset,
+      hotspot
+    }
+  }
+`;
+
 export const coreValuesQuery = groq`
   *[_type == "coreValue"] | order(order asc) {
     _id,
