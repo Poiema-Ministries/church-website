@@ -45,10 +45,14 @@ export async function GET(request: Request) {
     const hasMore = sermons.length > SERMONS_PER_PAGE;
     const results = hasMore ? sermons.slice(0, SERMONS_PER_PAGE) : sermons;
 
-    // Get the last sermon's date as the next cursor
+    // Sermon dates are Sanity date values (YYYY-MM-DD). Keep that string as the
+    // cursor. Converting with toISOString() yields a datetime, and a date-only
+    // value sorts before that datetime on the same day, so the last item on
+    // this page is included again on the next page.
+    const lastDate = results[results.length - 1]?.date;
     const nextCursor =
-      hasMore && results.length > 0 && results[results.length - 1].date
-        ? new Date(results[results.length - 1].date).toISOString()
+      hasMore && typeof lastDate === 'string' && lastDate.length > 0
+        ? lastDate.slice(0, 10)
         : null;
 
     return NextResponse.json({
