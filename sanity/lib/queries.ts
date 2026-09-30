@@ -41,11 +41,12 @@ export const bulletinsQuery = groq`
 `;
 
 export const announcementsQuery = groq`
-  *[_type == "announcement"] | order(order asc) {
+  *[_type == "announcement" && isVisible != false] | order(order asc) {
     _id,
     title,
     description,
     order,
+    isVisible,
     announcementImage {
       image {
         asset

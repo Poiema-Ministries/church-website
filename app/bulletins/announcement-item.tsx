@@ -6,10 +6,12 @@ import { urlFor } from '../../sanity/lib/image';
 
 interface AnnouncementItemProps {
   announcement: Announcement;
+  displayNumber: number;
 }
 
 export default function AnnouncementItem({
   announcement,
+  displayNumber,
 }: AnnouncementItemProps) {
   const hasImage =
     announcement.announcementImage?.image?.asset &&
@@ -21,7 +23,7 @@ export default function AnnouncementItem({
 
   return (
     <div className='flex flex-row gap-3 w-full md:w-auto'>
-      <span className='font-semibold'>{announcement.order}.</span>
+      <span className='font-semibold'>{displayNumber}.</span>
       <div className='flex flex-col flex-1'>
         <span className='font-semibold text-center md:text-left'>
           {announcement.title}
