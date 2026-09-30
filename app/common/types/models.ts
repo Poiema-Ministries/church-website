@@ -8,6 +8,7 @@ interface Describable {
 
 export interface Announcement extends Describable {
   order?: number;
+  isVisible?: boolean;
   announcementImage?: {
     image?: {
       asset?: {

@@ -34,10 +34,11 @@ export default async function Bulletins() {
 
   const renderAnnouncements = () => {
     return announcements.map(
-      (announcement: Announcement & { _id?: string }) => {
+      (announcement: Announcement & { _id?: string }, index) => {
         return (
           <AnnouncementItem
             announcement={announcement}
+            displayNumber={index + 1}
             key={announcement._id}
           />
         );
