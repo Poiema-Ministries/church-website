@@ -51,7 +51,10 @@ export function getResendFromAddress(): string {
 }
 
 export function getSiteUrl(): string {
-  return (
-    process.env.NEXT_PUBLIC_SITE_URL || 'https://poiemaministries.org'
-  ).replace(/\/$/, '');
+  const configured = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (configured) return configured.replace(/\/$/, '');
+  // Local sends must link back to this dev server. The live site does not
+  // have these pages until the branch is deployed.
+  if (process.env.NODE_ENV === 'development') return 'http://localhost:3000';
+  return 'https://poiemaministries.org';
 }
