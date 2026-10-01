@@ -62,6 +62,7 @@ function getNavItems(showRetreat: boolean): NavItem[] {
       hasDropdown: true,
       links: [
         { title: 'New Members', href: '/new-members' },
+        { title: 'Bible Study', href: '/bible-study' },
         { title: 'Prayer Requests', href: '/prayer-requests' },
         { title: 'Contact Us', href: '/contact-us' },
       ],
@@ -69,7 +70,11 @@ function getNavItems(showRetreat: boolean): NavItem[] {
   ];
 }
 
-export default function Navbar({ showRetreat = false }: { showRetreat?: boolean }) {
+export default function Navbar({
+  showRetreat = false,
+}: {
+  showRetreat?: boolean;
+}) {
   const NAV_ITEMS = getNavItems(showRetreat);
   const pathname = usePathname();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);

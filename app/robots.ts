@@ -11,7 +11,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/studio/', '/api/'],
+        disallow: ['/studio/', '/api/', '/bible-study/unsubscribe'],
       },
     ],
     sitemap: `${siteUrl}/sitemap.xml`,

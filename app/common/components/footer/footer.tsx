@@ -78,6 +78,10 @@ function getFooterLinks(showRetreat: boolean): FooterLink[] {
           href: '/new-members',
         },
         {
+          title: 'Bible Study',
+          href: '/bible-study',
+        },
+        {
           title: 'Prayer Requests',
           href: '/prayer-requests',
         },
