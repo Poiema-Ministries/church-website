@@ -69,7 +69,7 @@ export async function POST(req: Request) {
 
   revalidatePath('/');
 
-  if (documentType === 'retreat') {
+  if (documentType === 'retreat' || documentType === 'bibleStudy') {
     revalidatePath('/', 'layout');
   }
 

@@ -4,7 +4,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { WebLink, FooterLink } from '../../types/models';
 
-function getFooterLinks(showRetreat: boolean): FooterLink[] {
+function getFooterLinks(
+  showRetreat: boolean,
+  showBibleStudy: boolean,
+): FooterLink[] {
   const eventLinks: WebLink[] = [
     {
       title: 'Past Events',
@@ -20,6 +23,28 @@ function getFooterLinks(showRetreat: boolean): FooterLink[] {
     eventLinks.push({
       title: 'Retreat',
       href: '/retreat',
+    });
+  }
+
+  const involvedLinks: WebLink[] = [
+    {
+      title: 'New Members',
+      href: '/new-members',
+    },
+    {
+      title: 'Prayer Requests',
+      href: '/prayer-requests',
+    },
+    {
+      title: 'Contact Us',
+      href: '/contact-us',
+    },
+  ];
+
+  if (showBibleStudy) {
+    involvedLinks.splice(1, 0, {
+      title: 'Bible Study',
+      href: '/bible-study',
     });
   }
 
@@ -72,30 +97,19 @@ function getFooterLinks(showRetreat: boolean): FooterLink[] {
     },
     {
       title: 'Get Involved',
-      links: [
-        {
-          title: 'New Members',
-          href: '/new-members',
-        },
-        {
-          title: 'Prayer Requests',
-          href: '/prayer-requests',
-        },
-        {
-          title: 'Contact Us',
-          href: '/contact-us',
-        },
-      ],
+      links: involvedLinks,
     },
   ];
 }
 
 export default function Footer({
   showRetreat = false,
+  showBibleStudy = false,
 }: {
   showRetreat?: boolean;
+  showBibleStudy?: boolean;
 }) {
-  const footerLinks = getFooterLinks(showRetreat);
+  const footerLinks = getFooterLinks(showRetreat, showBibleStudy);
 
   const renderFooterLinks = () => {
     return footerLinks.map((footerLink: FooterLink) => {
