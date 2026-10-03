@@ -11,6 +11,14 @@ export const bibleStudyType = defineType({
   liveEdit: true,
   fields: [
     defineField({
+      name: 'isEnabled',
+      title: 'Show Bible Study on the website',
+      type: 'boolean',
+      initialValue: false,
+      description:
+        'Leave this off to keep Bible Study out of the menu and off its public page. Turn it on when the signup page should go live.',
+    }),
+    defineField({
       name: 'editor',
       title: 'Bible Study email',
       type: 'string',

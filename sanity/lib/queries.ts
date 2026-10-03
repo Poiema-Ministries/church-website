@@ -129,6 +129,12 @@ export const pastorQuery = groq`
   }
 `;
 
+export const bibleStudyEnabledQuery = groq`
+  *[_id == "bibleStudy"][0] {
+    isEnabled
+  }
+`;
+
 export const retreatEnabledQuery = groq`
   *[_type == "retreat"] | order(_updatedAt desc)[0] {
     isEnabled

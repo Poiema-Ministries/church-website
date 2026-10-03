@@ -1,6 +1,9 @@
 // Copyright 2026 Poiema Ministries. All Rights Reserved.
 
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+
+import { isBibleStudyPublic } from '@/lib/bible-study/visibility';
 
 import BibleStudyForm from './bible-study-form';
 
@@ -15,6 +18,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function BibleStudyPage() {
+export default async function BibleStudyPage() {
+  if (!(await isBibleStudyPublic())) notFound();
   return <BibleStudyForm />;
 }

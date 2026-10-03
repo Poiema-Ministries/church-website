@@ -14,11 +14,19 @@ import { clientIp, rateLimit } from '@/lib/bible-study/rate-limit';
 import { subscribe } from '@/lib/bible-study/record';
 import { mutateBibleStudy } from '@/lib/bible-study/store';
 import { parseSignup } from '@/lib/bible-study/validation';
+import { isBibleStudyPublic } from '@/lib/bible-study/visibility';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 export async function POST(req: Request) {
+  if (!(await isBibleStudyPublic())) {
+    return bibleStudyJson(
+      { error: 'Bible Study signup is not open right now.' },
+      404,
+    );
+  }
+
   if (!contentLengthIsReasonable(req, 20_000)) {
     return bibleStudyJson(
       { error: 'We could not submit that signup. Please try again.' },

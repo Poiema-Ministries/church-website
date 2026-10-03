@@ -2,6 +2,9 @@
 
 import type { Metadata } from 'next';
 import { Kaisei_Decol } from 'next/font/google';
+
+import { isBibleStudyPublic } from '@/lib/bible-study/visibility';
+
 import LayoutWrapper from './common/components/layout-wrapper';
 import { client } from '../sanity/lib/client';
 import { retreatEnabledQuery } from '../sanity/lib/queries';
@@ -84,6 +87,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   let showRetreat = false;
+  let showBibleStudy = false;
   try {
     const retreat = await client
       .withConfig({ useCdn: false })
@@ -102,10 +106,21 @@ export default async function RootLayout({
     showRetreat = false;
   }
 
+  try {
+    showBibleStudy = await isBibleStudyPublic();
+  } catch {
+    showBibleStudy = false;
+  }
+
   return (
     <html lang='en' className='overflow-x-hidden'>
       <body className={`${kaiseiDecol.variable} antialiased overflow-x-hidden`}>
-        <LayoutWrapper showRetreat={showRetreat}>{children}</LayoutWrapper>
+        <LayoutWrapper
+          showRetreat={showRetreat}
+          showBibleStudy={showBibleStudy}
+        >
+          {children}
+        </LayoutWrapper>
       </body>
     </html>
   );

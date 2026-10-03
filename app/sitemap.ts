@@ -2,6 +2,7 @@
 
 import { MetadataRoute } from 'next';
 import { client } from '@/sanity/lib/client';
+import { isBibleStudyPublic } from '@/lib/bible-study/visibility';
 import { retreatEnabledQuery } from '@/sanity/lib/queries';
 import {
   SANITY_RETREAT_REVALIDATE_SECONDS,
@@ -86,12 +87,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6,
     },
     {
-      url: `${siteUrl}/bible-study`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    },
-    {
       url: `${siteUrl}/prayer-requests`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
@@ -111,6 +106,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         },
       },
     );
+
+  if (await isBibleStudyPublic()) {
+    staticPages.push({
+      url: `${siteUrl}/bible-study`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    });
+  }
 
   if (retreat?.isEnabled) {
     staticPages.push({
