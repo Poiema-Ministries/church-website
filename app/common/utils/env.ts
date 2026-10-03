@@ -20,3 +20,21 @@ export function getResendApiKey(): string {
 
   return apiKey;
 }
+
+export function getGoogleServiceAccountEmail(): string {
+  const email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
+  if (!email) {
+    throw new Error(
+      'GOOGLE_SERVICE_ACCOUNT_EMAIL is not set in environment variables',
+    );
+  }
+  return email;
+}
+
+export function getGooglePrivateKey(): string {
+  const key = process.env.GOOGLE_PRIVATE_KEY;
+  if (!key) {
+    throw new Error('GOOGLE_PRIVATE_KEY is not set in environment variables');
+  }
+  return key.replace(/\\n/g, '\n');
+}
