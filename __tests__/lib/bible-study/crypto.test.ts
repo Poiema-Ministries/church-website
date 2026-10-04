@@ -42,10 +42,16 @@ describe('Bible Study encryption', () => {
   it('rejects a tampered payload', () => {
     const sealed = sealRecord(emptyRecord(), SECRET);
     const [version, iv, tag, cipher] = sealed.split('.');
-    const flipped = cipher.slice(0, -1) + (cipher.endsWith('a') ? 'b' : 'a');
+    // Flip a decoded byte. Changing the last base64 character can land in
+    // unused padding bits and leave the ciphertext unchanged.
+    const bytes = Buffer.from(cipher, 'base64url');
+    bytes[0] ^= 0xff;
     expect(() =>
-      openRecord([version, iv, tag, flipped].join('.'), SECRET),
-    ).toThrow();
+      openRecord(
+        [version, iv, tag, bytes.toString('base64url')].join('.'),
+        SECRET,
+      ),
+    ).toThrow('Bible Study record could not be read.');
   });
 
   it('matches only the exact unsubscribe token', () => {
