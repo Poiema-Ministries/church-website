@@ -70,6 +70,21 @@ body {
   display: none; /* Chrome, Safari and Opera */
 }
 
+/* Thin scrollbar for the photo filmstrip */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.4) transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  height: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+}
+
 /* Subtle bounce animation for scroll hints */
 @keyframes bounce-subtle {
   0%,
