@@ -20,11 +20,18 @@ export const announcementType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'isVisible',
+      title: 'Show on Bulletins Page',
+      type: 'boolean',
+      description: 'Turn off to hide this announcement. Turn on to display it.',
+      initialValue: true,
+    }),
+    defineField({
       name: 'order',
       title: 'Display Order',
       type: 'number',
       description:
-        'Order in which this announcement should be displayed (lower numbers appear first)',
+        'Order in which this announcement should be displayed (lower numbers appear first). The page numbers visible announcements 1, 2, 3… in this order.',
       validation: (rule) => rule.required().integer().min(1),
     }),
     defineField({
@@ -85,9 +92,11 @@ export const announcementType = defineType({
     select: {
       title: 'title',
       order: 'order',
+      isVisible: 'isVisible',
     },
-    prepare({ title, order }) {
-      return { title, subtitle: `Order: ${order}` };
+    prepare({ title, order, isVisible }) {
+      const visibility = isVisible === false ? 'Hidden' : 'Visible';
+      return { title, subtitle: `${visibility} · Order: ${order}` };
     },
   },
 });

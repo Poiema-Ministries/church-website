@@ -2,6 +2,16 @@
 
 import { groq } from 'next-sanity';
 
+export const homePageQuery = groq`
+  *[_type == "homePage"] | order(_updatedAt desc)[0] {
+    _id,
+    heroImage {
+      asset,
+      hotspot
+    }
+  }
+`;
+
 export const coreValuesQuery = groq`
   *[_type == "coreValue"] | order(order asc) {
     _id,
@@ -31,11 +41,12 @@ export const bulletinsQuery = groq`
 `;
 
 export const announcementsQuery = groq`
-  *[_type == "announcement"] | order(order asc) {
+  *[_type == "announcement" && isVisible != false] | order(order asc) {
     _id,
     title,
     description,
     order,
+    isVisible,
     announcementImage {
       image {
         asset
@@ -106,6 +117,24 @@ export const upcomingEventBySlugQuery = groq`
   }
 `;
 
+export const pastorQuery = groq`
+  *[_type == "pastor"] | order(_updatedAt desc)[0] {
+    _id,
+    name,
+    image {
+      asset,
+      hotspot
+    },
+    description
+  }
+`;
+
+export const bibleStudyEnabledQuery = groq`
+  *[_id == "bibleStudy"][0] {
+    isEnabled
+  }
+`;
+
 export const retreatEnabledQuery = groq`
   *[_type == "retreat"] | order(_updatedAt desc)[0] {
     isEnabled
@@ -135,12 +164,29 @@ export const retreatQuery = groq`
         note
       }
     },
+    areGroupsVisible,
+    groups[] {
+      _key,
+      name,
+      leader,
+      members
+    },
+    areBuddyQuestionsVisible,
+    buddyQuestions,
     questionSections[] {
       _key,
       isVisible,
       sermonTitle,
       bibleVerse,
+      bibleVerseText,
       reflectionQuestions
+    },
+    areLinksVisible,
+    links[] {
+      _key,
+      isVisible,
+      title,
+      url
     }
   }
 `;

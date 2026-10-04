@@ -2,16 +2,23 @@
 
 import { MetadataRoute } from 'next';
 
-export default function robots(): MetadataRoute.Robots {
+import { isBibleStudyPublic } from '@/lib/bible-study/visibility';
+
+export default async function robots(): Promise<MetadataRoute.Robots> {
   const siteUrl =
     process.env.NEXT_PUBLIC_SITE_URL || 'https://poiemaministries.org';
+  const disallow = ['/studio/', '/api/', '/bible-study/unsubscribe'];
+
+  if (!(await isBibleStudyPublic())) {
+    disallow.push('/bible-study');
+  }
 
   return {
     rules: [
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/studio/', '/api/'],
+        disallow,
       },
     ],
     sitemap: `${siteUrl}/sitemap.xml`,

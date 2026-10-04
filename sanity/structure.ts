@@ -8,13 +8,47 @@ export const structure: StructureResolver = (S) =>
     .title('Content')
     .items([
       S.listItem()
+        .title('Home Page')
+        .id('homePage')
+        .child(
+          S.document()
+            .schemaType('homePage')
+            .documentId('homePage')
+            .title('Home Page'),
+        ),
+      S.listItem()
+        .title('Pastor')
+        .id('pastor')
+        .child(
+          S.document()
+            .schemaType('pastor')
+            .documentId('pastor')
+            .title('Pastor'),
+        ),
+      S.listItem()
+        .title('Bible Study')
+        .id('bibleStudy')
+        .child(
+          S.document()
+            .schemaType('bibleStudy')
+            .documentId('bibleStudy')
+            .title('Bible Study'),
+        ),
+      S.listItem()
         .title('Retreat')
         .id('retreat')
         .child(
-          S.document().schemaType('retreat').documentId('retreat').title('Retreat'),
+          S.document()
+            .schemaType('retreat')
+            .documentId('retreat')
+            .title('Retreat'),
         ),
       S.divider(),
       ...S.documentTypeListItems().filter(
-        (listItem) => listItem.getId() !== 'retreat',
+        (listItem) =>
+          listItem.getId() !== 'retreat' &&
+          listItem.getId() !== 'pastor' &&
+          listItem.getId() !== 'homePage' &&
+          listItem.getId() !== 'bibleStudy',
       ),
     ]);

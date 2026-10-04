@@ -15,11 +15,19 @@ const GALLERY_IMAGES: string[] = [
   '/imgs/gallery-5.webp',
 ];
 
+const DEFAULT_HERO_IMAGE = '/imgs/home-banner.jpg';
+
 interface HomeClientProps {
   coreValues: CoreValue[];
+  heroImageSrc?: string;
+  heroImagePosition?: string;
 }
 
-export default function HomeClient({ coreValues }: HomeClientProps) {
+export default function HomeClient({
+  coreValues,
+  heroImageSrc,
+  heroImagePosition,
+}: HomeClientProps) {
   const [isVisible] = useState<boolean>(true);
 
   return (
@@ -28,11 +36,14 @@ export default function HomeClient({ coreValues }: HomeClientProps) {
       <div className='relative w-full h-screen min-h-[600px] flex items-center overflow-hidden -mt-[140px] pt-[140px]'>
         {/* Background Image - LCP element, optimized */}
         <Image
-          src='/imgs/home-banner.jpg'
+          src={heroImageSrc || DEFAULT_HERO_IMAGE}
           alt='Poiema Ministries'
           fill
           className='object-cover'
-          style={{ filter: 'grayscale(100%)' }}
+          style={{
+            filter: 'grayscale(100%)',
+            objectPosition: heroImagePosition || 'center',
+          }}
           priority
           quality={85}
           sizes='100vw'
@@ -54,7 +65,7 @@ export default function HomeClient({ coreValues }: HomeClientProps) {
                 <p className='font-semibold text-lg sm:text-xl md:text-2xl leading-normal'>
                   poiema
                 </p>
-                <p className='italic leading-normal'>poy&apos;-ah-mah</p>
+                <p className='italic leading-normal'>poy&apos;-eh-mah</p>
                 <p className='font-semibold leading-normal'>
                   Greek word for workmanship or masterpiece
                 </p>

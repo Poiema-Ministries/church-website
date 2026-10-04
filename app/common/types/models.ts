@@ -8,6 +8,7 @@ interface Describable {
 
 export interface Announcement extends Describable {
   order?: number;
+  isVisible?: boolean;
   announcementImage?: {
     image?: {
       asset?: {
@@ -88,6 +89,36 @@ export interface UpcomingEvent {
   googleSheetUrl?: string;
 }
 
+export interface HomePage {
+  _id: string;
+  heroImage?: {
+    asset?: {
+      _id: string;
+      url: string;
+    };
+    hotspot?: {
+      x: number;
+      y: number;
+    };
+  };
+}
+
+export interface Pastor {
+  _id: string;
+  name: string;
+  image: {
+    asset?: {
+      _id: string;
+      url: string;
+    };
+    hotspot?: {
+      x: number;
+      y: number;
+    };
+  };
+  description: string[];
+}
+
 export interface RetreatActivity {
   _key: string;
   title: string;
@@ -108,7 +139,22 @@ export interface RetreatQuestionSection {
   isVisible: boolean;
   sermonTitle: string;
   bibleVerse: string;
+  bibleVerseText?: string;
   reflectionQuestions: string[];
+}
+
+export interface RetreatGroup {
+  _key: string;
+  name?: string;
+  leader: string;
+  members: string[];
+}
+
+export interface RetreatLink {
+  _key: string;
+  isVisible: boolean;
+  title?: string;
+  url: string;
 }
 
 export interface Retreat {
@@ -128,5 +174,11 @@ export interface Retreat {
     };
   };
   scheduleDays?: RetreatScheduleDay[];
+  areGroupsVisible?: boolean;
+  groups?: RetreatGroup[];
+  areBuddyQuestionsVisible?: boolean;
+  buddyQuestions?: string[];
   questionSections?: RetreatQuestionSection[];
+  areLinksVisible?: boolean;
+  links?: RetreatLink[];
 }

@@ -148,6 +148,83 @@ export const retreatType = defineType({
       ],
     }),
     defineField({
+      name: 'areGroupsVisible',
+      title: 'Show Groups on Retreat Page',
+      type: 'boolean',
+      description:
+        'Turn on to display the Groups section. Leave off to hide it until ready.',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'groups',
+      title: 'Groups',
+      type: 'array',
+      description:
+        'Small groups shown after the schedule when "Show Groups on Retreat Page" is on.',
+      of: [
+        {
+          type: 'object',
+          name: 'retreatGroup',
+          title: 'Group',
+          fields: [
+            defineField({
+              name: 'name',
+              title: 'Group Name',
+              type: 'string',
+              description:
+                'e.g., Group 1. Leave blank to number groups automatically.',
+            }),
+            defineField({
+              name: 'leader',
+              title: 'Leader',
+              type: 'string',
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: 'members',
+              title: 'Members',
+              type: 'array',
+              of: [{ type: 'string' }],
+              validation: (rule) =>
+                rule.min(1).error('Add at least one group member'),
+            }),
+          ],
+          preview: {
+            select: {
+              title: 'name',
+              leader: 'leader',
+              members: 'members',
+            },
+            prepare({ title, leader, members }) {
+              const count = Array.isArray(members) ? members.length : 0;
+              return {
+                title: title || leader || 'Untitled group',
+                subtitle: [leader && `Leader: ${leader}`, `${count} members`]
+                  .filter(Boolean)
+                  .join(' · '),
+              };
+            },
+          },
+        },
+      ],
+    }),
+    defineField({
+      name: 'areBuddyQuestionsVisible',
+      title: 'Show Buddy Questions on Retreat Page',
+      type: 'boolean',
+      description:
+        'Turn on to display the Buddy Questions section. Leave off to hide it until ready.',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'buddyQuestions',
+      title: 'Buddy Questions',
+      type: 'array',
+      description:
+        'Icebreaker questions shown after Groups when "Show Buddy Questions on Retreat Page" is on.',
+      of: [{ type: 'string' }],
+    }),
+    defineField({
       name: 'questionSections',
       title: 'Question Sections',
       type: 'array',
@@ -175,10 +252,18 @@ export const retreatType = defineType({
             }),
             defineField({
               name: 'bibleVerse',
-              title: 'Bible Verse',
+              title: 'Verse Reference',
               type: 'string',
               description: 'e.g., Isaiah 40:1–11',
               validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: 'bibleVerseText',
+              title: 'Scripture Text',
+              type: 'text',
+              rows: 10,
+              description:
+                'Paste the passage shown on the retreat page. Start each verse on a new line with its number, for example:\n1 Comfort, comfort my people, says your God.\n2 Speak tenderly to Jerusalem...',
             }),
             defineField({
               name: 'reflectionQuestions',
@@ -199,6 +284,69 @@ export const retreatType = defineType({
               return {
                 title: title || 'Untitled sermon',
                 subtitle: `${isVisible ? 'Visible' : 'Hidden'}${verse ? ` · ${verse}` : ''}`,
+              };
+            },
+          },
+        },
+      ],
+    }),
+    defineField({
+      name: 'areLinksVisible',
+      title: 'Show Links on Retreat Page',
+      type: 'boolean',
+      description:
+        'Turn on to display the Links section. Leave off to hide it until ready.',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'links',
+      title: 'Links',
+      type: 'array',
+      description:
+        'Links shown after Reflection Questions when "Show Links on Retreat Page" is on. Each link also has its own visibility toggle.',
+      of: [
+        {
+          type: 'object',
+          name: 'retreatLink',
+          title: 'Link',
+          fields: [
+            defineField({
+              name: 'isVisible',
+              title: 'Show on Retreat Page',
+              type: 'boolean',
+              description: 'Turn off to hide this link without deleting it.',
+              initialValue: true,
+            }),
+            defineField({
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+              description:
+                'Optional label shown before the URL (e.g., "Sign-up Form").',
+            }),
+            defineField({
+              name: 'url',
+              title: 'Link',
+              type: 'url',
+              description: 'The URL to display (required).',
+              validation: (rule) =>
+                rule.required().uri({
+                  scheme: ['http', 'https'],
+                }),
+            }),
+          ],
+          preview: {
+            select: {
+              title: 'title',
+              url: 'url',
+              isVisible: 'isVisible',
+            },
+            prepare({ title, url, isVisible }) {
+              return {
+                title: title || url || 'Untitled link',
+                subtitle: `${isVisible ? 'Visible' : 'Hidden'}${
+                  url ? ` · ${url}` : ''
+                }`,
               };
             },
           },

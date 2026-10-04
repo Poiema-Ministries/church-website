@@ -12,9 +12,12 @@ import {
 } from '@/sanity/lib/cache';
 import {
   Retreat,
+  RetreatGroup,
+  RetreatLink,
   RetreatQuestionSection,
   RetreatScheduleDay,
 } from '../common/types/models';
+import { parseBiblePassage } from '../common/utils/parse-bible-passage';
 
 export const revalidate = 0;
 export const dynamic = 'force-dynamic';
@@ -22,11 +25,11 @@ export const dynamic = 'force-dynamic';
 export const metadata: Metadata = {
   title: 'Retreat',
   description:
-    'View the schedule, theme, and reflection questions for the Poiema Ministries retreat.',
+    'View the schedule, groups, buddy questions, theme, reflection questions, and links for the Poiema Ministries retreat.',
   openGraph: {
     title: 'Retreat | Poiema Ministries',
     description:
-      'View the schedule, theme, and reflection questions for the Poiema Ministries retreat.',
+      'View the schedule, groups, buddy questions, theme, reflection questions, and links for the Poiema Ministries retreat.',
   },
 };
 
@@ -107,16 +110,106 @@ function ScheduleDay({ day }: { day: RetreatScheduleDay }) {
   );
 }
 
+function BiblePassage({ text }: { text: string }) {
+  const verses = parseBiblePassage(text);
+
+  return (
+    <blockquote className='mt-5 pl-4 sm:pl-5 border-l-2 border-primary-black/25'>
+      {verses ? (
+        <p className='text-base sm:text-lg leading-[1.9] text-primary-black'>
+          {verses.map((verse, index) => (
+            <span key={`${verse.number}-${index}`}>
+              {index > 0 ? verse.lines.length > 1 ? <br /> : ' ' : null}
+              <sup className='mr-1 select-none text-[0.7em] font-semibold text-primary-black/45 align-super'>
+                {verse.number}
+              </sup>
+              {verse.lines.map((line, lineIndex) => (
+                <span key={lineIndex}>
+                  {lineIndex > 0 && <br />}
+                  {line}
+                </span>
+              ))}
+            </span>
+          ))}
+        </p>
+      ) : (
+        <p className='text-base sm:text-lg leading-[1.9] text-primary-black whitespace-pre-wrap'>
+          {text.trim()}
+        </p>
+      )}
+    </blockquote>
+  );
+}
+
+function groupsGridClass(count: number) {
+  if (count <= 1) return 'grid-cols-1';
+  if (count === 2) return 'grid-cols-1 sm:grid-cols-2';
+  if (count === 3) return 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3';
+  if (count === 4) return 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4';
+  return 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5';
+}
+
+function GroupCard({ group, index }: { group: RetreatGroup; index: number }) {
+  const groupName = group.name?.trim() || `Group ${index + 1}`;
+
+  return (
+    <article className='flex flex-col min-w-0 border border-primary-black/15 bg-background'>
+      <header className='bg-secondary px-4 py-3 border-b border-primary-black/15'>
+        <p className='text-xs tracking-wide uppercase text-primary-black/60'>
+          {groupName}
+        </p>
+        <h3 className='mt-1 text-lg sm:text-xl font-bold text-primary-black leading-tight'>
+          {group.leader}
+        </h3>
+        <p className='mt-0.5 text-xs sm:text-sm text-primary-black/70'>
+          Leader
+        </p>
+      </header>
+      <ul className='px-4 py-4 space-y-2.5'>
+        {group.members?.map((member, memberIndex) => (
+          <li
+            key={`${group._key}-${memberIndex}`}
+            className='text-sm sm:text-base text-primary-black leading-relaxed'
+          >
+            {member}
+          </li>
+        ))}
+      </ul>
+    </article>
+  );
+}
+
+function LinkItem({ link }: { link: RetreatLink }) {
+  const title = link.title?.trim();
+
+  return (
+    <li className='text-sm sm:text-base text-primary-black leading-relaxed break-words pl-1'>
+      {title ? <span className='font-semibold'>{title}: </span> : null}
+      <a
+        href={link.url}
+        target='_blank'
+        rel='noopener noreferrer'
+        className='underline underline-offset-2 hover:text-primary-black/70'
+      >
+        {link.url}
+      </a>
+    </li>
+  );
+}
+
 function QuestionSection({ section }: { section: RetreatQuestionSection }) {
   return (
     <article className='border-t border-primary-black/20 pt-8 first:border-t-0 first:pt-0'>
-      <h3 className='text-xl sm:text-2xl font-bold text-primary-black'>
-        {section.sermonTitle}
-      </h3>
-      <p className='mt-2 text-sm sm:text-base italic text-primary-black/80'>
-        {section.bibleVerse}
-      </p>
-      <ol className='mt-5 list-decimal pl-5 space-y-3'>
+      <header>
+        <h3 className='text-xl sm:text-2xl font-bold text-primary-black'>
+          {section.sermonTitle}
+        </h3>
+        <p className='mt-1 text-base sm:text-lg font-medium text-primary-black/75'>
+          {section.bibleVerse}
+        </p>
+      </header>
+      {section.bibleVerseText && <BiblePassage text={section.bibleVerseText} />}
+      <ol className='mt-6 list-decimal pl-5 space-y-3'>
         {section.reflectionQuestions?.map((question, index) => (
           <li
             key={`${section._key}-${index}`}
@@ -133,20 +226,31 @@ function QuestionSection({ section }: { section: RetreatQuestionSection }) {
 export default async function RetreatPage() {
   const retreat: Retreat | null = await client
     .withConfig({ useCdn: false })
-    .fetch(retreatQuery, {}, {
-      next: {
-        revalidate: SANITY_RETREAT_REVALIDATE_SECONDS,
-        tags: [SANITY_TAGS.retreat, SANITY_TAGS.all],
+    .fetch(
+      retreatQuery,
+      {},
+      {
+        next: {
+          revalidate: SANITY_RETREAT_REVALIDATE_SECONDS,
+          tags: [SANITY_TAGS.retreat, SANITY_TAGS.all],
+        },
       },
-    });
+    );
 
   if (!retreat?.isEnabled) {
     notFound();
   }
 
   const scheduleDays = retreat.scheduleDays ?? [];
+  const groups = retreat.areGroupsVisible ? (retreat.groups ?? []) : [];
+  const buddyQuestions = retreat.areBuddyQuestionsVisible
+    ? (retreat.buddyQuestions ?? [])
+    : [];
   const visibleSections =
     retreat.questionSections?.filter((section) => section.isVisible) ?? [];
+  const links = retreat.areLinksVisible
+    ? (retreat.links?.filter((link) => link.isVisible && link.url) ?? [])
+    : [];
 
   return (
     <div className='flex flex-col w-full bg-background min-h-screen'>
@@ -179,6 +283,45 @@ export default async function RetreatPage() {
           <ThemePanel retreat={retreat} className='hidden md:flex' />
         </div>
 
+        {groups.length > 0 && (
+          <section
+            aria-label='Retreat groups'
+            className='mt-14 sm:mt-16 md:mt-20 pt-10 border-t border-primary-black/20'
+          >
+            <h2 className='text-2xl sm:text-3xl font-bold text-primary-black mb-8'>
+              Groups
+            </h2>
+            <div
+              className={`grid gap-4 sm:gap-5 ${groupsGridClass(groups.length)}`}
+            >
+              {groups.map((group, index) => (
+                <GroupCard key={group._key} group={group} index={index} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {buddyQuestions.length > 0 && (
+          <section
+            aria-label='Buddy questions'
+            className='mt-14 sm:mt-16 md:mt-20 pt-10 border-t border-primary-black/20'
+          >
+            <h2 className='text-2xl sm:text-3xl font-bold text-primary-black mb-8'>
+              Buddy Questions
+            </h2>
+            <ol className='list-decimal pl-5 space-y-3 max-w-3xl'>
+              {buddyQuestions.map((question, index) => (
+                <li
+                  key={`buddy-${index}`}
+                  className='text-sm sm:text-base text-primary-black leading-relaxed pl-1'
+                >
+                  {question}
+                </li>
+              ))}
+            </ol>
+          </section>
+        )}
+
         {visibleSections.length > 0 && (
           <section
             aria-label='Reflection questions'
@@ -192,6 +335,22 @@ export default async function RetreatPage() {
                 <QuestionSection key={section._key} section={section} />
               ))}
             </div>
+          </section>
+        )}
+
+        {links.length > 0 && (
+          <section
+            aria-label='Retreat links'
+            className='mt-14 sm:mt-16 md:mt-20 pt-10 border-t border-primary-black/20'
+          >
+            <h2 className='text-2xl sm:text-3xl font-bold text-primary-black mb-8'>
+              Links
+            </h2>
+            <ul className='list-disc pl-5 space-y-3 max-w-3xl'>
+              {links.map((link) => (
+                <LinkItem key={link._key} link={link} />
+              ))}
+            </ul>
           </section>
         )}
       </div>

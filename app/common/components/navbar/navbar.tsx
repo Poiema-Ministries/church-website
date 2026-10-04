@@ -16,7 +16,7 @@ type NavItem = {
   links?: NavLink[];
 };
 
-function getNavItems(showRetreat: boolean): NavItem[] {
+function getNavItems(showRetreat: boolean, showBibleStudy: boolean): NavItem[] {
   const eventLinks: NavLink[] = [
     { title: 'Past Events', href: '/past-events' },
     { title: 'Upcoming Events', href: '/upcoming-events' },
@@ -24,6 +24,16 @@ function getNavItems(showRetreat: boolean): NavItem[] {
 
   if (showRetreat) {
     eventLinks.push({ title: 'Retreat', href: '/retreat' });
+  }
+
+  const involvedLinks: NavLink[] = [
+    { title: 'New Members', href: '/new-members' },
+    { title: 'Prayer Requests', href: '/prayer-requests' },
+    { title: 'Contact Us', href: '/contact-us' },
+  ];
+
+  if (showBibleStudy) {
+    involvedLinks.splice(1, 0, { title: 'Bible Study', href: '/bible-study' });
   }
 
   return [
@@ -60,17 +70,19 @@ function getNavItems(showRetreat: boolean): NavItem[] {
     {
       name: 'Get Involved',
       hasDropdown: true,
-      links: [
-        { title: 'New Members', href: '/new-members' },
-        { title: 'Prayer Requests', href: '/prayer-requests' },
-        { title: 'Contact Us', href: '/contact-us' },
-      ],
+      links: involvedLinks,
     },
   ];
 }
 
-export default function Navbar({ showRetreat = false }: { showRetreat?: boolean }) {
-  const NAV_ITEMS = getNavItems(showRetreat);
+export default function Navbar({
+  showRetreat = false,
+  showBibleStudy = false,
+}: {
+  showRetreat?: boolean;
+  showBibleStudy?: boolean;
+}) {
+  const NAV_ITEMS = getNavItems(showRetreat, showBibleStudy);
   const pathname = usePathname();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [closeTimeout, setCloseTimeout] = useState<NodeJS.Timeout | null>(null);
