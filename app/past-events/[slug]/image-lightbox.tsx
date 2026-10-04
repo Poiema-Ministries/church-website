@@ -12,6 +12,7 @@ import {
 import Image from 'next/image';
 import {
   type GalleryImage,
+  isViewerLoaded,
   markViewerLoaded,
   preloadViewer,
   probeViewerReady,
@@ -53,10 +54,15 @@ export default function ImageLightbox({
   const followSelectionRef = useRef(false);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
-  const [viewerPending, setViewerPending] = useState(false);
   const viewerSrc = currentImage ? viewerUrl(currentImage.secure_url) : '';
-  const viewerSrcRef = useRef(viewerSrc);
-  viewerSrcRef.current = viewerSrc;
+  const [trackedViewerSrc, setTrackedViewerSrc] = useState<string | null>(null);
+  const [viewerPending, setViewerPending] = useState(false);
+  if (viewerSrc !== trackedViewerSrc) {
+    setTrackedViewerSrc(viewerSrc);
+    setViewerPending(viewerSrc !== '' && !probeViewerReady(viewerSrc));
+  } else if (viewerPending && (!viewerSrc || isViewerLoaded(viewerSrc))) {
+    setViewerPending(false);
+  }
 
   const totalLabel =
     typeof totalCount === 'number'
@@ -210,15 +216,6 @@ export default function ImageLightbox({
     dialogRef.current?.focus();
   }, [isOpen]);
 
-  useLayoutEffect(() => {
-    if (!isOpen || !viewerSrc) {
-      setViewerPending(false);
-      return;
-    }
-    const ready = probeViewerReady(viewerSrc);
-    setViewerPending((current) => (current === !ready ? current : !ready));
-  }, [isOpen, viewerSrc]);
-
   useEffect(() => {
     if (!isOpen) return;
     [currentIndex - 1, currentIndex + 1, currentIndex + 2].forEach((index) => {
@@ -248,17 +245,17 @@ export default function ImageLightbox({
     positionStrip('nearest');
   }, [isOpen, currentIndex, positionStrip]);
 
-  useLayoutEffect(() => {
-    if (!isOpen) return;
-    syncScrollHints();
-  }, [isOpen, images.length, syncScrollHints]);
-
   useEffect(() => {
+    if (!isOpen) return;
+    const frame = requestAnimationFrame(() => syncScrollHints());
     const strip = stripRef.current;
-    if (!strip || !isOpen) return;
+    if (!strip) return () => cancelAnimationFrame(frame);
     const observer = new ResizeObserver(() => syncScrollHints());
     observer.observe(strip);
-    return () => observer.disconnect();
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+    };
   }, [isOpen, images.length, syncScrollHints]);
 
   if (!isOpen || !currentImage) return null;
@@ -338,10 +335,10 @@ export default function ImageLightbox({
             priority
             onLoad={() => {
               markViewerLoaded(viewerSrc);
-              if (viewerSrcRef.current === viewerSrc) setViewerPending(false);
+              setViewerPending(false);
             }}
             onError={() => {
-              if (viewerSrcRef.current === viewerSrc) setViewerPending(false);
+              setViewerPending(false);
             }}
           />
           {viewerPending && (
