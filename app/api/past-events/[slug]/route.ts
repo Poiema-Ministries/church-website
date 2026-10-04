@@ -24,6 +24,7 @@ export async function GET(
     return NextResponse.json({
       images: result.images || [],
       nextCursor: result.nextCursor || null,
+      totalCount: result.totalCount,
     });
   } catch (error) {
     console.error('Error fetching images:', error);

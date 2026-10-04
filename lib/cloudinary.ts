@@ -42,7 +42,11 @@ export async function getImagesFromFolder(
   folderName: string,
   maxResults: number = 20,
   nextCursor?: string,
-): Promise<{ images: CloudinaryImage[]; nextCursor: string | null }> {
+): Promise<{
+  images: CloudinaryImage[];
+  nextCursor: string | null;
+  totalCount: number | null;
+}> {
   try {
     // Validate environment variables
     const cloudName =
@@ -98,9 +102,13 @@ export async function getImagesFromFolder(
       }),
     );
 
+    const totalCount =
+      typeof result.total_count === 'number' ? result.total_count : null;
+
     return {
       images,
       nextCursor: result.next_cursor || null,
+      totalCount,
     };
   } catch (error) {
     console.error('Error fetching images from Cloudinary:', error);
