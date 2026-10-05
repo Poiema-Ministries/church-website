@@ -116,10 +116,9 @@ export default function HomeClient({
                       alt={`Poiema Ministries Gallery ${idx + 1}`}
                       fill
                       className='object-cover'
-                      priority={idx < 2}
-                      loading={idx < 2 ? 'eager' : 'lazy'}
-                      quality={idx < 2 ? 85 : 75}
-                      sizes='(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 25vw'
+                      loading='lazy'
+                      quality={90}
+                      sizes='(max-width: 639px) 100vw, (max-width: 1920px) 576px, 33vw'
                     />
                   </div>
                 </div>
@@ -137,8 +136,8 @@ export default function HomeClient({
                       fill
                       className='object-cover'
                       loading='lazy'
-                      quality={75}
-                      sizes='(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 25vw'
+                      quality={90}
+                      sizes='(max-width: 639px) 100vw, (max-width: 1920px) 576px, 33vw'
                     />
                   </div>
                 </div>
@@ -170,9 +169,9 @@ export default function HomeClient({
                   alt='Poiema Ministries Core Values'
                   fill
                   className='object-contain'
-                  sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 40vw'
+                  sizes='(max-width: 1023px) 100vw, 40vw'
                   loading='lazy'
-                  quality={85}
+                  quality={90}
                 />
               </div>
             </div>
@@ -226,8 +225,8 @@ export default function HomeClient({
                 fill
                 className='object-cover'
                 loading='lazy'
-                quality={80}
-                sizes='300px'
+                quality={90}
+                sizes='850px'
               />
             </div>
 
@@ -278,8 +277,8 @@ export default function HomeClient({
                 fill
                 className='object-cover'
                 loading='lazy'
-                quality={80}
-                sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'
+                quality={90}
+                sizes='(max-width: 767px) 100vw, (max-width: 1700px) 900px, 60vw'
               />
             </div>
           </div>

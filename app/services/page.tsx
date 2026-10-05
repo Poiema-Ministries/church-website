@@ -51,6 +51,8 @@ export default function Services() {
             width={400}
             height={270}
             alt='First Service'
+            quality={90}
+            sizes='(max-width: 767px) 100vw, 400px'
             className='w-full h-auto md:w-auto md:h-full object-cover'
           />
         </div>
@@ -62,6 +64,8 @@ export default function Services() {
             width={400}
             height={270}
             alt='Second Service'
+            quality={90}
+            sizes='(max-width: 767px) 100vw, 400px'
             className='w-full h-auto md:w-auto md:h-full object-cover'
           />
         </div>

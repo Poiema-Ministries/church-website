@@ -50,7 +50,7 @@ export default async function Home() {
 
   const heroImage = homePage?.heroImage;
   const heroImageSrc = heroImage?.asset
-    ? urlFor(heroImage).width(2400).quality(85).url()
+    ? urlFor(heroImage).width(3840).quality(90).url()
     : undefined;
 
   return (
