@@ -17,6 +17,32 @@ export const structure: StructureResolver = (S) =>
             .title('Home Page'),
         ),
       S.listItem()
+        .title('Services')
+        .id('services')
+        .child(
+          S.list()
+            .title('Services')
+            .items([
+              S.listItem()
+                .title('Worship Services')
+                .id('service')
+                .child(
+                  S.documentTypeList('service')
+                    .title('Worship Services')
+                    .defaultOrdering([{ field: 'order', direction: 'asc' }]),
+                ),
+              S.listItem()
+                .title('Join Us')
+                .id('servicesPage')
+                .child(
+                  S.document()
+                    .schemaType('servicesPage')
+                    .documentId('servicesPage')
+                    .title('Join Us'),
+                ),
+            ]),
+        ),
+      S.listItem()
         .title('Pastor')
         .id('pastor')
         .child(
@@ -49,6 +75,8 @@ export const structure: StructureResolver = (S) =>
           listItem.getId() !== 'retreat' &&
           listItem.getId() !== 'pastor' &&
           listItem.getId() !== 'homePage' &&
-          listItem.getId() !== 'bibleStudy',
+          listItem.getId() !== 'bibleStudy' &&
+          listItem.getId() !== 'service' &&
+          listItem.getId() !== 'servicesPage',
       ),
     ]);
