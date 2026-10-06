@@ -28,6 +28,8 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['@sanity/image-url', 'next-sanity'],
   },
+  // These packages ship ESM only. Transpiling them lets Jest run the services page.
+  transpilePackages: ['@portabletext/react', '@portabletext/toolkit'],
   // Headers for better caching
   async headers() {
     return [
@@ -50,6 +52,24 @@ const nextConfig: NextConfig = {
           {
             key: 'Cache-Control',
             value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/services',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-store, max-age=0, must-revalidate',
+          },
+        ],
+      },
+      {
+        source: '/api/services',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-store, max-age=0, must-revalidate',
           },
         ],
       },

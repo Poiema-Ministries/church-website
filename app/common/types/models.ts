@@ -1,5 +1,7 @@
 // Copyright 2025 Poiema Ministries. All Rights Reserved.
 
+import type { PortableTextBlock } from '@portabletext/types';
+
 interface Describable {
   id: number;
   title: string;
@@ -85,6 +87,25 @@ export interface UpcomingEvent {
   registrationDeadline: string;
   fields: EventFormField[];
   order: number;
+}
+
+export interface ServiceItem {
+  _id: string;
+  title: string;
+  description: PortableTextBlock[];
+  imageUrl: string | null;
+  imageAlt: string;
+  order: number;
+}
+
+export interface ServicesJoinUs {
+  description: string;
+  address: string;
+}
+
+export interface ServicesContent {
+  services: ServiceItem[];
+  joinUs: ServicesJoinUs | null;
 }
 
 export interface HomePage {

@@ -135,6 +135,27 @@ export const bibleStudyEnabledQuery = groq`
   }
 `;
 
+export const servicesPageQuery = groq`
+  {
+    "services": *[_type == "service" && isVisible != false] | order(order asc, _createdAt asc) {
+      _id,
+      title,
+      description,
+      order,
+      image {
+        alt,
+        asset,
+        hotspot,
+        crop
+      }
+    },
+    "joinUs": *[_id == "servicesPage"][0] {
+      description,
+      address
+    }
+  }
+`;
+
 export const retreatEnabledQuery = groq`
   *[_type == "retreat"] | order(_updatedAt desc)[0] {
     isEnabled

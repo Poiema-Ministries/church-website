@@ -11,6 +11,8 @@ import { retreatType } from './retreatType';
 import { pastorType } from './pastorType';
 import { homePageType } from './homePageType';
 import { bibleStudyType } from './bibleStudyType';
+import { serviceType } from './serviceType';
+import { servicesPageType } from './servicesPageType';
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -24,5 +26,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     retreatType,
     pastorType,
     bibleStudyType,
+    serviceType,
+    servicesPageType,
   ],
 };
