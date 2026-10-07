@@ -8,6 +8,10 @@ import {
   isSubmissionTooFast,
   isSuspiciousMessage,
 } from '@/lib/spam-validation';
+import {
+  appendEventRegistration,
+  isGoogleSheetsConfigured,
+} from '@/lib/google-sheets';
 import { client } from '@/sanity/lib/client';
 import { groq } from 'next-sanity';
 
@@ -21,21 +25,20 @@ interface EventFieldDefinition {
 }
 
 interface EventValidationData {
+  title?: string;
   registrationDeadline?: string;
   fields?: EventFieldDefinition[];
+  googleSheetId?: string;
 }
 
-/**
- * Fetches the event's deadline and field definitions for server-side
- * validation. Returning the field definitions lets us validate choice fields
- * against their allowed options rather than trusting the client.
- */
 async function getEventForValidation(
   eventId: string,
 ): Promise<EventValidationData | null> {
   return client.fetch(
     groq`*[_type == "upcomingEvent" && _id == $eventId][0] {
+      title,
       registrationDeadline,
+      googleSheetId,
       fields[] {
         label,
         inputType,
@@ -47,10 +50,6 @@ async function getEventForValidation(
   );
 }
 
-/**
- * Checks if the registration deadline has passed.
- * Returns true if the deadline is still open, false if it has passed.
- */
 function isRegistrationOpen(registrationDeadline?: string): boolean {
   if (!registrationDeadline) {
     return false;
@@ -70,7 +69,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Spam checks
     if (isHoneypotFilled(requestData)) {
       return NextResponse.json(
         { error: 'Invalid submission' },
@@ -93,14 +91,11 @@ export async function POST(req: Request) {
       );
     }
 
-    // Fetch the event once for server-side validation (deadline + field defs)
     const event = await getEventForValidation(eventId);
     if (!event) {
       return NextResponse.json({ error: 'Event not found' }, { status: 404 });
     }
 
-    // Server-side deadline verification - prevents submissions even if
-    // client-side checks are bypassed
     if (!isRegistrationOpen(event.registrationDeadline)) {
       return NextResponse.json(
         { error: 'Registration for this event has closed' },
@@ -108,7 +103,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Validate that all fields have values
     const fieldEntries = Object.entries(fields) as [string, string][];
     if (fieldEntries.length === 0) {
       return NextResponse.json(
@@ -126,11 +120,6 @@ export async function POST(req: Request) {
       }
     }
 
-    // Validate each field against its definition. Choice fields (dropdown /
-    // checkbox) are constrained to admin-defined options, so we verify the
-    // submitted value(s) are allowed rather than running spam heuristics on
-    // them (heuristics false-positive on concatenated option labels). Only
-    // free-text fields (text, phone, textarea) get the spam pattern check.
     const fieldDefsByLabel = new Map(
       (event.fields ?? []).map((field) => [field.label, field]),
     );
@@ -168,13 +157,27 @@ export async function POST(req: Request) {
         continue;
       }
 
-      // Free-text field: run the spam pattern check
       if (isSuspiciousMessage(stringValue)) {
         return NextResponse.json(
           { error: 'Invalid submission' },
           { status: 400 },
         );
       }
+    }
+
+    if (isGoogleSheetsConfigured()) {
+      const fieldLabels = (event.fields ?? []).map((field) => field.label);
+      await appendEventRegistration({
+        eventId,
+        eventTitle: event.title || eventTitle,
+        googleSheetId: event.googleSheetId,
+        fieldLabels,
+        fields,
+      });
+    } else {
+      console.warn(
+        'Google Sheets credentials are not configured; skipping sheet write',
+      );
     }
 
     const html = generateUpcomingEventEmail({
@@ -191,9 +194,9 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Email error:', error);
+    console.error('Upcoming event registration error:', error);
     const errorMessage =
-      error instanceof Error ? error.message : 'Failed to send email';
+      error instanceof Error ? error.message : 'Failed to process registration';
     return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
