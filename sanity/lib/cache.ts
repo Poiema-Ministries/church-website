@@ -25,6 +25,7 @@ export const SANITY_TAGS = {
   homePage: 'sanity:homePage',
   service: 'sanity:service',
   servicesPage: 'sanity:servicesPage',
+  offeringPage: 'sanity:offeringPage',
 } as const;
 
 export type SanityDocumentType =
@@ -39,7 +40,8 @@ export type SanityDocumentType =
   | 'pastor'
   | 'homePage'
   | 'service'
-  | 'servicesPage';
+  | 'servicesPage'
+  | 'offeringPage';
 
 export const SANITY_TYPE_TO_TAG: Record<SanityDocumentType, string> = {
   bulletin: SANITY_TAGS.bulletin,
@@ -54,6 +56,7 @@ export const SANITY_TYPE_TO_TAG: Record<SanityDocumentType, string> = {
   homePage: SANITY_TAGS.homePage,
   service: SANITY_TAGS.service,
   servicesPage: SANITY_TAGS.servicesPage,
+  offeringPage: SANITY_TAGS.offeringPage,
 };
 
 export const SANITY_TYPE_TO_PATHS: Record<SanityDocumentType, string[]> = {
@@ -69,4 +72,5 @@ export const SANITY_TYPE_TO_PATHS: Record<SanityDocumentType, string[]> = {
   homePage: ['/'],
   service: ['/services'],
   servicesPage: ['/services'],
+  offeringPage: ['/offering'],
 };
