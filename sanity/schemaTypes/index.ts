@@ -13,6 +13,7 @@ import { homePageType } from './homePageType';
 import { bibleStudyType } from './bibleStudyType';
 import { serviceType } from './serviceType';
 import { servicesPageType } from './servicesPageType';
+import { offeringPageType } from './offeringPageType';
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -28,5 +29,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     bibleStudyType,
     serviceType,
     servicesPageType,
+    offeringPageType,
   ],
 };

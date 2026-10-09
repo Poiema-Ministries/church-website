@@ -3,6 +3,15 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { client } from '@/sanity/lib/client';
+import { SANITY_TAGS } from '@/sanity/lib/cache';
+import { offeringPageQuery } from '@/sanity/lib/queries';
+import { toOfferingContent, type OfferingPageDocument } from './content';
+
+// Offering copy is edited in Sanity and must not be cached.
+export const revalidate = 0;
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
 
 export const metadata: Metadata = {
   title: 'Online Offering',
@@ -19,7 +28,29 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Offering() {
+export default async function Offering() {
+  let document: OfferingPageDocument | null = null;
+
+  try {
+    document = await client
+      .withConfig({ useCdn: false })
+      .fetch<OfferingPageDocument | null>(
+        offeringPageQuery,
+        {},
+        {
+          cache: 'no-store',
+          next: {
+            revalidate: 0,
+            tags: [SANITY_TAGS.offeringPage, SANITY_TAGS.all],
+          },
+        },
+      );
+  } catch (error) {
+    console.error('Unable to load the online offering page', error);
+  }
+
+  const { label, giveNowUrl, whyWeGive } = toOfferingContent(document);
+
   return (
     <div className='flex flex-col w-full gap-4 sm:gap-5 md:gap-7'>
       <div className='relative flex flex-col items-center md:items-start w-full h-48 overflow-hidden'>
@@ -36,10 +67,10 @@ export default function Offering() {
           Online Offering
         </h1>
         <span className='relative z-10 text-base sm:text-lg md:text-2xl text-center mt-2 px-4 md:px-0 md:ml-5 text-white'>
-          Your generosity helps us serve our community.
+          {label}
         </span>
         <Link
-          href='https://tithe.ly/give_new/www/#/tithely/give-one-time/1285769'
+          href={giveNowUrl}
           target='_blank'
           rel='noopener noreferrer'
           className='relative z-10 inline-block text-white px-4 py-0.5 rounded-lg mt-3 md:px-5 md:ml-5 border-2 border-white'
@@ -54,13 +85,8 @@ export default function Offering() {
           </h2>
         </div>
         <div className='flex-1 flex items-center'>
-          <p className='text-sm sm:text-base md:text-lg leading-relaxed font-bold text-primary-black'>
-            Tithing is an act of worship and an expression of our gratitude to
-            God. By returning a portion of what He has provided, we acknowledge
-            that He is the source of every blessing in our lives. Your
-            generosity allows us to continue our mission of sharing the Gospel
-            and serving our local community. As 2 Corinthians 9:7 reminds us,
-            &ldquo;God loves a cheerful giver.&rdquo;
+          <p className='text-sm sm:text-base md:text-lg leading-relaxed font-bold text-primary-black whitespace-pre-line'>
+            {whyWeGive}
           </p>
         </div>
       </div>

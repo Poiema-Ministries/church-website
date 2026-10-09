@@ -17,6 +17,15 @@ export const structure: StructureResolver = (S) =>
             .title('Home Page'),
         ),
       S.listItem()
+        .title('Online Offering')
+        .id('offeringPage')
+        .child(
+          S.document()
+            .schemaType('offeringPage')
+            .documentId('offeringPage')
+            .title('Online Offering'),
+        ),
+      S.listItem()
         .title('Services')
         .id('services')
         .child(
@@ -77,6 +86,7 @@ export const structure: StructureResolver = (S) =>
           listItem.getId() !== 'homePage' &&
           listItem.getId() !== 'bibleStudy' &&
           listItem.getId() !== 'service' &&
-          listItem.getId() !== 'servicesPage',
+          listItem.getId() !== 'servicesPage' &&
+          listItem.getId() !== 'offeringPage',
       ),
     ]);

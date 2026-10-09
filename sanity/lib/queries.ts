@@ -135,6 +135,14 @@ export const bibleStudyEnabledQuery = groq`
   }
 `;
 
+export const offeringPageQuery = groq`
+  *[_id == "offeringPage"][0] {
+    label,
+    giveNowUrl,
+    whyWeGive
+  }
+`;
+
 export const servicesPageQuery = groq`
   {
     "services": *[_type == "service" && isVisible != false] | order(order asc, _createdAt asc) {

@@ -56,6 +56,15 @@ const nextConfig: NextConfig = {
         ],
       },
       {
+        source: '/offering',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-store, max-age=0, must-revalidate',
+          },
+        ],
+      },
+      {
         source: '/services',
         headers: [
           {
