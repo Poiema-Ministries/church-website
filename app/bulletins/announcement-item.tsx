@@ -22,28 +22,25 @@ export default function AnnouncementItem({
     : undefined;
 
   return (
-    <div className='flex flex-row gap-3 w-full md:w-auto'>
-      <span className='font-semibold'>{displayNumber}.</span>
-      <div className='flex flex-col flex-1'>
-        <span className='font-semibold text-center md:text-left'>
-          {announcement.title}
-        </span>
-        <span className='font-medium whitespace-pre-line text-center md:text-left mt-1'>
-          {announcement.description}
-        </span>
-        {hasImage && imageUrl && (
-          <div className='mt-2 flex justify-center md:justify-start'>
-            <Image
-              src={imageUrl}
-              alt={announcement.title}
-              width={announcement.announcementImage!.width}
-              height={announcement.announcementImage!.height}
-              className='object-contain'
-              loading='lazy'
-            />
-          </div>
-        )}
-      </div>
+    <div className='flex flex-col items-center justify-center w-full max-w-2xl'>
+      <span className='font-semibold text-center'>
+        {displayNumber}. {announcement.title}
+      </span>
+      <span className='font-medium whitespace-pre-line text-center mt-1'>
+        {announcement.description}
+      </span>
+      {hasImage && imageUrl && (
+        <div className='mt-2 flex justify-center'>
+          <Image
+            src={imageUrl}
+            alt={announcement.title}
+            width={announcement.announcementImage!.width}
+            height={announcement.announcementImage!.height}
+            className='object-contain'
+            loading='lazy'
+          />
+        </div>
+      )}
     </div>
   );
 }

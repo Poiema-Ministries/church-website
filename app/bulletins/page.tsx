@@ -56,15 +56,13 @@ export default async function Bulletins() {
       <div className='flex flex-col items-center justify-center gap-4 px-4'>
         {renderBulletins()}
       </div>
-      <div className='flex flex-col items-center md:items-start w-full px-4 md:px-0'>
-        <h1 className='text-4xl font-bold text-center md:text-left mt-10 md:ml-5'>
+      <div className='flex flex-col items-center md:items-start w-full max-w-xl mx-auto md:mx-0'>
+        <h1 className='text-4xl font-bold text-center mt-10 px-4 md:px-0 md:ml-5'>
           Announcements
         </h1>
       </div>
-      <div className='flex flex-col items-center md:items-end justify-center gap-4 px-4 md:px-0 md:pr-8'>
-        <div className='flex flex-col items-center md:items-start gap-4 w-full md:w-auto md:max-w-2xl'>
-          {renderAnnouncements()}
-        </div>
+      <div className='flex flex-col items-center justify-center gap-4 px-4'>
+        {renderAnnouncements()}
       </div>
     </div>
   );
