@@ -60,6 +60,8 @@ community and beyond.
 
 - **[Cloudinary](https://cloudinary.com/)** - Image hosting and optimization
 - **[Resend](https://resend.com/)** - Email service for contact forms
+- **[Google Sheets](https://developers.google.com/sheets/api)** - Upcoming
+  event registration storage (service account)
 - **Google Maps API** - Location and map integration
 
 ### Development Tools
@@ -102,7 +104,17 @@ Before you begin, ensure you have the following installed:
    Create a `.env.local` file in the root directory. You can use `.env.example`
    as a reference. Required variables:
    - `RESEND_API_KEY` - Your Resend API key for email services
+   - `SANITY_WRITE_TOKEN` - Sanity token with write access (needed to store
+     Google Sheet IDs on upcoming events)
+   - `GOOGLE_SERVICE_ACCOUNT_EMAIL` / `GOOGLE_PRIVATE_KEY` - Google service
+     account credentials for Sheets
+   - `GOOGLE_DRIVE_FOLDER_ID` - Shared Drive/My Drive folder for new sheets
+     (recommended)
+   - `GOOGLE_SHEETS_SHARE_EMAIL` - Email granted editor access on new sheets
+     (recommended)
    - Additional variables may be required based on your setup
+
+   See **Google Sheets setup** below for the full credential walkthrough.
 
 4. **Run the development server**
 
@@ -131,6 +143,70 @@ Before you begin, ensure you have the following installed:
 - `npm run start` - Start the production server (requires `npm run build` first)
 - `npm run lint` - Run ESLint to check code quality
 - `npm run prettier` - Format code using Prettier
+
+## Google Sheets setup (Upcoming Event registrations)
+
+Form submissions create or append to a Google Spreadsheet titled
+`Poiema Ministries - [Event Name]`. Credentials stay in server environment
+variables — never in Sanity and never with a `NEXT_PUBLIC_` prefix.
+
+### 1. Google Cloud
+
+1. Create (or reuse) a Google Cloud project.
+2. Enable **Google Sheets API** and **Google Drive API**.
+3. Create a **Service Account** (IAM → Service Accounts → Create).
+4. Create a JSON key for that service account and download it.
+5. From the JSON, copy:
+   - `client_email` → `GOOGLE_SERVICE_ACCOUNT_EMAIL`
+   - `private_key` → `GOOGLE_PRIVATE_KEY`
+
+### 2. Shared folder (recommended)
+
+Service-account-created files are otherwise hard to find in your own Drive.
+
+1. In Google Drive, create a folder (e.g. `Poiema Event Registrations`).
+2. Share that folder with the service account email as **Editor**.
+3. Open the folder and copy the ID from the URL:
+   `https://drive.google.com/drive/folders/<FOLDER_ID>`
+4. Set `GOOGLE_DRIVE_FOLDER_ID=<FOLDER_ID>`.
+
+### 3. Share email (recommended)
+
+Set `GOOGLE_SHEETS_SHARE_EMAIL` to a ministry inbox (e.g.
+`info@poiemaministries.org`) so each new sheet is also shared with that address
+as an editor.
+
+### 4. Sanity write token
+
+Create a Sanity API token with **Editor** permissions and set
+`SANITY_WRITE_TOKEN`. The API stores `googleSheetId` / `googleSheetUrl` on the
+upcoming event document after the first registration (fields are read-only in
+Studio).
+
+### 5. Environment values
+
+In `.env.local` and your host (Netlify / Vercel / etc.):
+
+```bash
+GOOGLE_SERVICE_ACCOUNT_EMAIL=your-sa@project.iam.gserviceaccount.com
+GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
+GOOGLE_DRIVE_FOLDER_ID=your_folder_id
+GOOGLE_SHEETS_SHARE_EMAIL=info@poiemaministries.org
+SANITY_WRITE_TOKEN=your_sanity_write_token
+```
+
+Keep the private key quoted and preserve `\n` escapes — most hosts need that
+format for multiline secrets.
+
+### Behavior
+
+1. First successful registration for an event creates the spreadsheet, writes
+   header columns (`Submitted At` + form field labels), freezes/bolds the
+   header row, saves the sheet ID/URL on the Sanity event, then appends the
+   row.
+2. Later registrations append the next row to the same sheet.
+3. If Google credentials are missing, the form still emails via Resend and
+   skips Sheets (with a server warning).
 
 ## Project Structure
 
